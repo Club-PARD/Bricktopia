@@ -1,12 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/weather_model.dart';
-import '../widgets/todayWeather.dart';
 
 class AIHandler {
-
   //추가
   List<WeatherData> weatherDataList = [];
   List<List<WeatherData>> groupedWeatherDataList = [];
@@ -21,16 +21,6 @@ class AIHandler {
 
   Future<String> getResponse(String message) async {
     try {
-      final request = ChatCompleteText(messages: [
-        {'role': 'user', 'content': message}
-      ], maxToken: 500, model: 'gpt-3.5-turbo');
-
-
-      final response = await _openAI.onChatCompletion(request: request);
-      if (response != null) {
-        return response.choices[0].message!.content.trim();
-      }
-
       return 'Something went wrong';
     } catch (e) {
       return 'Bad response';
@@ -38,7 +28,7 @@ class AIHandler {
   }
 
   Future<String> fetchWeatherData(String city) async {
-    final apiKey = '9400fa5b5392bd26329d0dd65aa01ecb';
+    const apiKey = '9400fa5b5392bd26329d0dd65aa01ecb';
     final url =
         'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric';
 
@@ -79,7 +69,7 @@ class AIHandler {
           minTemperature: minTemp.toDouble(),
           humidity: humidity.toDouble(),
           main: main.toString(),
-          pop : pop.toDouble(),
+          pop: pop.toDouble(),
         );
         dataList.add(weatherData);
       }
@@ -97,7 +87,8 @@ class AIHandler {
     groupedWeatherDataList = groupWeatherDataByDate(filteredDataList);
   }
 
-  List<List<WeatherData>> groupWeatherDataByDate(List<WeatherData> weatherDataList) {
+  List<List<WeatherData>> groupWeatherDataByDate(
+      List<WeatherData> weatherDataList) {
     final groupedData = <List<WeatherData>>[];
     for (final weatherData in weatherDataList) {
       bool foundGroup = false;
@@ -116,7 +107,9 @@ class AIHandler {
   }
 
   bool isSameDate(DateTime date1, DateTime date2) {
-    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
   Future<String> getWeatherDataSummary(String city) async {
