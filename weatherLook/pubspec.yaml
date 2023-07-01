@@ -43,6 +43,7 @@ dependencies:
   intl: ^0.18.1
   chat_gpt_sdk: ^2.2.2
   sliding_up_panel: ^2.0.0+1
+  blur: ^3.0.0
 
 
 dev_dependencies:
@@ -78,6 +79,14 @@ flutter:
     - assets/rainy.png
     - assets/sun.png
     - assets/snow.png
+    - assets/line.png
+    - assets/home.png
+    - assets/add.png
+    - assets/items/cap.png
+    - assets/items/paddedCoat.png
+    - assets/items/hoodie.png
+    - assets/items/shorts.png
+    - assets/items/sneakers.png
     - icon/icon_briefing.png
     - icon/icon_chatbot.png
     - icon/icon_cloud_sun.png
@@ -93,6 +102,8 @@ flutter:
     - icon/logo_black.png
     - icon/logo_white.png
     - icon/Weathy.png
+    - icon/icon_back.png
+    - icon/icon_arrow.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
