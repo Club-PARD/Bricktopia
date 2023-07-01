@@ -1,6 +1,7 @@
 import 'dart:math';
 
 class Weather {
+  final String city;
   final double temp;
   final double feelsLike;
   final double temp_min;
@@ -17,6 +18,7 @@ class Weather {
   final List<String> daily_icon;
 
   Weather({
+    required this.city,
     required this.temp,
     required this.feelsLike,
     required this.temp_min,
@@ -84,6 +86,7 @@ class Weather {
     }
 
     return Weather(
+      city: json['city']['name'],
       temp: json['list'][0]['main']['temp'].toDouble(),
       feelsLike: json['list'][0]['main']['feels_like'].toDouble(),
       temp_min: json['list'][0]['main']['temp_min'].toDouble(),
