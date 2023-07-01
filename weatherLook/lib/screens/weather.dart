@@ -5,7 +5,6 @@ import 'package:homepage/api/weather_api.dart';
 import 'package:homepage/model/weather_model.dart';
 import 'package:homepage/widget/hourly_box.dart';
 import 'package:homepage/widget/weather_box.dart';
-import 'package:homepage/widget/weekly_box.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
@@ -74,7 +73,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           const SizedBox(
                             height: 30,
                           ),
-                          WeeklyBox(weather: _weather!),
+                          //WeeklyBox(weather: _weather!),
                         ],
                       );
                     }
