@@ -5,7 +5,6 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../models/chat_model.dart';
 import '../providers/chats_provider.dart';
 import '../widgets/chat_item.dart';
-import '../widgets/text_and_voice_field.dart';
 import 'my_app_bar.dart';
 
 class ChatScreen extends ConsumerStatefulWidget {
@@ -154,18 +153,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               ),
             ),
             borderRadius: radius,
-          ),
-          Container(
-            color: Colors.black, // 검정색으로 변경
-            child: const Padding(
-              padding: EdgeInsets.all(12.0),
-              child: Column(
-                children: [
-                  TextAndVoiceField(),
-                  SizedBox(height: 10),
-                ],
-              ),
-            ),
           ),
         ],
       ),
