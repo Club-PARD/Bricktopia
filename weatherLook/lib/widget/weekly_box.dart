@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:homepage/model/weather_model.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 class WeeklyBox extends StatelessWidget {
   final Weather weather;
@@ -9,12 +8,9 @@ class WeeklyBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting('ko_KR');
-
     //print(weather.daily_max_temp);
     //print(weather.daily_min_temp);
     //print(weather.daily_pop);
-    print(weather.daily_icon);
     return Container(
       margin: const EdgeInsets.only(
         left: 24,
@@ -63,8 +59,6 @@ class WeeklyBox extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 5,
             itemBuilder: (context, index) {
-              //double minTemp = weather.daily_min_temp[index];
-              //double maxTemp = weather.daily_max_temp[index];
               int hourlyIndex = index * 8;
 
               if (hourlyIndex >= weather.hourly_dt.length) {
@@ -77,8 +71,8 @@ class WeeklyBox extends StatelessWidget {
               double maxTemp = weather.daily_max_temp[hourlyIndex];
 
               double pop = weather.daily_pop[index];
+              String icon = weather.daily_most_occuring_icons[index];
 
-              //String dayOfWeek = DateFormat('EEEE', 'ko_KR').format(dateTime);
               String dayOfWeek = '';
 
               if (index == 0) {
@@ -113,14 +107,14 @@ class WeeklyBox extends StatelessWidget {
                           ),
                         ),
                         Image.asset(
-                          'asset/icon/${weather.icon}.png',
+                          'asset/weather/$icon.png',
                           width: 35,
                           height: 35,
                         ),
-                        if (weather.icon == '09d' ||
-                            weather.icon == '09n' ||
-                            weather.icon == '10d' ||
-                            weather.icon == '10n')
+                        if (icon == '09d' ||
+                            icon == '09n' ||
+                            icon == '10d' ||
+                            icon == '10n')
                           Text(
                             '${(pop * 100).toInt()}%',
                             style: const TextStyle(
