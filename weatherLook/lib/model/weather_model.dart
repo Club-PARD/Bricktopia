@@ -15,7 +15,7 @@ class Weather {
   final List<double> daily_min_temp;
   final List<double> daily_max_temp;
   final List<double> daily_pop;
-  final List<String> daily_icon;
+  final List<String> daily_most_occuring_icons;
 
   Weather({
     required this.city,
@@ -32,10 +32,13 @@ class Weather {
     required this.daily_min_temp,
     required this.daily_max_temp,
     required this.daily_pop,
-    required this.daily_icon,
+    required this.daily_most_occuring_icons,
   });
 
   factory Weather.fromJson(Map<String, dynamic> json) {
+    Map<String, List<double>> tempByDate = {};
+    Map<String, List<double>> popByDate = {};
+    Map<String, List<String>> iconByDate = {};
     List<dynamic> list = json['list'];
     List<double> hListTemp = [];
     List<String> hListIcon = [];
@@ -48,18 +51,27 @@ class Weather {
       double pop = list[i]['pop'].toDouble();
       int timestamp = list[i]['dt'];
       DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+      String date = dateTime.toString().split(' ')[0];
 
+      if (tempByDate.containsKey(date)) {
+        tempByDate[date]!.add(temperature);
+        popByDate[date]!.add(pop);
+        iconByDate[date]!.add(weatherIcon);
+      } else {
+        tempByDate[date] = [temperature];
+        popByDate[date] = [pop];
+        iconByDate[date] = [weatherIcon];
+      }
       hListTemp.add(temperature);
       hListIcon.add(weatherIcon);
       hListDt.add(dateTime);
       hListPop.add(pop);
     }
-    print(hListDt);
     List<DateTime> distinctDates = hListDt.toSet().toList();
     List<double> dMinTemp = [];
     List<double> dMaxTemp = [];
     List<double> dAvgPop = [];
-    List<String> dIcon = ['', '', '', '', ''];
+    List<String> dMostOccurringIcons = [];
 
     for (DateTime date in distinctDates) {
       List<double> temperatures = [];
@@ -75,16 +87,31 @@ class Weather {
           icons.add(hListIcon[i]);
         }
       }
-      //print(hListIcon);
-      dMinTemp.add(temperatures.reduce((min)));
-      dMaxTemp.add(temperatures.reduce((max)));
+
+      dMinTemp.add(temperatures.reduce(min));
+      dMaxTemp.add(temperatures.reduce(max));
       double avgPop = pops.reduce((a, b) => a + b) / pops.length;
+      dAvgPop.add(avgPop);
 
-      if (!dAvgPop.contains(avgPop)) {
-        dAvgPop.add(avgPop);
+      // Find the most occurring icon
+      Map<String, int> iconCounts = {};
+      for (String icon in icons) {
+        iconCounts[icon] = (iconCounts[icon] ?? 0) + 1;
       }
+      int maxCount = 0;
+      String mostOccurringIcon = '';
+      for (String icon in iconCounts.keys) {
+        if (iconCounts[icon]! > maxCount) {
+          maxCount = iconCounts[icon]!;
+          mostOccurringIcon = icon;
+        }
+      }
+      dMostOccurringIcons.add(mostOccurringIcon);
     }
-
+    print(dMaxTemp);
+    print(dMaxTemp);
+    print(dAvgPop);
+    print(dMostOccurringIcons);
     return Weather(
       city: json['city']['name'],
       temp: json['list'][0]['main']['temp'].toDouble(),
@@ -100,7 +127,7 @@ class Weather {
       daily_min_temp: dMinTemp,
       daily_max_temp: dMaxTemp,
       daily_pop: dAvgPop,
-      daily_icon: dIcon,
+      daily_most_occuring_icons: dMostOccurringIcons,
     );
   }
 }
