@@ -1,6 +1,8 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:homepage/home/homepage.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'chatbot/constants/themes.dart';
 
@@ -19,7 +21,15 @@ class App extends ConsumerWidget {
       title: 'Flutter Demo',
       theme: mainTheme,
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: AnimatedSplashScreen(
+        duration: 3000,
+        splash: Image.asset('assets/weatherlook_logo.png'),
+        splashIconSize: 362,
+        nextScreen: const HomePage(),
+        splashTransition: SplashTransition.fadeTransition,
+        pageTransitionType: PageTransitionType.fade,
+        backgroundColor: Colors.white,
+      ),
     );
   }
 }

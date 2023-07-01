@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../chatbot/screens/chat_screen.dart';
 import 'search.dart';
 import 'setting.dart';
 
@@ -395,10 +396,10 @@ class PageOne extends StatelessWidget {
                 child: FloatingActionButton(
                   heroTag: 'chat',
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => ChatScreen()),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ChatScreen()),
+                    );
                   },
                   backgroundColor: Colors.transparent,
                   elevation: 0,
