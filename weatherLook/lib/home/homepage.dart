@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:homepage/home/page_one.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+<<<<<<< Updated upstream
 //import 'search.dart';
 //import 'setting.dart';
+=======
+import 'search.dart';
+>>>>>>> Stashed changes
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -81,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                   effect: const JumpingDotEffect(
                     activeDotColor: Colors.black,
                     dotColor: Color(0xffD7D7D7),
-                    dotHeight: 12,
+                    dotHeight: 10,
                     dotWidth: 12,
                   ),
                 ),
