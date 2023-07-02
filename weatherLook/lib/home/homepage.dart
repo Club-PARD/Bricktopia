@@ -119,7 +119,7 @@ class PageOne extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const SearchPage()),
+                                    builder: (context) => SearchPage()),
                               );
                             },
                             child: Image.asset(
@@ -468,7 +468,7 @@ class PageTwo extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const SearchPage()),
+                    MaterialPageRoute(builder: (context) => SearchPage()),
                   );
                 },
                 child: Image.asset(

@@ -5,7 +5,7 @@ class WeatherData {
   final double humidity;
   final double pop;
   final String main;
-
+  final String city;
 
   WeatherData({
     required this.time,
@@ -14,6 +14,7 @@ class WeatherData {
     required this.humidity,
     required this.main,
     required this.pop,
+    required this.city,
   });
 
   @override
@@ -23,6 +24,7 @@ class WeatherData {
         'Min Temperature: ${minTemperature.toStringAsFixed(1)}°C, '
         'Humidity: ${humidity.toInt()}%, '
         'Main: $main, '
-        'POP: ${(pop * 100).toInt()}%';
+        'POP: ${(pop * 100).toInt()}%,'
+        'City: $city';
   }
 }

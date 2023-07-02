@@ -3,16 +3,14 @@ import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/weather_model.dart';
-import '../widgets/todayWeather.dart';
 
 class AIHandler {
-
   //추가
   List<WeatherData> weatherDataList = [];
   List<List<WeatherData>> groupedWeatherDataList = [];
 
   final _openAI = OpenAI.instance.build(
-    token: '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',
+    token: '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',
     baseOption: HttpSetup(
       receiveTimeout: const Duration(seconds: 60),
       connectTimeout: const Duration(seconds: 60),
@@ -24,7 +22,6 @@ class AIHandler {
       final request = ChatCompleteText(messages: [
         {'role': 'user', 'content': message}
       ], maxToken: 500, model: 'gpt-3.5-turbo');
-
 
       final response = await _openAI.onChatCompletion(request: request);
       if (response != null) {
@@ -56,6 +53,24 @@ class AIHandler {
     }
   }
 
+  Future<String> fetchWeatherData_m(double longitude, double latitude) async {
+    final apiKey = '9400fa5b5392bd26329d0dd65aa01ecb';
+    final url =
+        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey&units=metric';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final weather = data['weather'][0]['main'];
+      final temperature = data['main']['temp'];
+      final humidity = data['main']['humidity'];
+      final pop = data['pop'];
+
+      return 'Current weather:\nWeather: $weather\nTemperature: $temperature\nHumidity: $humidity\nPrecipitation: $pop';
+    } else {
+      return 'Failed to fetch weather data';
+    }
+  }
+
   //추가
   Future<void> fetchWeatherData2(String city) async {
     // Fetch weather data and populate weatherDataList
@@ -64,6 +79,7 @@ class AIHandler {
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
+      final city = data['city']['name'];
       final List<WeatherData> dataList = [];
       for (final item in data['list']) {
         final dateTime = DateTime.fromMillisecondsSinceEpoch(item['dt'] * 1000);
@@ -79,7 +95,8 @@ class AIHandler {
           minTemperature: minTemp.toDouble(),
           humidity: humidity.toDouble(),
           main: main.toString(),
-          pop : pop.toDouble(),
+          pop: pop.toDouble(),
+          city: city.toString(),
         );
         dataList.add(weatherData);
       }
@@ -97,7 +114,8 @@ class AIHandler {
     groupedWeatherDataList = groupWeatherDataByDate(filteredDataList);
   }
 
-  List<List<WeatherData>> groupWeatherDataByDate(List<WeatherData> weatherDataList) {
+  List<List<WeatherData>> groupWeatherDataByDate(
+      List<WeatherData> weatherDataList) {
     final groupedData = <List<WeatherData>>[];
     for (final weatherData in weatherDataList) {
       bool foundGroup = false;
@@ -116,11 +134,68 @@ class AIHandler {
   }
 
   bool isSameDate(DateTime date1, DateTime date2) {
-    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
+  }
+
+  Future<List<List<WeatherData>>> fetchWeatherData3(double longitude, double latitude) async {
+    final url = Uri.parse('https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appid=9400fa5b5392bd26329d0dd65aa01ecb&units=metric');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final city = data['city']['name'];
+      final List<WeatherData> dataList = [];
+      for (final item in data['list']) {
+        final dateTime = DateTime.fromMillisecondsSinceEpoch(item['dt'] * 1000);
+        final maxTemp = item['main']['temp_max'];
+        final minTemp = item['main']['temp_min'];
+        final humidity = item['main']['humidity'];
+        final main = item['weather'][0]['main'];
+        final pop = item['pop'];
+
+        final weatherData = WeatherData(
+          time: dateTime,
+          maxTemperature: maxTemp.toDouble(),
+          minTemperature: minTemp.toDouble(),
+          humidity: humidity.toDouble(),
+          main: main.toString(),
+          pop: pop.toDouble(),
+          city: city.toString(),
+        );
+        dataList.add(weatherData);
+      }
+
+      // Filter weatherDataList for today's data
+      final today = DateTime.now();
+      final filteredDataList = dataList.where((data) {
+        return isSameDate(data.time, today);
+      }).toList();
+
+      // Group filteredDataList by date
+      return groupWeatherDataByDate(filteredDataList);
+    } else {
+      print('Failed to fetch weather data');
+      return [];
+    }
   }
 
   Future<String> getWeatherDataSummary(String city) async {
     await fetchWeatherData2(city);
+    final buffer = StringBuffer();
+    for (final group in groupedWeatherDataList) {
+      for (final weatherData in group) {
+        buffer.writeln(weatherData.toString());
+      }
+    }
+    final groupedWeatherDataString = buffer.toString();
+
+    final summary = await getResponse(groupedWeatherDataString);
+    return summary;
+  }
+
+  Future<String> getWeatherDataSummary2(double longitude, double latitude) async {
+    await fetchWeatherData3(longitude, latitude);
     final buffer = StringBuffer();
     for (final group in groupedWeatherDataList) {
       for (final weatherData in group) {

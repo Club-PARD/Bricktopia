@@ -29,6 +29,7 @@ class _FivedayWeatherState extends State<FivedayWeather> {
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
+      final city = data['city']['name'];
       final List<WeatherData> dataList = [];
       for (final item in data['list']) {
         final dateTime = DateTime.fromMillisecondsSinceEpoch(item['dt'] * 1000);
@@ -45,6 +46,7 @@ class _FivedayWeatherState extends State<FivedayWeather> {
           humidity: humidity.toDouble(),
           main: main.toString(),
           pop : pop.toDouble(),
+          city: city.toString(),
         );
         dataList.add(weatherData);
       }
@@ -106,6 +108,7 @@ class _FivedayWeatherState extends State<FivedayWeather> {
         humidity: averageHumidity,
         main: main,
         pop: maxPop,
+        city: main,
       );
       comparedList.add(comparedData);
     }
