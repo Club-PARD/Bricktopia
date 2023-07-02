@@ -24,9 +24,6 @@ class _HomePageState extends State<HomePage> {
     _pages = [
       const PageOne(),
       const PageTwo(),
-      // AddPage(
-      //   addPageCallback: addPage,
-      // ),
     ];
   }
 
@@ -119,7 +116,7 @@ class PageOne extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const SearchPage()),
+                                    builder: (context) => SearchPage()),
                               );
                             },
                             child: Image.asset(
@@ -468,7 +465,7 @@ class PageTwo extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const SearchPage()),
+                    MaterialPageRoute(builder: (context) => SearchPage()),
                   );
                 },
                 child: Image.asset(
@@ -483,9 +480,14 @@ class PageTwo extends StatelessWidget {
   }
 }
 
-class AddPage extends StatelessWidget {
+class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
 
+  @override
+  State<AddPage> createState() => _AddPageState();
+}
+
+class _AddPageState extends State<AddPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

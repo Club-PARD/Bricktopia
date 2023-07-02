@@ -50,23 +50,146 @@ class _SettingPageState extends State<SettingPage> {
           Padding(
               padding: EdgeInsets.fromLTRB(
                   (MediaQuery.of(context).size.width) / 11.14,
-                  (MediaQuery.of(context).size.height) / 28.57,
+                  (MediaQuery.of(context).size.height) / 50,
                   (MediaQuery.of(context).size.width) / 11.14,
-                  (MediaQuery.of(context).size.height) / 28.57),
-              child: Row(
-                children: [
-                  const Text(
-                    '개인정보',
-                    style: TextStyle(fontSize: 16),
-                    textAlign: TextAlign.start,
-                  ),
-                  GestureDetector(
-                      child: Image.asset(
-                    'icon/icon_arrow.png',
-                    alignment: Alignment.centerRight,
-                  ))
-                ],
-              ))
+                  (MediaQuery.of(context).size.height) / 50),
+              child: GestureDetector(
+                onTap: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => const personalInfoPage()),
+                  // );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      '개인정보',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(),
+                    GestureDetector(
+                        child: Image.asset(
+                          'icon/icon_arrow.png',
+                        ))
+                  ],
+                ),
+              )),
+          Divider(
+            color: Colors.black,
+            thickness: 1.0,
+            indent: (MediaQuery.of(context).size.width) / 12.63,
+            endIndent: (MediaQuery.of(context).size.width) / 12.63,
+          ),
+          Padding(
+              padding: EdgeInsets.fromLTRB(
+                (MediaQuery.of(context).size.width) / 11.14,
+                (MediaQuery.of(context).size.height) / 50,
+                (MediaQuery.of(context).size.width) / 11.14,
+                (MediaQuery.of(context).size.height) / 50,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => const personalizedPage()),
+                  // );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      '개인 맞춤 설정',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(),
+                    GestureDetector(
+                        child: Image.asset(
+                          'icon/icon_arrow.png',
+                        ))
+                  ],
+                ),
+              )),
+          Divider(
+            color: Colors.black,
+            thickness: 1.0,
+            indent: (MediaQuery.of(context).size.width) / 12.63,
+            endIndent: (MediaQuery.of(context).size.width) / 12.63,
+          ),
+          Padding(
+              padding: EdgeInsets.fromLTRB(
+                (MediaQuery.of(context).size.width) / 11.14,
+                (MediaQuery.of(context).size.height) / 50,
+                (MediaQuery.of(context).size.width) / 11.14,
+                (MediaQuery.of(context).size.height) / 50,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => const briefingAlarmpage()),
+                  // );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      '브리핑 알림 설정',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(),
+                    GestureDetector(
+                        child: Image.asset(
+                          'icon/icon_arrow.png',
+                        ))
+                  ],
+                ),
+              )),
+          Divider(
+            color: Colors.black,
+            thickness: 1.0,
+            indent: (MediaQuery.of(context).size.width) / 12.63,
+            endIndent: (MediaQuery.of(context).size.width) / 12.63,
+          ),
+          Padding(
+              padding: EdgeInsets.fromLTRB(
+                (MediaQuery.of(context).size.width) / 11.14,
+                (MediaQuery.of(context).size.height) / 50,
+                (MediaQuery.of(context).size.width) / 11.14,
+                (MediaQuery.of(context).size.height) / 50,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => const feedbackPage()),
+                  // );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      '피드백',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(),
+                    GestureDetector(
+                        child: Image.asset(
+                          'icon/icon_arrow.png',
+                        ))
+                  ],
+                ),
+              )),
+          Divider(
+            color: Colors.black,
+            thickness: 1.0,
+            indent: (MediaQuery.of(context).size.width) / 12.63,
+            endIndent: (MediaQuery.of(context).size.width) / 12.63,
+          ),
         ],
       ),
     );
