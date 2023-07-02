@@ -43,7 +43,7 @@ class _SearchPageState extends State<SearchPage> {
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                       borderSide:
                           BorderSide(width: 1, color: Color(0xffD9D5FC))),
-                  hintText: '지역 검색',
+                  hintText: '지역 검색하세요:)',
                   hintStyle: TextStyle(fontSize: 16, color: Colors.black),
                   filled: true,
                   fillColor: Colors.white,
