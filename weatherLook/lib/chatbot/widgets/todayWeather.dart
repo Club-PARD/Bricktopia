@@ -1,9 +1,9 @@
-// ignore_for_file: file_names, avoid_print
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:homepage/chatbot/widgets/today_weather_card.dart';
+
+import 'package:intl/intl.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -35,6 +35,7 @@ class _TodayWeatherState extends State<TodayWeather> {
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
+      final city = data['city']['name'];
       final List<WeatherData> dataList = [];
       for (final item in data['list']) {
         final dateTime = DateTime.fromMillisecondsSinceEpoch(item['dt'] * 1000);
@@ -50,7 +51,8 @@ class _TodayWeatherState extends State<TodayWeather> {
           minTemperature: minTemp.toDouble(),
           humidity: humidity.toDouble(),
           main: main.toString(),
-          pop: pop.toDouble(),
+          pop : pop.toDouble(),
+          city : city.toString(),
         );
         dataList.add(weatherData);
       }
@@ -71,8 +73,53 @@ class _TodayWeatherState extends State<TodayWeather> {
     setState(() {});
   }
 
-  List<List<WeatherData>> groupWeatherDataByDate(
-      List<WeatherData> weatherDataList) {
+  //홈 화면에서 새로운 페이지 추가할 때 사용할 기능입니다:)
+  Future<void> fetchWeatherData3(double longitude, double latitude) async {
+    // Fetch weather data and populate weatherDataList
+    final url = Uri.parse(
+        'https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appid=9400fa5b5392bd26329d0dd65aa01ecb&units=metric');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final List<WeatherData> dataList = [];
+      final city = data['city']['name'];
+      for (final item in data['list']) {
+        final dateTime = DateTime.fromMillisecondsSinceEpoch(item['dt'] * 1000);
+        final maxTemp = item['main']['temp_max'];
+        final minTemp = item['main']['temp_min'];
+        final humidity = item['main']['humidity'];
+        final main = item['weather'][0]['main'];
+        final pop = item['pop'];
+
+        final weatherData = WeatherData(
+          time: dateTime,
+          maxTemperature: maxTemp.toDouble(),
+          minTemperature: minTemp.toDouble(),
+          humidity: humidity.toDouble(),
+          main: main.toString(),
+          pop : pop.toDouble(),
+          city: city.toString(),
+        );
+        dataList.add(weatherData);
+      }
+      setState(() {
+        weatherDataList = dataList;
+      });
+    } else {
+      print('Failed to fetch weather data');
+    }
+    // Filter weatherDataList for today's data
+    final today = DateTime.now();
+    final filteredDataList = weatherDataList.where((data) {
+      return isSameDate(data.time, today);
+    }).toList();
+
+    // Group filteredDataList by date
+    groupedWeatherDataList = groupWeatherDataByDate(filteredDataList);
+    setState(() {});
+  }
+
+  List<List<WeatherData>> groupWeatherDataByDate(List<WeatherData> weatherDataList) {
     final groupedData = <List<WeatherData>>[];
     for (final weatherData in weatherDataList) {
       bool foundGroup = false;
@@ -91,16 +138,14 @@ class _TodayWeatherState extends State<TodayWeather> {
   }
 
   bool isSameDate(DateTime date1, DateTime date2) {
-    return date1.year == date2.year &&
-        date1.month == date2.month &&
-        date1.day == date2.day;
+    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: groupedWeatherDataList.isEmpty
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator())
           : TodayWeatherCard(groupedWeatherDataList: groupedWeatherDataList),
     );
   }
