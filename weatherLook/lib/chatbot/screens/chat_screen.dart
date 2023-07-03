@@ -17,7 +17,7 @@ class ChatScreen extends ConsumerStatefulWidget {
 }
 
 class _ChatScreenState extends ConsumerState<ChatScreen> {
-  BorderRadiusGeometry radius = BorderRadius.only(
+  BorderRadiusGeometry radius = const BorderRadius.only(
     topLeft: Radius.circular(24.0),
     topRight: Radius.circular(24.0),
   );
@@ -31,7 +31,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   void chatFirst() async {
     final chats = ref.read(chatsProvider.notifier);
-    chats.add(ChatModel(
+    chats.add(const ChatModel(
       id: "weady",
       message: "안녕하세요!"
           "\n저는 웨디 입니다!\n"
@@ -46,7 +46,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: const MyAppBar(),
       body: Column(
         children: [
           Expanded(
@@ -80,7 +80,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           SlidingUpPanel(
             minHeight: 40,
             maxHeight: 205,
-            color: Color(0xffD9D9D9),
+            color: const Color(0xffD9D9D9),
             panel: Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 6),
@@ -89,7 +89,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   children: [
                     Container(
                       height: 3,
-                      margin: EdgeInsets.symmetric(horizontal: 160,vertical: 5),
+                      margin: const EdgeInsets.symmetric(horizontal: 160,vertical: 5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.grey.shade500,
@@ -107,9 +107,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                         ));
 
                       },
-                      child: Text('원하는 지역의 날씨가?!😮'),
+                      child: const Text('원하는 지역의 날씨가?!😮'),
                     ),
-                    Divider(color: Color(0xffF4F4F4),),
+                    const Divider(color: Color(0xffF4F4F4),),
                     ElevatedButton(
                       onPressed: () {
                         // 버튼 2 동작 처리

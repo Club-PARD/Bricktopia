@@ -33,15 +33,15 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            // 그라데이션 배경화면
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/home.png"),
-                fit: BoxFit.cover, // 화면 자동 맞춤
-              ),
-            ),
-          ),
+          // Container(
+          //   // 그라데이션 배경화면
+          //   decoration: const BoxDecoration(
+          //     image: DecorationImage(
+          //       image: AssetImage("assets/home.png"),
+          //       fit: BoxFit.cover, // 화면 자동 맞춤
+          //     ),
+          //   ),
+          // ),
           Container(
             child: Column(
               children: [
