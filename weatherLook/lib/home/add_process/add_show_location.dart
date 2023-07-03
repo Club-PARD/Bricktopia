@@ -2,16 +2,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:homepage/home/homepage.dart';
 import 'package:http/http.dart' as http;
-import '../chatbot/models/weather_model.dart';
-import '../chatbot/services/ai_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../chatbot/models/weather_model.dart';
+import '../../chatbot/services/ai_handler.dart';
+import '../shared_preferences/weather_page.dart';
 
 class AddShowLocation extends StatefulWidget {
   final double? longitude;
   final double? latitude;
+  final String id;
 
   const AddShowLocation({super.key,
     this.longitude,
-    this.latitude,
+    this.latitude, required this.id,
   });
 
   @override
@@ -21,7 +24,7 @@ class AddShowLocation extends StatefulWidget {
 class _AddShowLocationState extends State<AddShowLocation> {
   List<List<WeatherData>> groupedWeatherDataList = [];
   final AIHandler _openAI = AIHandler();
-  HomePage homePage = HomePage();
+  //HomePage homePage = HomePage();
   late String aiWeatherresponse ="";
 
   @override
@@ -45,7 +48,7 @@ class _AddShowLocationState extends State<AddShowLocation> {
 
   Future<String> makeASummary(double longitude, double latitude) async {
     String weatherSummary = await AIHandler().fetchWeatherData_m(longitude,latitude);
-    final aiWeather = "날씨 정보를 바탕으로 은유적인 포현으로 10글자 적어줘 +$weatherSummary";
+    final aiWeather = "날씨 정보를 바탕으로 은유적인 포현으로 한글 10글자 적어줘 + $weatherSummary";
     final aiResponse = await _openAI.getResponse(aiWeather);
     return aiResponse;
   }
@@ -181,7 +184,6 @@ class _AddShowLocationState extends State<AddShowLocation> {
       print('${averageTemperatures.join(', ')}°');
       print(mainWeather2);
       print(mainCity2);
-
     }
     //front
     return Scaffold(
@@ -209,8 +211,16 @@ class _AddShowLocationState extends State<AddShowLocation> {
                         },
                         icon: Icon(Icons.arrow_back_ios_new_outlined)),
                     TextButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          await prefs.setDouble(widget.id + '_latitude', widget.latitude!);
+                          await prefs.setDouble(widget.id + '_longitude', widget.longitude!);
 
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage()),
+                          );
                         },
                         child: Text(
                           "추가",

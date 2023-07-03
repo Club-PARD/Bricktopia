@@ -5,11 +5,13 @@ import 'package:geocoding/geocoding.dart';
 import 'package:translator/translator.dart';
 import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
-import '../chatbot/models/weather_model.dart';
+import '../../chatbot/models/weather_model.dart';
 import 'add_show_location.dart';
 
 class SearchPage extends StatefulWidget {
-  SearchPage({super.key});
+  final String id;
+
+  SearchPage({super.key, required this.id});
 
   Map<String, dynamic>? _selectedLocation;
 
@@ -171,6 +173,7 @@ class _SearchPageState extends State<SearchPage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => AddShowLocation(
+                              id:widget.id,
                               longitude: longitude,
                               latitude: latitude,
                             ),

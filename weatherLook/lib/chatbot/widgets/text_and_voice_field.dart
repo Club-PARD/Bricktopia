@@ -170,6 +170,13 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
     }
   }
 
+  Future<String> brifMorning(double latitude,double longitude) async {
+    String weatherSummary = await AIHandler().getWeatherDataSummary2(latitude, longitude);
+    String AI_weather = "$weatherSummary + 에 오늘 날씨 20글자로 표현해줘. 오늘 날씨에 맞는 옷차림을 구체적으로 자세하게 한국말로 알려줘. 마지막으로 오늘 하루를 응원하고, 축복해줘.";
+    final aiResponse = await _openAI.getResponse(AI_weather);
+    return aiResponse;
+  }
+
   //날씨 정보를 위함
   void sendTextMessageWeather(String message) async {
     setReplyingState(true);
@@ -179,8 +186,8 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
 
     String weatherSummary = await AIHandler().getWeatherDataSummary(message);
     //final weatherResponse = await _openAI.fetchWeatherData(message);
-    String AI_weather = "$weatherSummary + $message는 어떤 날씨인지 바로 알기 쉽게 요약해주고, 어떤 옷이나 코디, 물건을 챙기면 좋은지 한국말로 요약해서 친구처럼 친근하게 이야기해줘.";
-    final aiResponse = await _openAI.getResponse(AI_weather);
+    String AI_weather = "$weatherSummary + $message에 오늘 날씨 20글자로 표현해주는데 수치를 단어로 바꿔서 표현해줘, 오늘 날씨에 맞는 옷차림을 어떤 상의, 하의, 아우터, 신발, 악세사리를 옷차림을 구체적으로 자세하게 한국말로 알려줘. 마지막으로 오늘 하루를 응원해줘.";
+   final aiResponse = await _openAI.getResponse(AI_weather);
     removeTyping();
 
     final replyWidget = Container(
