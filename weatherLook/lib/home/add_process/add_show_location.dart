@@ -2,16 +2,21 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:homepage/home/homepage.dart';
 import 'package:http/http.dart' as http;
-import '../chatbot/models/weather_model.dart';
-import '../chatbot/services/ai_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../chatbot/models/weather_model.dart';
+import '../../chatbot/services/ai_handler.dart';
+import '../shared_preferences/weather_page.dart';
 
 class AddShowLocation extends StatefulWidget {
   final double? longitude;
   final double? latitude;
+  final String id;
 
-  const AddShowLocation({super.key,
+  const AddShowLocation({
+    super.key,
     this.longitude,
     this.latitude,
+    required this.id,
   });
 
   @override
@@ -21,20 +26,19 @@ class AddShowLocation extends StatefulWidget {
 class _AddShowLocationState extends State<AddShowLocation> {
   List<List<WeatherData>> groupedWeatherDataList = [];
   final AIHandler _openAI = AIHandler();
-  HomePage homePage = HomePage();
-  late String aiWeatherresponse ="";
+  //HomePage homePage = HomePage();
+  late String aiWeatherresponse = "";
 
   @override
   void initState() {
     super.initState();
-    fetchWeatherData3(widget.longitude!,widget.latitude!).then((value) {
+    fetchWeatherData3(widget.longitude!, widget.latitude!).then((value) {
       setState(() {
         print(value);
         groupedWeatherDataList = value;
-
       });
     });
-    makeASummary(widget.longitude!,widget.latitude!).then((value) {
+    makeASummary(widget.longitude!, widget.latitude!).then((value) {
       setState(() {
         if (aiWeatherresponse.isEmpty) {
           aiWeatherresponse = value; // mainWeather2가 비어있을 경우에만 값 할당
@@ -44,20 +48,22 @@ class _AddShowLocationState extends State<AddShowLocation> {
   }
 
   Future<String> makeASummary(double longitude, double latitude) async {
-    String weatherSummary = await AIHandler().fetchWeatherData_m(longitude,latitude);
-    final aiWeather = "날씨 정보를 바탕으로 은유적인 포현으로 10글자 적어줘 +$weatherSummary";
+    String weatherSummary =
+        await AIHandler().fetchWeatherData_m(longitude, latitude);
+    final aiWeather = "날씨 정보를 바탕으로 은유적인 포현으로 한글 10글자 적어줘 + $weatherSummary";
     final aiResponse = await _openAI.getResponse(aiWeather);
     return aiResponse;
   }
 
-  Future<List<List<WeatherData>>> fetchWeatherData3(double longitude, double latitude) async {
-    final apiKey = '9400fa5b5392bd26329d0dd65aa01ecb';
+  Future<List<List<WeatherData>>> fetchWeatherData3(
+      double longitude, double latitude) async {
+    const apiKey = '05bce39b122b5837ca69e880e3c94c0e';
     final url =
         'https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appid=$apiKey&units=metric';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      final city =  data['city']['name'];
+      final city = data['city']['name'];
       final List<WeatherData> dataList = [];
       for (final item in data['list']) {
         final dateTime = DateTime.fromMillisecondsSinceEpoch(item['dt'] * 1000);
@@ -93,7 +99,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
     }
   }
 
-  List<List<WeatherData>> groupWeatherDataByDate(List<WeatherData> weatherDataList) {
+  List<List<WeatherData>> groupWeatherDataByDate(
+      List<WeatherData> weatherDataList) {
     final groupedData = <List<WeatherData>>[];
     for (final weatherData in weatherDataList) {
       bool foundGroup = false;
@@ -112,20 +119,42 @@ class _AddShowLocationState extends State<AddShowLocation> {
   }
 
   bool isSameDate(DateTime date1, DateTime date2) {
-    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
   Widget mainImage(String mainWeather) {
-    if(mainWeather=="Clouds"){
-      return Image.asset("assets/clouds.png",width: 100,height: 100,);
-    }else if(mainWeather=="Rain"){
-      return Image.asset("assets/rainy.png",width: 100,height: 100,);
-    }else if(mainWeather=="Snow"){
-      return Image.asset("assets/snow.png",width: 100,height: 100,);
-    }else if(mainWeather=="Clear"){
-      return Image.asset("assets/sun.png",width: 100,height: 100,);
+    if (mainWeather == "Clouds") {
+      return Image.asset(
+        "assets/clouds.png",
+        width: 100,
+        height: 100,
+      );
+    } else if (mainWeather == "Rain") {
+      return Image.asset(
+        "assets/rainy.png",
+        width: 100,
+        height: 100,
+      );
+    } else if (mainWeather == "Snow") {
+      return Image.asset(
+        "assets/snow.png",
+        width: 100,
+        height: 100,
+      );
+    } else if (mainWeather == "Clear") {
+      return Image.asset(
+        "assets/sun.png",
+        width: 100,
+        height: 100,
+      );
     }
-    return Image.asset("assets/cloud_sun.png",width: 100,height: 100,);
+    return Image.asset(
+      "assets/cloud_sun.png",
+      width: 100,
+      height: 100,
+    );
   }
 
   @override
@@ -154,11 +183,14 @@ class _AddShowLocationState extends State<AddShowLocation> {
           minTemperature = weatherData.minTemperature.round();
         }
 
-        totalTemperature += (weatherData.maxTemperature.round() + weatherData.minTemperature.round()) ~/ 2;
+        totalTemperature += (weatherData.maxTemperature.round() +
+                weatherData.minTemperature.round()) ~/
+            2;
         totalPrecipitation += (weatherData.pop * 100).round();
 
         if (weatherData.main != mainWeather) {
-          mainWeather = 'Mixed'; // If there are different main weathers, set it as 'Mixed'
+          mainWeather =
+              'Mixed'; // If there are different main weathers, set it as 'Mixed'
         }
       }
 
@@ -181,7 +213,6 @@ class _AddShowLocationState extends State<AddShowLocation> {
       print('${averageTemperatures.join(', ')}°');
       print(mainWeather2);
       print(mainCity2);
-
     }
     //front
     return Scaffold(
@@ -197,7 +228,7 @@ class _AddShowLocationState extends State<AddShowLocation> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
             child: Column(
               children: [
                 Row(
@@ -207,12 +238,23 @@ class _AddShowLocationState extends State<AddShowLocation> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: Icon(Icons.arrow_back_ios_new_outlined)),
+                        icon: const Icon(Icons.arrow_back_ios_new_outlined)),
                     TextButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.setDouble(
+                              '${widget.id}_latitude', widget.latitude!);
+                          await prefs.setDouble(
+                              '${widget.id}_longitude', widget.longitude!);
 
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage()),
+                          );
                         },
-                        child: Text(
+                        child: const Text(
                           "추가",
                           style: TextStyle(
                             color: Color(0xff5772D3),
@@ -234,21 +276,21 @@ class _AddShowLocationState extends State<AddShowLocation> {
                               height: (MediaQuery.of(context).size.height) /
                                   22.857),
                           Text(mainCity2,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20)),
                           SizedBox(
                               height:
-                              (MediaQuery.of(context).size.height) / 35),
+                                  (MediaQuery.of(context).size.height) / 35),
                           Text('${averageTemperatures.join(', ')}°',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 36)),
                           SizedBox(
                               height:
-                              (MediaQuery.of(context).size.height) / 57.15),
+                                  (MediaQuery.of(context).size.height) / 57.15),
                           Row(
                             children: [
                               Text('${minTemperatures.join(', ')}°',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Color(0xff5772D3))),
@@ -256,9 +298,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                               SizedBox(
                                   width: (MediaQuery.of(context).size.width) /
                                       190),
-                              Text(
-                                  '${maxTemperatures.join(', ')}°',
-                                  style: TextStyle(
+                              Text('${maxTemperatures.join(', ')}°',
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Color(0xffDD5441))),
@@ -271,8 +312,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                         children: [
                           SizedBox(
                               height:
-                              (MediaQuery.of(context).size.height) / 42),
-                          mainImage(mainWeather2!)
+                                  (MediaQuery.of(context).size.height) / 42),
+                          mainImage(mainWeather2)
                         ],
                       )
                     ],
@@ -285,7 +326,7 @@ class _AddShowLocationState extends State<AddShowLocation> {
                         children: [
                           SizedBox(
                               height:
-                              (MediaQuery.of(context).size.height) / 20.5),
+                                  (MediaQuery.of(context).size.height) / 20.5),
                           Row(
                             children: [
                               SizedBox(
@@ -295,9 +336,10 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                 width: 180,
                                 height: 45,
                                 child: Text(
-                                  aiWeatherresponse!,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 16),
+                                  aiWeatherresponse,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
                                 ),
                               ),
                             ],
@@ -310,17 +352,17 @@ class _AddShowLocationState extends State<AddShowLocation> {
                         children: [
                           SizedBox(
                               height:
-                              (MediaQuery.of(context).size.height) / 33.33),
+                                  (MediaQuery.of(context).size.height) / 33.33),
                           Image.asset(
                             'assets/rain.png',
                             width: 20,
                           ),
                           SizedBox(
                               height:
-                              (MediaQuery.of(context).size.height) / 128.4),
+                                  (MediaQuery.of(context).size.height) / 128.4),
                           Text(
-                            '${precipitationList!.join(', ')}',
-                            style: TextStyle(
+                            precipitationList.join(', '),
+                            style: const TextStyle(
                                 fontSize: 14, color: Color(0xff5772D3)),
                           )
                         ],
@@ -389,76 +431,76 @@ class _AddShowLocationState extends State<AddShowLocation> {
                       Column(
                         children: [
                           Center(
-                            // 상의
+                              // 상의
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset('assets/items/hoodie.png',
-                                      width: (MediaQuery.of(context).size.height) /
-                                          10),
-                                  SizedBox(
-                                      width: (MediaQuery.of(context).size.width) /
-                                          18.95),
-                                  Image.asset('assets/items/paddedCoat.png',
-                                      width: (MediaQuery.of(context).size.height) /
-                                          10),
-                                  SizedBox(
-                                      width: (MediaQuery.of(context).size.width) /
-                                          18.95),
-                                  Image.asset('assets/items/paddedCoat.png',
-                                      width: (MediaQuery.of(context).size.height) /
-                                          10),
-                                ],
-                              )),
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Image.asset('assets/items/hoodie.png',
+                                  width: (MediaQuery.of(context).size.height) /
+                                      10),
+                              SizedBox(
+                                  width: (MediaQuery.of(context).size.width) /
+                                      18.95),
+                              Image.asset('assets/items/paddedCoat.png',
+                                  width: (MediaQuery.of(context).size.height) /
+                                      10),
+                              SizedBox(
+                                  width: (MediaQuery.of(context).size.width) /
+                                      18.95),
+                              Image.asset('assets/items/paddedCoat.png',
+                                  width: (MediaQuery.of(context).size.height) /
+                                      10),
+                            ],
+                          )),
                           SizedBox(
                               height:
-                              (MediaQuery.of(context).size.height) / 38),
+                                  (MediaQuery.of(context).size.height) / 38),
                           Center(
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset('assets/items/shorts.png',
-                                      width: (MediaQuery.of(context).size.height) /
-                                          10),
-                                  SizedBox(
-                                      width: (MediaQuery.of(context).size.width) /
-                                          18.95),
-                                  Image.asset('assets/items/hoodie.png',
-                                      width: (MediaQuery.of(context).size.height) /
-                                          10),
-                                  SizedBox(
-                                      width: (MediaQuery.of(context).size.width) /
-                                          18.95),
-                                  Image.asset('assets/items/shorts.png',
-                                      width: (MediaQuery.of(context).size.height) /
-                                          10),
-                                ],
-                              )),
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Image.asset('assets/items/shorts.png',
+                                  width: (MediaQuery.of(context).size.height) /
+                                      10),
+                              SizedBox(
+                                  width: (MediaQuery.of(context).size.width) /
+                                      18.95),
+                              Image.asset('assets/items/hoodie.png',
+                                  width: (MediaQuery.of(context).size.height) /
+                                      10),
+                              SizedBox(
+                                  width: (MediaQuery.of(context).size.width) /
+                                      18.95),
+                              Image.asset('assets/items/shorts.png',
+                                  width: (MediaQuery.of(context).size.height) /
+                                      10),
+                            ],
+                          )),
                           SizedBox(
                               height:
-                              (MediaQuery.of(context).size.height) / 38),
+                                  (MediaQuery.of(context).size.height) / 38),
                           Center(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Image.asset('assets/items/sneakers.png',
                                     width:
-                                    (MediaQuery.of(context).size.height) /
-                                        10),
+                                        (MediaQuery.of(context).size.height) /
+                                            10),
                                 SizedBox(
                                     width: (MediaQuery.of(context).size.width) /
                                         18.95),
                                 Image.asset('assets/items/cap.png',
                                     width:
-                                    (MediaQuery.of(context).size.height) /
-                                        10),
+                                        (MediaQuery.of(context).size.height) /
+                                            10),
                                 SizedBox(
                                     width: (MediaQuery.of(context).size.width) /
                                         18.95),
                                 Image.asset('assets/items/sneakers.png',
                                     width:
-                                    (MediaQuery.of(context).size.height) /
-                                        10),
+                                        (MediaQuery.of(context).size.height) /
+                                            10),
                               ],
                             ),
                           ),

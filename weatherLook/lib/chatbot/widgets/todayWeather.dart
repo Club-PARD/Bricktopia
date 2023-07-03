@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:homepage/chatbot/widgets/today_weather_card.dart';
 
-import 'package:intl/intl.dart';
-
 import 'package:http/http.dart' as http;
 
 import '../models/weather_model.dart';
@@ -31,7 +29,7 @@ class _TodayWeatherState extends State<TodayWeather> {
   Future<void> fetchWeatherData2(String city) async {
     // Fetch weather data and populate weatherDataList
     final url = Uri.parse(
-        'https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=9400fa5b5392bd26329d0dd65aa01ecb&units=metric');
+        'https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=05bce39b122b5837ca69e880e3c94c0e&units=metric');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -51,8 +49,8 @@ class _TodayWeatherState extends State<TodayWeather> {
           minTemperature: minTemp.toDouble(),
           humidity: humidity.toDouble(),
           main: main.toString(),
-          pop : pop.toDouble(),
-          city : city.toString(),
+          pop: pop.toDouble(),
+          city: city.toString(),
         );
         dataList.add(weatherData);
       }
@@ -77,7 +75,7 @@ class _TodayWeatherState extends State<TodayWeather> {
   Future<void> fetchWeatherData3(double longitude, double latitude) async {
     // Fetch weather data and populate weatherDataList
     final url = Uri.parse(
-        'https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appid=9400fa5b5392bd26329d0dd65aa01ecb&units=metric');
+        'https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appid=05bce39b122b5837ca69e880e3c94c0e&units=metric');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -97,7 +95,7 @@ class _TodayWeatherState extends State<TodayWeather> {
           minTemperature: minTemp.toDouble(),
           humidity: humidity.toDouble(),
           main: main.toString(),
-          pop : pop.toDouble(),
+          pop: pop.toDouble(),
           city: city.toString(),
         );
         dataList.add(weatherData);
@@ -119,7 +117,8 @@ class _TodayWeatherState extends State<TodayWeather> {
     setState(() {});
   }
 
-  List<List<WeatherData>> groupWeatherDataByDate(List<WeatherData> weatherDataList) {
+  List<List<WeatherData>> groupWeatherDataByDate(
+      List<WeatherData> weatherDataList) {
     final groupedData = <List<WeatherData>>[];
     for (final weatherData in weatherDataList) {
       bool foundGroup = false;
@@ -138,14 +137,16 @@ class _TodayWeatherState extends State<TodayWeather> {
   }
 
   bool isSameDate(DateTime date1, DateTime date2) {
-    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: groupedWeatherDataList.isEmpty
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : TodayWeatherCard(groupedWeatherDataList: groupedWeatherDataList),
     );
   }

@@ -25,7 +25,7 @@ class _FivedayWeatherState extends State<FivedayWeather> {
 
   Future<void> fetchWeatherData(String city) async {
     final url = Uri.parse(
-        'https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=9400fa5b5392bd26329d0dd65aa01ecb&units=metric');
+        'https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=05bce39b122b5837ca69e880e3c94c0e&units=metric');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -45,7 +45,7 @@ class _FivedayWeatherState extends State<FivedayWeather> {
           minTemperature: minTemp.toDouble(),
           humidity: humidity.toDouble(),
           main: main.toString(),
-          pop : pop.toDouble(),
+          pop: pop.toDouble(),
           city: city.toString(),
         );
         dataList.add(weatherData);
@@ -58,7 +58,8 @@ class _FivedayWeatherState extends State<FivedayWeather> {
     }
   }
 
-  List<List<WeatherData>> groupWeatherDataByDate(List<WeatherData> weatherDataList) {
+  List<List<WeatherData>> groupWeatherDataByDate(
+      List<WeatherData> weatherDataList) {
     final groupedData = <List<WeatherData>>[];
     for (final weatherData in weatherDataList) {
       bool foundGroup = false;
@@ -77,10 +78,13 @@ class _FivedayWeatherState extends State<FivedayWeather> {
   }
 
   bool isSameDate(DateTime date1, DateTime date2) {
-    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
-  List<WeatherData> compareWeatherData(List<List<WeatherData>> groupedDataList) {
+  List<WeatherData> compareWeatherData(
+      List<List<WeatherData>> groupedDataList) {
     final List<WeatherData> comparedList = [];
     for (final group in groupedDataList) {
       double maxTemperature = group.first.maxTemperature;

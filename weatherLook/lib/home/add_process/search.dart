@@ -1,15 +1,17 @@
-// ignore_for_file: unnecessary_null_comparison, avoid_print, use_build_context_synchronously, must_be_immutable
-
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:translator/translator.dart';
 import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
-import '../chatbot/models/weather_model.dart';
+import '../../chatbot/models/weather_model.dart';
+import 'add_show_location.dart';
 
 class SearchPage extends StatefulWidget {
-  SearchPage({super.key});
+  final String id;
+
+  SearchPage({super.key, required this.id});
 
   Map<String, dynamic>? _selectedLocation;
 
@@ -22,8 +24,8 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final translator = GoogleTranslator();
   List<List<WeatherData>> groupedWeatherDataList = [];
-  final TextEditingController _controller = TextEditingController();
-  var uuid = const Uuid();
+  TextEditingController _controller = TextEditingController();
+  var uuid = Uuid();
   String _sessionToken = '122344';
   List<dynamic>? _placesList = [];
   Map<String, dynamic>? _selectedLocation;
@@ -59,14 +61,13 @@ class _SearchPageState extends State<SearchPage> {
     if (_isDisposed) return; // dispose()가 호출된 경우, setState() 호출을 피합니다.
 
     // 이하 코드는 동일합니다.
-    String kplacesApiKey = "AIzaSyACJPYK1YH-CGunm0fAR84vYuMgw2QFSa8";
+    String kPLACES_API_KEY = "AIzaSyACJPYK1YH-CGunm0fAR84vYuMgw2QFSa8";
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
     String request =
-        '$baseURL?input=$input&key=$kplacesApiKey&sessiontoken=$_sessionToken';
+        '$baseURL?input=$input&key=$kPLACES_API_KEY&sessiontoken=$_sessionToken';
 
     var response = await http.get(Uri.parse(request));
-    // ignore: unused_local_variable
     var data = response.body.toString();
 
     print(response.body.toString());
@@ -92,6 +93,14 @@ class _SearchPageState extends State<SearchPage> {
       };
     });
   }
+
+  Future<bool> _onBackPressed() {
+    if (_selectedLocation != null) {
+      Navigator.pop(context, _selectedLocation);
+    }
+    return Future.value(true);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -124,11 +133,11 @@ class _SearchPageState extends State<SearchPage> {
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                       borderSide:
-                          BorderSide(width: 1, color: Color(0xffD9D5FC))),
+                      BorderSide(width: 1, color: Color(0xffD9D5FC))),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                       borderSide:
-                          BorderSide(width: 1, color: Color(0xffD9D5FC))),
+                      BorderSide(width: 1, color: Color(0xffD9D5FC))),
                   hintText: '지역 검색',
                   hintStyle: TextStyle(fontSize: 16, color: Colors.black),
                   filled: true,
@@ -150,7 +159,7 @@ class _SearchPageState extends State<SearchPage> {
                     },
                     title: Text(_placesList![index]['description']),
                     trailing: IconButton(
-                      icon: const Icon(Icons.check),
+                      icon: Icon(Icons.check),
                       onPressed: () async {
                         List<Location> locations = await locationFromAddress(
                             _placesList![index]['description']);
@@ -160,15 +169,16 @@ class _SearchPageState extends State<SearchPage> {
                         double? longitude = locations.last.longitude;
                         double? latitude = locations.last.latitude;
 
-                        /*Navigator.push(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => AddShowLocation(
+                              id:widget.id,
                               longitude: longitude,
-                              latitude: latitude, id: '',
+                              latitude: latitude,
                             ),
                           ),
-                        );*/
+                        );
                       },
                     ),
                   );
