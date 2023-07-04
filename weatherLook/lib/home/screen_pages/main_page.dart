@@ -25,7 +25,7 @@ class _MainPageState extends State<MainPage> {
   Future<String> makeASummary(double longitude, double latitude) async {
     String weatherSummary =
         await AIHandler().fetchWeatherData_m(longitude, latitude);
-    final aiWeather = "날씨 정보를 바탕으로 은유적인 포현으로 10글자 적어줘 +$weatherSummary";
+    final aiWeather = "날씨 정보를 요약해서 한국말로 10글자 적어줘 +$weatherSummary";
     final aiResponse = await _openAI.getResponse(aiWeather);
 
     if (aiWeatherresponse.isEmpty) {
@@ -265,6 +265,141 @@ class _MainPageState extends State<MainPage> {
                               ],
                             ),
                           ),
+                          SizedBox(height: (MediaQuery.of(context).size.height) / 17.4),
+                          Container(
+                            width: (MediaQuery.of(context).size.width) / 1.14,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.77), // 배경색 지정
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color.fromRGBO(217, 213, 252, 0.70),
+                                  spreadRadius: 1, // 그림자의 퍼짐 정도
+                                  blurRadius: 12, // 그림자의 흐림 정도
+                                  offset: Offset(0, 2), // 그림자의 위치 (x, y)
+                                ),
+                              ],
+                            ),
+                            child: Container(
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    top: -((MediaQuery.of(context).size.height) / 40),
+                                    child: Container(
+                                      height: ((MediaQuery.of(context).size.height) / 22),
+                                      width: ((MediaQuery.of(context).size.width) / 1.7),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Color.fromRGBO(217, 213, 252, 0.70),
+                                            spreadRadius: 1, // 그림자의 퍼짐 정도
+                                            blurRadius: 12, // 그림자의 흐림 정도
+                                            offset: Offset(0, 2), // 그림자의 위치 (x, y)
+                                          ),
+                                        ],
+                                      ),
+                                      child: const Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            '오늘의 아이템을 추천드려요!',
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.black),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.fromLTRB(
+                                      ((MediaQuery.of(context).size.width) / 20),
+                                      // ((MediaQuery.of(context).size.width) / 13.3), // emulator로 봤을 때 맞는 사이즈
+                                      ((MediaQuery.of(context).size.height) / 23.53),
+                                      ((MediaQuery.of(context).size.width) / 20),
+                                      // ((MediaQuery.of(context).size.width) / 13.3), // mulator로 봤을 때 맞는 사이즈
+                                      ((MediaQuery.of(context).size.height) / 23.53),
+                                    ),
+                                    child: Column(children: [
+                                      Center(
+                                        // 상의
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Image.asset('assets/items/hoodie.png',
+                                                  width: (MediaQuery.of(context).size.height) /
+                                                      10),
+                                              SizedBox(
+                                                  width: (MediaQuery.of(context).size.width) /
+                                                      18.95),
+                                              Image.asset('assets/items/paddedCoat.png',
+                                                  width: (MediaQuery.of(context).size.height) /
+                                                      10),
+                                              SizedBox(
+                                                  width: (MediaQuery.of(context).size.width) /
+                                                      18.95),
+                                              Image.asset('assets/items/paddedCoat.png',
+                                                  width: (MediaQuery.of(context).size.height) /
+                                                      10),
+                                            ],
+                                          )),
+                                      SizedBox(
+                                          height:
+                                          (MediaQuery.of(context).size.height) / 38),
+                                      Center(
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Image.asset('assets/items/shorts.png',
+                                                  width: (MediaQuery.of(context).size.height) /
+                                                      10),
+                                              SizedBox(
+                                                  width: (MediaQuery.of(context).size.width) /
+                                                      18.95),
+                                              Image.asset('assets/items/hoodie.png',
+                                                  width: (MediaQuery.of(context).size.height) /
+                                                      10),
+                                              SizedBox(
+                                                  width: (MediaQuery.of(context).size.width) /
+                                                      18.95),
+                                              Image.asset('assets/items/shorts.png',
+                                                  width: (MediaQuery.of(context).size.height) /
+                                                      10),
+                                            ],
+                                          )),
+                                      SizedBox(
+                                          height:
+                                          (MediaQuery.of(context).size.height) / 38),
+                                      Center(
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Image.asset('assets/items/sneakers.png',
+                                                  width: (MediaQuery.of(context).size.height) /
+                                                      10),
+                                              SizedBox(
+                                                  width: (MediaQuery.of(context).size.width) /
+                                                      18.95),
+                                              Image.asset('assets/items/cap.png',
+                                                  width: (MediaQuery.of(context).size.height) /
+                                                      10),
+                                              SizedBox(
+                                                  width: (MediaQuery.of(context).size.width) /
+                                                      18.95),
+                                              Image.asset('assets/items/sneakers.png',
+                                                  width: (MediaQuery.of(context).size.height) /
+                                                      10),
+                                            ],
+                                          )),
+                                    ]),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       );
                     }
@@ -274,170 +409,6 @@ class _MainPageState extends State<MainPage> {
                 },
                 future: getCurrentWeather(),
               ),
-              SizedBox(height: (MediaQuery.of(context).size.height) / 17.4),
-              // Container(
-              //   height: ((MediaQuery.of(context).size.height) / 22),
-              //   width: ((MediaQuery.of(context).size.width) / 1.7),
-              //   decoration: BoxDecoration(
-              //     color: Colors.white,
-              //     borderRadius: BorderRadius.circular(20),
-              //     boxShadow: const [
-              //       BoxShadow(
-              //         color: Color.fromRGBO(217, 213, 252, 0.70),
-              //         spreadRadius: 1, // 그림자의 퍼짐 정도
-              //         blurRadius: 12, // 그림자의 흐림 정도
-              //         offset: Offset(0, 2), // 그림자의 위치 (x, y)
-              //       ),
-              //     ],
-              //   ),
-              //   child: const Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       Text(
-              //         '오늘의 아이템을 추천드려요!',
-              //         style: TextStyle(
-              //             fontSize: 14,
-              //             fontWeight: FontWeight.w400,
-              //             color: Colors.black),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-
-              Container(
-                width: (MediaQuery.of(context).size.width) / 1.14,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.77), // 배경색 지정
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color.fromRGBO(217, 213, 252, 0.70),
-                      spreadRadius: 1, // 그림자의 퍼짐 정도
-                      blurRadius: 12, // 그림자의 흐림 정도
-                      offset: Offset(0, 2), // 그림자의 위치 (x, y)
-                    ),
-                  ],
-                ),
-                child: Container(
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: -((MediaQuery.of(context).size.height) / 40),
-                        child: Container(
-                          height: ((MediaQuery.of(context).size.height) / 22),
-                          width: ((MediaQuery.of(context).size.width) / 1.7),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color.fromRGBO(217, 213, 252, 0.70),
-                                spreadRadius: 1, // 그림자의 퍼짐 정도
-                                blurRadius: 12, // 그림자의 흐림 정도
-                                offset: Offset(0, 2), // 그림자의 위치 (x, y)
-                              ),
-                            ],
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '오늘의 아이템을 추천드려요!',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(
-                          ((MediaQuery.of(context).size.width) / 20),
-                          // ((MediaQuery.of(context).size.width) / 13.3), // emulator로 봤을 때 맞는 사이즈
-                          ((MediaQuery.of(context).size.height) / 23.53),
-                          ((MediaQuery.of(context).size.width) / 20),
-                          // ((MediaQuery.of(context).size.width) / 13.3), // mulator로 봤을 때 맞는 사이즈
-                          ((MediaQuery.of(context).size.height) / 23.53),
-                        ),
-                        child: Column(children: [
-                          Center(
-                              // 상의
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Image.asset('assets/items/hoodie.png',
-                                  width: (MediaQuery.of(context).size.height) /
-                                      10),
-                              SizedBox(
-                                  width: (MediaQuery.of(context).size.width) /
-                                      18.95),
-                              Image.asset('assets/items/paddedCoat.png',
-                                  width: (MediaQuery.of(context).size.height) /
-                                      10),
-                              SizedBox(
-                                  width: (MediaQuery.of(context).size.width) /
-                                      18.95),
-                              Image.asset('assets/items/paddedCoat.png',
-                                  width: (MediaQuery.of(context).size.height) /
-                                      10),
-                            ],
-                          )),
-                          SizedBox(
-                              height:
-                                  (MediaQuery.of(context).size.height) / 38),
-                          Center(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Image.asset('assets/items/shorts.png',
-                                  width: (MediaQuery.of(context).size.height) /
-                                      10),
-                              SizedBox(
-                                  width: (MediaQuery.of(context).size.width) /
-                                      18.95),
-                              Image.asset('assets/items/hoodie.png',
-                                  width: (MediaQuery.of(context).size.height) /
-                                      10),
-                              SizedBox(
-                                  width: (MediaQuery.of(context).size.width) /
-                                      18.95),
-                              Image.asset('assets/items/shorts.png',
-                                  width: (MediaQuery.of(context).size.height) /
-                                      10),
-                            ],
-                          )),
-                          SizedBox(
-                              height:
-                                  (MediaQuery.of(context).size.height) / 38),
-                          Center(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Image.asset('assets/items/sneakers.png',
-                                  width: (MediaQuery.of(context).size.height) /
-                                      10),
-                              SizedBox(
-                                  width: (MediaQuery.of(context).size.width) /
-                                      18.95),
-                              Image.asset('assets/items/cap.png',
-                                  width: (MediaQuery.of(context).size.height) /
-                                      10),
-                              SizedBox(
-                                  width: (MediaQuery.of(context).size.width) /
-                                      18.95),
-                              Image.asset('assets/items/sneakers.png',
-                                  width: (MediaQuery.of(context).size.height) /
-                                      10),
-                            ],
-                          )),
-                        ]),
-                      )
-                    ],
-                  ),
-                ),
-              )
             ],
           ),
           floatingActionButton: Stack(
