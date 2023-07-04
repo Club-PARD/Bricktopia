@@ -10,7 +10,7 @@ class AIHandler {
   List<List<WeatherData>> groupedWeatherDataList = [];
 
   final _openAI = OpenAI.instance.build(
-    token: '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',
+    token: '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',
     baseOption: HttpSetup(
       receiveTimeout: const Duration(seconds: 60),
       connectTimeout: const Duration(seconds: 60),
@@ -35,7 +35,7 @@ class AIHandler {
   }
 
   Future<String> fetchWeatherData(String city) async {
-    final apiKey = '9400fa5b5392bd26329d0dd65aa01ecb';
+    const apiKey = '9400fa5b5392bd26329d0dd65aa01ecb';
     final url =
         'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric';
 
@@ -54,7 +54,7 @@ class AIHandler {
   }
 
   Future<String> fetchWeatherData_m(double longitude, double latitude) async {
-    final apiKey = '9400fa5b5392bd26329d0dd65aa01ecb';
+    const apiKey = '9400fa5b5392bd26329d0dd65aa01ecb';
     final url =
         'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey&units=metric';
     final response = await http.get(Uri.parse(url));
@@ -181,7 +181,6 @@ class AIHandler {
     groupedWeatherDataList = groupWeatherDataByDate(filteredDataList);
   }
 
-
   Future<String> getWeatherDataSummary(String city) async {
     await fetchWeatherData2(city);
     final buffer = StringBuffer();
@@ -196,7 +195,8 @@ class AIHandler {
     return summary;
   }
 
-  Future<String> getWeatherDataSummary2(double latitude,double longitude) async {
+  Future<String> getWeatherDataSummary2(
+      double latitude, double longitude) async {
     await fetchWeatherData3(latitude, longitude);
     final buffer = StringBuffer();
     for (final group in groupedWeatherDataList) {

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-// import 'package:homepage/home/briefingAlarm.dart';
-import 'package:homepage/home/feedback.dart';
 
-class SettingPage extends StatefulWidget {
-  const SettingPage({super.key});
+import 'createFeedback.dart';
+
+class feedbackPage extends StatefulWidget {
+  const feedbackPage({super.key});
 
   @override
-  State<SettingPage> createState() => _SettingPageState();
+  State<feedbackPage> createState() => _feedbackPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
+class _feedbackPageState extends State<feedbackPage> {
+  bool _switchValue = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,50 +37,58 @@ class _SettingPageState extends State<SettingPage> {
                       ),
                       SizedBox(
                           width: (MediaQuery.of(context).size.width) / 21.4),
-                      const Text('설정',
+                      const Text('피드백',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold))
+                              fontSize: 20, fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ],
               )),
           SizedBox(height: (MediaQuery.of(context).size.height) / 15),
-          Divider(
-            color: Colors.black,
-            thickness: 1.0,
-            indent: (MediaQuery.of(context).size.width) / 12.63,
-            endIndent: (MediaQuery.of(context).size.width) / 12.63,
-          ),
           Padding(
-              padding: EdgeInsets.fromLTRB(
+            padding: EdgeInsets.fromLTRB(
                 (MediaQuery.of(context).size.width) / 11.14,
-                (MediaQuery.of(context).size.height) / 50,
+                0,
                 (MediaQuery.of(context).size.width) / 11.14,
-                (MediaQuery.of(context).size.height) / 50,
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => const briefingAlarmpage()),
-                  // );
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      '브리핑 알림 설정',
+                      '피드백 알림 설정',
                       style: TextStyle(fontSize: 16),
                     ),
-                    const SizedBox(),
-                    GestureDetector(
-                        child: Image.asset(
-                      'icon/icon_arrow.png',
-                    ))
+                    SizedBox(height: (MediaQuery.of(context).size.height) / 47),
+                    const Text(
+                      '매일 오후 10시에 날씨 추천에\n대한 피드백 알림이 전송됩니다.',
+                      style: TextStyle(fontSize: 14),
+                    )
                   ],
                 ),
-              )),
+                Column(
+                  children: [
+                    Transform.scale(
+                      scale: 1.3,
+                      child: Switch(
+                        value: _switchValue,
+                        activeColor: const Color(0xff4E5FFF),
+                        onChanged: (bool value) {
+                          setState(() {
+                            _switchValue = value;
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                        height: (MediaQuery.of(context).size.height) / 14.54),
+                  ],
+                ),
+              ],
+            ),
+          ),
           Divider(
             color: Colors.black,
             thickness: 1.0,
@@ -103,14 +113,22 @@ class _SettingPageState extends State<SettingPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      '피드백',
+                      '피드백 작성하기',
                       style: TextStyle(fontSize: 16),
                     ),
                     const SizedBox(),
                     GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const createFeedbackPage()),
+                          );
+                        },
                         child: Image.asset(
-                      'icon/icon_arrow.png',
-                    ))
+                          'icon/icon_arrow.png',
+                        ))
                   ],
                 ),
               )),

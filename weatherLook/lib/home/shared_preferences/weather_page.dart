@@ -6,7 +6,7 @@ import '../screen_pages/weather_book.dart';
 class WeatherPage extends StatefulWidget {
   final String id;
 
-  WeatherPage({required this.id});
+  const WeatherPage({super.key, required this.id});
 
   @override
   _WeatherPageState createState() => _WeatherPageState();
@@ -24,8 +24,8 @@ class _WeatherPageState extends State<WeatherPage> {
 
   Future<void> saveLocation(double latitude, double longitude) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setDouble(widget.id + '_latitude', latitude);
-    await prefs.setDouble(widget.id + '_longitude', longitude);
+    await prefs.setDouble('${widget.id}_latitude', latitude);
+    await prefs.setDouble('${widget.id}_longitude', longitude);
     setState(() {
       this.latitude = latitude;
       this.longitude = longitude;
@@ -34,8 +34,8 @@ class _WeatherPageState extends State<WeatherPage> {
 
   Future<void> deleteLocation() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove(widget.id + '_latitude');
-    await prefs.remove(widget.id + '_longitude');
+    await prefs.remove('${widget.id}_latitude');
+    await prefs.remove('${widget.id}_longitude');
     setState(() {
       latitude = null;
       longitude = null;
@@ -44,8 +44,8 @@ class _WeatherPageState extends State<WeatherPage> {
 
   Future<void> loadLocation() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    double? loadedLatitude = prefs.getDouble(widget.id + '_latitude');
-    double? loadedLongitude = prefs.getDouble(widget.id + '_longitude');
+    double? loadedLatitude = prefs.getDouble('${widget.id}_latitude');
+    double? loadedLongitude = prefs.getDouble('${widget.id}_longitude');
     setState(() {
       latitude = loadedLatitude;
       longitude = loadedLongitude;
@@ -105,7 +105,7 @@ class _WeatherPageState extends State<WeatherPage> {
   Widget _defaultPage() {
     return Column(
       children: [
-        SizedBox(height: (MediaQuery.of(context).size.height) / 10.5),
+        SizedBox(height: (MediaQuery.of(context).size.height) / 22),
         const Text(
           '지역 추가하기',
           style: TextStyle(
@@ -114,14 +114,14 @@ class _WeatherPageState extends State<WeatherPage> {
           ),
           textAlign: TextAlign.center,
         ),
-        SizedBox(height: (MediaQuery.of(context).size.height) / 30.75),
+        SizedBox(height: (MediaQuery.of(context).size.height) / 38),
         const Text(
           '저장하고 싶은 지역을 추가해 보세요',
           style: TextStyle(fontSize: 16, color: Color(0xff5772D3)),
         ),
-        SizedBox(height: (MediaQuery.of(context).size.height) / 10),
+        SizedBox(height: (MediaQuery.of(context).size.height) / 12),
         Container(
-          height: (MediaQuery.of(context).size.height) / 1.8779,
+          height: (MediaQuery.of(context).size.height) / 2,
           width: (MediaQuery.of(context).size.width) / 1.54,
           decoration: BoxDecoration(
             color: Colors.white,
