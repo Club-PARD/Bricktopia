@@ -33,22 +33,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          // Container(
-          //   // 그라데이션 배경화면
-          //   decoration: const BoxDecoration(
-          //     image: DecorationImage(
-          //       image: AssetImage("assets/home.png"),
-          //       fit: BoxFit.cover, // 화면 자동 맞춤
-          //     ),
-          //   ),
-          // ),
           Container(
             child: Column(
               children: [
-                SizedBox(
+                Expanded(
                   // 여기에 페이지가 나타난다
-                  height: (MediaQuery.of(context).size.height) / 1.025,
-                  width: MediaQuery.of(context).size.width,
+                  // height: (MediaQuery.of(context).size.height) / 1.025,
+                  // width: MediaQuery.of(context).size.width,
                   child: PageView.builder(
                     controller: _pageController,
                     onPageChanged: (int page) {
@@ -60,9 +51,6 @@ class _HomePageState extends State<HomePage> {
                       return _pages[index % _pages.length];
                     },
                   ),
-                ),
-                const Spacer(
-                  flex: 2,
                 ),
                 SmoothPageIndicator(
                   controller: _pageController,
