@@ -84,25 +84,29 @@ flutter:
     - assets/items/hoodie.png
     - assets/items/shorts.png
     - assets/items/sneakers.png
-    - icon/icon_briefing.png
-    - icon/icon_chatbot.png
-    - icon/icon_cloud_sun.png
-    - icon/icon_clouds.png
-    - icon/icon_google.png
-    - icon/icon_mic.png
-    - icon/icon_rain.png
-    - icon/icon_search.png
-    - icon/icon_send.png
-    - icon/icon_settings.png
-    - icon/icon_snow.png
-    - icon/icon_sun.png
-    - icon/logo_black.png
-    - icon/logo_white.png
-    - icon/Weathy.png
-    - icon/icon_back.png
-    - icon/icon_arrow.png
+    - icon/.
     - assets/weatherlook_logo.png
     - assets/weather/.
+
+  fonts:
+    - family: NanumGothic
+      fonts:
+        - asset: assets/fonts/NanumGothic-Regular.ttf
+        - asset: assets/fonts/NanumGothic-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/NanumGothic-ExtraBold.ttf
+          weight: 900
+    - family: paybooc
+      fonts:
+        - asset: "assets/fonts/paybooc Bold.ttf"
+          weight: 700
+        - asset: "assets/fonts/paybooc ExtraBold.ttf"
+          weight: 800
+        - asset: "assets/fonts/paybooc Light.ttf"
+          weight: 300
+        - asset: "assets/fonts/paybooc Medium.ttf"
+          weight: 500
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

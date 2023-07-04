@@ -10,7 +10,7 @@ class AIHandler {
   List<List<WeatherData>> groupedWeatherDataList = [];
 
   final _openAI = OpenAI.instance.build(
-    token: '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',
+    token: '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',
     baseOption: HttpSetup(
       receiveTimeout: const Duration(seconds: 60),
       connectTimeout: const Duration(seconds: 60),

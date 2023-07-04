@@ -8,7 +8,6 @@ import 'package:homepage/chatbot/services/ai_handler.dart';
 import 'package:homepage/home/setting.dart';
 import 'package:perfect_volume_control/perfect_volume_control.dart';
 
-import '../pages/tts.dart';
 import '../weather/weather_api.dart';
 import '../weather/weather_model.dart';
 
@@ -46,7 +45,8 @@ class _MainPageState extends State<MainPage> {
   Future<String> brifMorning(double latitude, double longitude) async {
     String weatherSummary2 =
         await AIHandler().getWeatherDataSummary2(latitude, longitude);
-    String aiWeather2 = "$weatherSummary2 + 정보를 가지고 오늘 날씨 유쾌하게 표현해줘. 오늘 날씨에 맞는 옷차림을 구체적으로 자세하게 한국말로 알려줘. 마지막으로 오늘 하루를 응원하고, 축복해줘.";
+    String aiWeather2 =
+        "$weatherSummary2 + 정보를 가지고 오늘 날씨 유쾌하게 표현해줘. 오늘 날씨에 맞는 옷차림을 구체적으로 자세하게 한국말로 알려줘. 마지막으로 오늘 하루를 응원하고, 축복해줘.";
     final aiResponse2 = await _openAI.getResponse(aiWeather2);
 
     if (aiWeatherresponse_detail.isEmpty) {
@@ -326,7 +326,7 @@ class _MainPageState extends State<MainPage> {
                                                           TextOverflow.clip,
                                                       style: const TextStyle(
                                                           fontWeight:
-                                                              FontWeight.w400,
+                                                              FontWeight.w300,
                                                           fontSize: 14),
                                                     ),
                                                   );
@@ -336,7 +336,7 @@ class _MainPageState extends State<MainPage> {
                                                   _weather!.lon, _weather!.lat),
                                             ),
                                           ),
-                                          Icon(Icons.keyboard_arrow_down),
+                                          const Icon(Icons.keyboard_arrow_down),
                                         ],
                                       ),
                                     ],
@@ -497,7 +497,8 @@ class _MainPageState extends State<MainPage> {
                             ),
                           ),
                           Transform.translate(
-                            offset: Offset(0, -355),
+                            offset: Offset(0,
+                                -(MediaQuery.of(context).size.height) / 2.18),
                             child: Container(
                               height:
                                   ((MediaQuery.of(context).size.height) / 22),
@@ -531,7 +532,7 @@ class _MainPageState extends State<MainPage> {
                           ),
                           if (isContainerVisible)
                             Transform.translate(
-                              offset: Offset(0, -390),
+                              offset: const Offset(0, -390),
                               child: Container(
                                 height: 300,
                                 width: 345,
@@ -549,24 +550,22 @@ class _MainPageState extends State<MainPage> {
                                   ],
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(20),
+                                  padding: const EdgeInsets.all(20),
                                   child: FutureBuilder<String>(
                                     builder: (context, snapshot) {
                                       if (snapshot.connectionState ==
                                           ConnectionState.waiting) {
                                         return const CircularProgressIndicator();
                                       } else if (snapshot.hasError) {
-                                        return Text(
-                                            'Error: ${snapshot.error}');
+                                        return Text('Error: ${snapshot.error}');
                                       } else {
-                                        final aiWeatherresponse_detail =
+                                        final aiweatherresponseDetail =
                                             snapshot.data;
                                         return Align(
                                           alignment: Alignment.center,
                                           child: Text(
-                                            aiWeatherresponse_detail!,
-                                            overflow:
-                                            TextOverflow.clip,
+                                            aiweatherresponseDetail!,
+                                            overflow: TextOverflow.clip,
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 14),
@@ -574,7 +573,8 @@ class _MainPageState extends State<MainPage> {
                                         );
                                       }
                                     },
-                                    future: brifMorning(_weather!.lon, _weather!.lat),
+                                    future: brifMorning(
+                                        _weather!.lon, _weather!.lat),
                                   ),
                                 ),
                               ),
