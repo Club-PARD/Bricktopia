@@ -119,7 +119,7 @@ class _WeatherPageState extends State<WeatherPage> {
           '저장하고 싶은 지역을 추가해 보세요',
           style: TextStyle(fontSize: 16, color: Color(0xff5772D3)),
         ),
-        SizedBox(height: (MediaQuery.of(context).size.height) / 12),
+        SizedBox(height: (MediaQuery.of(context).size.height) / 10),
         Container(
           height: (MediaQuery.of(context).size.height) / 2,
           width: (MediaQuery.of(context).size.width) / 1.54,
@@ -130,30 +130,31 @@ class _WeatherPageState extends State<WeatherPage> {
               BoxShadow(
                 color:
                     const Color.fromRGBO(217, 213, 252, 0.40).withOpacity(0.5),
-                spreadRadius: 4,
-                blurRadius: 5,
+                spreadRadius: 6,
+                blurRadius: 10,
                 offset: const Offset(0, 3),
               ),
             ],
           ),
-          child: ElevatedButton(
-            onPressed: () {
-              if (latitude == null || longitude == null) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SearchPage(
-                            id: widget.id,
-                          )),
-                ); // 예시로 위도 37.5, 경도 127.0 저장
-              } else {
-                deleteLocation();
-              }
-            },
-            child: Image.asset(
-              'assets/add.png',
-            ),
-          ),
+          child: GestureDetector(
+              onTap: () {
+                if (latitude == null || longitude == null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SearchPage(
+                              id: widget.id,
+                            )),
+                  ); // 예시로 위도 37.5, 경도 127.0 저장
+                } else {
+                  deleteLocation();
+                }
+              },
+              child: Image.asset(
+                'assets/add.png',
+                width: 280,
+                height: 400,
+              )),
         ),
       ],
     );

@@ -443,23 +443,6 @@ class _MainPageState extends State<MainPage> {
           floatingActionButton: Stack(
             children: <Widget>[
               Align(
-                alignment: Alignment(
-                    Alignment.bottomRight.x, Alignment.bottomRight.y - 0.22),
-                child: FloatingActionButton(
-                  heroTag: 'brief',
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/tts');
-                  },
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  shape: const CircleBorder(),
-                  child: Image.asset(
-                    "icon/icon_briefing.png",
-                    width: (MediaQuery.of(context).size.width) / 1,
-                  ),
-                ),
-              ),
-              Align(
                 alignment:
                     Alignment(Alignment.bottomRight.x, Alignment.bottomRight.y),
                 child: FloatingActionButton(
