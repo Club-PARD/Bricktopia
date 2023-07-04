@@ -1,3 +1,13 @@
+<<<<<<< Updated upstream
+import 'package:flutter/material.dart';
+import 'package:homepage/home/homepage.dart';
+import 'package:homepage/screens/weather.dart';
+
+import 'chatbot/constants/themes.dart';
+
+class WeatherLook extends StatelessWidget {
+  const WeatherLook({super.key});
+=======
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:homepage/home/homepage.dart';
@@ -9,6 +19,7 @@ import 'chatbot/constants/themes.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
+>>>>>>> Stashed changes
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +27,11 @@ class App extends StatelessWidget {
       title: 'Flutter Demo',
       theme: mainTheme,
       debugShowCheckedModeBanner: false,
+<<<<<<< Updated upstream
+      routes: {
+        '/': (BuildContext context) => const HomePage(),
+        //'/tts': (BuildContext context) => const TextToSpeech(),
+=======
       home: AnimatedSplashScreen(
         duration: 3000,
         splash: Image.asset('assets/weatherlook_logo.png'),
@@ -27,6 +43,7 @@ class App extends StatelessWidget {
       ),
       routes: {
         '/tts': (BuildContext context) => const TextToSpeech(),
+>>>>>>> Stashed changes
         '/weather': (BuildContext context) => const WeatherPage(),
       },
     );

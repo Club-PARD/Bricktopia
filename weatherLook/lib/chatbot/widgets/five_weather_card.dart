@@ -1,29 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import '../models/weather_model.dart';
-
 
 class FiveWeatherCard extends StatelessWidget {
   final List<WeatherData> weatherDataList;
 
-  const FiveWeatherCard({required this.weatherDataList});
+  const FiveWeatherCard({super.key, required this.weatherDataList});
 
   Widget mainImage(String mainWeather) {
-    if(mainWeather=="Clouds"){
-      return Image.asset("assets/clouds.png",width: 30,height: 30,);
-    }else if(mainWeather=="Rain"){
-      return Image.asset("assets/rainy.png",width: 30,height: 30,);
-    }else if(mainWeather=="Snow"){
-      return Image.asset("assets/snow.png",width: 30,height: 30,);
-    }else if(mainWeather=="Clear"){
-      return Image.asset("assets/sun.png",width: 30,height: 30,);
+    if (mainWeather == "Clouds") {
+      return Image.asset(
+        "assets/clouds.png",
+        width: 30,
+        height: 30,
+      );
+    } else if (mainWeather == "Rain") {
+      return Image.asset(
+        "assets/rainy.png",
+        width: 30,
+        height: 30,
+      );
+    } else if (mainWeather == "Snow") {
+      return Image.asset(
+        "assets/snow.png",
+        width: 30,
+        height: 30,
+      );
+    } else if (mainWeather == "Clear") {
+      return Image.asset(
+        "assets/sun.png",
+        width: 30,
+        height: 30,
+      );
     }
-    return Image.asset("assets/cloud_sun.png",width: 30,height: 30,);
+    return Image.asset(
+      "assets/cloud_sun.png",
+      width: 30,
+      height: 30,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -48,7 +66,7 @@ class FiveWeatherCard extends StatelessWidget {
                 width: 150,
                 margin: const EdgeInsets.symmetric(horizontal: 8),
                 child: Card(
-                  color: Color(0xffD9D9D9),
+                  color: const Color(0xffD9D9D9),
                   child: Padding(
                     padding: const EdgeInsets.all(15),
                     child: Column(

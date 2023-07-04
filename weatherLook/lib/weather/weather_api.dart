@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:homepage/weather/weather_model.dart';
@@ -25,7 +23,7 @@ Future getCurrentWeather() async {
     if (response.statusCode == 200) {
       weather = Weather.fromJson(jsonDecode(response.body));
     } else {
-      // Throw error here
+      // TODO: Throw error here
     }
   } catch (e) {
     // Handle location permission denied error

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -25,11 +27,10 @@ class _FivedayWeatherState extends State<FivedayWeather> {
 
   Future<void> fetchWeatherData(String city) async {
     final url = Uri.parse(
-        'https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=05bce39b122b5837ca69e880e3c94c0e&units=metric');
+        'https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=9400fa5b5392bd26329d0dd65aa01ecb&units=metric');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      final city = data['city']['name'];
       final List<WeatherData> dataList = [];
       for (final item in data['list']) {
         final dateTime = DateTime.fromMillisecondsSinceEpoch(item['dt'] * 1000);
@@ -46,7 +47,6 @@ class _FivedayWeatherState extends State<FivedayWeather> {
           humidity: humidity.toDouble(),
           main: main.toString(),
           pop: pop.toDouble(),
-          city: city.toString(),
         );
         dataList.add(weatherData);
       }
@@ -112,7 +112,6 @@ class _FivedayWeatherState extends State<FivedayWeather> {
         humidity: averageHumidity,
         main: main,
         pop: maxPop,
-        city: main,
       );
       comparedList.add(comparedData);
     }
