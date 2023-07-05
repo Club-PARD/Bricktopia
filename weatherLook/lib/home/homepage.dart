@@ -43,8 +43,7 @@ class _HomePageState extends State<HomePage> {
                   child: PageView.builder(
                     controller: _pageController,
                     onPageChanged: (int page) {
-                      setState(() {
-                      });
+                      setState(() {});
                     },
                     itemCount: _pages.length,
                     itemBuilder: (BuildContext context, int index) {

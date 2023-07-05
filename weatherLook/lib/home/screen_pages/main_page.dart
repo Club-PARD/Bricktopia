@@ -135,7 +135,7 @@ class _MainPageState extends State<MainPage> {
                   ],
                 ),
               ),
-              SizedBox(height: (MediaQuery.of(context).size.height) / 24),
+              SizedBox(height: (MediaQuery.of(context).size.height) / 29),
               FutureBuilder(
                 builder: (context, snapshot) {
                   if (snapshot != null) {
@@ -163,8 +163,8 @@ class _MainPageState extends State<MainPage> {
                                                 140),
                                         Text(_weather!.city,
                                             style: const TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 20)),
+                                                fontFamily: 'paybooc Bold',
+                                                fontSize: 20)), // 지역 이름(포항시)
                                       ],
                                     ),
                                     SizedBox(
@@ -175,8 +175,8 @@ class _MainPageState extends State<MainPage> {
                                     Text(
                                         '${_weather!.temp.toStringAsFixed(0)}°',
                                         style: const TextStyle(
-                                            fontWeight: FontWeight.w300,
-                                            fontSize: 36)),
+                                            fontFamily: 'NanumGothic_Light',
+                                            fontSize: 36)), // 현재 기온
                                     SizedBox(
                                         height: (MediaQuery.of(context)
                                                 .size
@@ -193,8 +193,8 @@ class _MainPageState extends State<MainPage> {
                                             _weather!.daily_min_temp[0]
                                                 .toStringAsFixed(0),
                                             style: const TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w700,
+                                                fontSize: 18,
+                                                fontFamily: 'paybooc Medium',
                                                 color: Color(0xff5772D3))),
                                         SizedBox(
                                             width: MediaQuery.of(context)
@@ -212,8 +212,8 @@ class _MainPageState extends State<MainPage> {
                                             _weather!.daily_max_temp[0]
                                                 .toStringAsFixed(0),
                                             style: const TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w700,
+                                                fontSize: 18,
+                                                fontFamily: 'paybooc Medium',
                                                 color: Color(0xffDD5441))),
                                         SizedBox(
                                             width: MediaQuery.of(context)
@@ -230,6 +230,7 @@ class _MainPageState extends State<MainPage> {
                                         Text(
                                           '${(_weather!.pop * 100).toInt()}%',
                                           style: const TextStyle(
+                                              fontFamily: 'NanumGotihc-Regular',
                                               fontSize: 14,
                                               color: Color(0xff5772D3)),
                                         )
@@ -240,7 +241,7 @@ class _MainPageState extends State<MainPage> {
                                 Column(
                                   children: [
                                     GestureDetector(
-                                      child: const Text('날씨 세부정보 >',
+                                      child: const Text('날씨 더보기 >',
                                           style: TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w400,
@@ -249,7 +250,7 @@ class _MainPageState extends State<MainPage> {
                                     SizedBox(
                                       height:
                                           MediaQuery.of(context).size.height /
-                                              100,
+                                              55,
                                     ),
                                     SizedBox(
                                       width: 100,
@@ -352,7 +353,7 @@ class _MainPageState extends State<MainPage> {
                             width: (MediaQuery.of(context).size.width) / 1.14,
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.77), // 배경색 지정
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(40),
                               boxShadow: const [
                                 BoxShadow(
                                   color: Color.fromRGBO(217, 213, 252, 0.70),
@@ -362,169 +363,248 @@ class _MainPageState extends State<MainPage> {
                                 ),
                               ],
                             ),
-                            child: Container(
+                            child: SizedBox(
+                              height:
+                                  (MediaQuery.of(context).size.height) / 2.1,
+                              width: (MediaQuery.of(context).size.width) / 1.2,
                               child: Stack(
                                 children: [
                                   Container(
                                     padding: EdgeInsets.fromLTRB(
-                                      ((MediaQuery.of(context).size.width) /
-                                          20),
-                                      // ((MediaQuery.of(context).size.width) / 13.3), // emulator로 봤을 때 맞는 사이즈
-                                      ((MediaQuery.of(context).size.height) /
-                                          23.53),
-                                      ((MediaQuery.of(context).size.width) /
-                                          20),
-                                      // ((MediaQuery.of(context).size.width) / 13.3), // mulator로 봤을 때 맞는 사이즈
-                                      ((MediaQuery.of(context).size.height) /
-                                          23.53),
+                                        ((MediaQuery.of(context).size.width) /
+                                            25),
+                                        0,
+                                        ((MediaQuery.of(context).size.width) /
+                                            25),
+                                        0),
+                                    child: GridView(
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        mainAxisSpacing: (MediaQuery.of(context)
+                                                .size
+                                                .height) /
+                                            70,
+                                      ),
+                                      children: [
+                                        Stack(
+                                          children: [
+                                            Image.asset(
+                                              'assets/items/longSleeve.png',
+                                            ),
+                                            Transform.translate(
+                                              offset: Offset(
+                                                  0,
+                                                  (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                      17.7),
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                child: const Text(
+                                                  '긴팔',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black,
+                                                    fontFamily: 'paybooc Light',
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Stack(
+                                          children: [
+                                            Image.asset(
+                                              'assets/items/knitwear.png',
+                                            ),
+                                            Transform.translate(
+                                              offset: Offset(
+                                                  0,
+                                                  (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                      17.7),
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                child: const Text(
+                                                  '니트',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black,
+                                                    fontFamily: 'paybooc Light',
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Stack(
+                                          children: [
+                                            Image.asset(
+                                              'assets/items/hoodie.png',
+                                            ),
+                                            Transform.translate(
+                                              offset: Offset(
+                                                  0,
+                                                  (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                      17.7),
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                child: const Text(
+                                                  '후드티',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black,
+                                                    fontFamily: 'paybooc Light',
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Stack(
+                                          children: [
+                                            Center(
+                                              child: Image.asset(
+                                                'assets/items/shirts.png',
+                                                width: 92,
+                                              ),
+                                            ),
+                                            Transform.translate(
+                                              offset: Offset(
+                                                  0,
+                                                  (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                      17.7),
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                child: const Text(
+                                                  '셔츠',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black,
+                                                    fontFamily: 'paybooc Light',
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Stack(
+                                          children: [
+                                            Center(
+                                              child: Image.asset(
+                                                'assets/items/longTrousers.png',
+                                                width: 88,
+                                              ),
+                                            ),
+                                            Transform.translate(
+                                              offset: Offset(
+                                                  0,
+                                                  (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                      17.7),
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                child: const Text(
+                                                  '긴바지',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black,
+                                                    fontFamily: 'paybooc Light',
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Stack(
+                                          children: [
+                                            Image.asset(
+                                              'assets/items/longSleeve.png',
+                                            ),
+                                            Transform.translate(
+                                              offset: Offset(
+                                                  0,
+                                                  (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                      17.7),
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                child: const Text(
+                                                  '긴팔',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black,
+                                                    fontFamily: 'paybooc Light',
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Stack(
+                                          children: [
+                                            Center(
+                                              child: Image.asset(
+                                                  'assets/items/cap.png',
+                                                  width: 82),
+                                            ),
+                                            Transform.translate(
+                                              offset: Offset(
+                                                  0,
+                                                  (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                      17.7),
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                child: const Text(
+                                                  '모자',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black,
+                                                    fontFamily: 'paybooc Light',
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Stack(
+                                          children: [
+                                            Image.asset(
+                                              'assets/items/sandals.png',
+                                            ),
+                                            Transform.translate(
+                                              offset: Offset(
+                                                  0,
+                                                  (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                      17.7),
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                child: const Text(
+                                                  '슬리퍼/샌들',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black,
+                                                    fontFamily: 'paybooc Light',
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                    child: Column(children: [
-                                      Center(
-                                          // 상의
-                                          child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Image.asset('assets/items/hoodie.png',
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .height) /
-                                                  10),
-                                          SizedBox(
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .width) /
-                                                  18.95),
-                                          Image.asset(
-                                              'assets/items/paddedCoat.png',
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .height) /
-                                                  10),
-                                          SizedBox(
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .width) /
-                                                  18.95),
-                                          Image.asset(
-                                              'assets/items/paddedCoat.png',
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .height) /
-                                                  10),
-                                        ],
-                                      )),
-                                      SizedBox(
-                                          height: (MediaQuery.of(context)
-                                                  .size
-                                                  .height) /
-                                              38),
-                                      Center(
-                                          child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Image.asset('assets/items/shorts.png',
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .height) /
-                                                  10),
-                                          SizedBox(
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .width) /
-                                                  18.95),
-                                          Image.asset('assets/items/hoodie.png',
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .height) /
-                                                  10),
-                                          SizedBox(
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .width) /
-                                                  18.95),
-                                          Image.asset('assets/items/shorts.png',
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .height) /
-                                                  10),
-                                        ],
-                                      )),
-                                      SizedBox(
-                                          height: (MediaQuery.of(context)
-                                                  .size
-                                                  .height) /
-                                              38),
-                                      Center(
-                                          child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Image.asset(
-                                              'assets/items/sneakers.png',
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .height) /
-                                                  10),
-                                          SizedBox(
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .width) /
-                                                  18.95),
-                                          Image.asset('assets/items/cap.png',
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .height) /
-                                                  10),
-                                          SizedBox(
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .width) /
-                                                  18.95),
-                                          Image.asset(
-                                              'assets/items/sneakers.png',
-                                              width: (MediaQuery.of(context)
-                                                      .size
-                                                      .height) /
-                                                  10),
-                                        ],
-                                      )),
-                                    ]),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Transform.translate(
-                            offset: Offset(0,
-                                -(MediaQuery.of(context).size.height) / 2.18),
-                            child: Container(
-                              height:
-                                  ((MediaQuery.of(context).size.height) / 22),
-                              width:
-                                  ((MediaQuery.of(context).size.width) / 1.7),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Color.fromRGBO(217, 213, 252, 0.70),
-                                    spreadRadius: 1, // 그림자의 퍼짐 정도
-                                    blurRadius: 12, // 그림자의 흐림 정도
-                                    offset: Offset(0, 2), // 그림자의 위치 (x, y)
-                                  ),
-                                ],
-                              ),
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '오늘의 아이템을 추천드려요!',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black),
                                   ),
                                 ],
                               ),
@@ -538,7 +618,7 @@ class _MainPageState extends State<MainPage> {
                                 width: 345,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(30),
                                   boxShadow: const [
                                     BoxShadow(
                                       color:

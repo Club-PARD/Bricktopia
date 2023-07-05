@@ -79,18 +79,14 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/.
-    - assets/items/cap.png
-    - assets/items/paddedCoat.png
-    - assets/items/hoodie.png
-    - assets/items/shorts.png
-    - assets/items/sneakers.png
     - icon/.
-    - assets/weatherlook_logo.png
     - assets/weather/.
+    - assets/items/.
 
   fonts:
     - family: NanumGothic
       fonts:
+        - asset: assets/fonts/NanumGothic-Light.ttf
         - asset: assets/fonts/NanumGothic-Regular.ttf
         - asset: assets/fonts/NanumGothic-Bold.ttf
           weight: 700
