@@ -82,24 +82,35 @@ flutter:
     - icon/.
     - assets/weather/.
     - assets/items/.
+    - assets/weather_mini/.
+    - assets/home/.
 
   fonts:
-    - family: NanumGothic
+    - family: "NanumGothic-Light"
       fonts:
         - asset: assets/fonts/NanumGothic-Light.ttf
+    - family: "NanumGothic-Regular"
+      fonts:
         - asset: assets/fonts/NanumGothic-Regular.ttf
+    - family: "NanumGothic-Bold"
+      fonts:
         - asset: assets/fonts/NanumGothic-Bold.ttf
           weight: 700
+    - family: "NanumGothic-ExtraBold"
+      fonts:
         - asset: assets/fonts/NanumGothic-ExtraBold.ttf
           weight: 900
-    - family: paybooc
+    - family: "paybooc Bold"
       fonts:
         - asset: "assets/fonts/paybooc Bold.ttf"
-          weight: 700
+    - family: "paybooc ExtraBold"
+      fonts:
         - asset: "assets/fonts/paybooc ExtraBold.ttf"
-          weight: 800
+    - family: "paybooc Light"
+      fonts:
         - asset: "assets/fonts/paybooc Light.ttf"
-          weight: 300
+    - family: "paybooc Medium"
+      fonts:
         - asset: "assets/fonts/paybooc Medium.ttf"
           weight: 500
 
