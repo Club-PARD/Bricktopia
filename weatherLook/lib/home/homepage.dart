@@ -30,15 +30,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          SingleChildScrollView(
+    return Stack(
+      children: [
+        Scaffold(
+          body: SingleChildScrollView(
             child: Column(
               children: [
                 SizedBox(
                   // 여기에 페이지가 나타난다
-                  height: (MediaQuery.of(context).size.height) / 1.025,
+                  height: (MediaQuery.of(context).size.height) / 1.050,
                   width: MediaQuery.of(context).size.width,
                   child: PageView.builder(
                     controller: _pageController,
@@ -64,8 +64,8 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

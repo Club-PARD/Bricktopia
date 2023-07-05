@@ -34,7 +34,7 @@ class _AddShowLocationState extends State<AddShowLocation> {
 
   Future<String> makeASummary(double latitude, double longitude) async {
     String weatherSummary =
-    await AIHandler().fetchWeatherData_m(latitude, longitude);
+        await AIHandler().fetchWeatherData_m(latitude, longitude);
     final aiWeather = "$weatherSummary + 진짜 정말 제발 짧게 말해줘.";
     final aiResponse = await _openAI.getResponse(aiWeather);
 
@@ -45,6 +45,7 @@ class _AddShowLocationState extends State<AddShowLocation> {
   }
 
   //tts part
+  bool isTts = false;
   bool isContainerVisible = false;
   late String aiWeatherresponse_detail = "";
 
@@ -53,7 +54,7 @@ class _AddShowLocationState extends State<AddShowLocation> {
 
   Future<String> brifMorning(double latitude, double longitude) async {
     String weatherSummary2 =
-    await AIHandler().getWeatherDataSummary2(latitude, longitude);
+        await AIHandler().getWeatherDataSummary2(latitude, longitude);
     String aiWeather2 =
         "$weatherSummary2 + 정보를 가지고 오늘 날씨 유쾌하게 표현해줘. 오늘 날씨에 맞는 옷차림을 구체적으로 자세하게 한국말로 알려줘. 마지막으로 오늘 하루를 응원하고, 축복해줘.";
     final aiResponse2 = await _openAI.getResponse(aiWeather2);
@@ -117,42 +118,49 @@ class _AddShowLocationState extends State<AddShowLocation> {
                   // 앱바 역할
                   height: (MediaQuery.of(context).size.height) / 10.8,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end, // 아이콘들을 아래로 정렬
-                    crossAxisAlignment: CrossAxisAlignment.end, // 아이콘들을 오른쪽으로 정렬
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    // 아이콘들을 아래로 정렬
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    // 아이콘들을 오른쪽으로 정렬
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: Icon(
-                                Icons.arrow_back_ios_new_outlined,
-                              )),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(
+                              Icons.arrow_back_ios_new_outlined,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 235,
+                          ),
                           TextButton(
-                              onPressed: () async {
-                                SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                                await prefs.setDouble(
-                                    widget.id + '_latitude', widget.latitude!);
-                                await prefs.setDouble(
-                                    widget.id + '_longitude', widget.longitude!);
+                            onPressed: () async {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.setDouble(
+                                  widget.id + '_latitude', widget.latitude!);
+                              await prefs.setDouble(
+                                  widget.id + '_longitude', widget.longitude!);
 
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage()),
-                                );
-                              },
-                              child: Text(
-                                "추가",
-                                style: TextStyle(
-                                  color: Color(0xff5772D3),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()),
+                              );
+                            },
+                            child: Text(
+                              "추가",
+                              style: TextStyle(
+                                color: Color(0xff5772D3),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -171,18 +179,20 @@ class _AddShowLocationState extends State<AddShowLocation> {
                             SizedBox(
                               width: MediaQuery.of(context).size.width - 80,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
                                           SizedBox(
                                               width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
+                                                      .size
+                                                      .width /
                                                   140),
                                           Text(_weather!.city,
                                               style: const TextStyle(
@@ -192,8 +202,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                       ),
                                       SizedBox(
                                           height: (MediaQuery.of(context)
-                                              .size
-                                              .height) /
+                                                  .size
+                                                  .height) /
                                               30),
                                       Text(
                                           '${_weather!.temp.toStringAsFixed(0)}°',
@@ -202,15 +212,15 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                               fontSize: 36)), // 현재 기온
                                       SizedBox(
                                           height: (MediaQuery.of(context)
-                                              .size
-                                              .height) /
+                                                  .size
+                                                  .height) /
                                               50),
                                       Row(
                                         children: [
                                           SizedBox(
                                               width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
+                                                      .size
+                                                      .width /
                                                   126),
                                           Text(
                                               _weather!.daily_min_temp[0]
@@ -221,15 +231,15 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                   color: Color(0xff5772D3))),
                                           SizedBox(
                                               width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
+                                                      .size
+                                                      .width /
                                                   126),
                                           Image.asset('assets/line.png',
                                               width: 18),
                                           SizedBox(
                                               width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
+                                                      .size
+                                                      .width /
                                                   126),
                                           Text(
                                               _weather!.daily_max_temp[0]
@@ -240,20 +250,21 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                   color: Color(0xffDD5441))),
                                           SizedBox(
                                               width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
+                                                      .size
+                                                      .width /
                                                   15.17),
                                           Image.asset('assets/rain.png',
                                               height: 12.5),
                                           SizedBox(
                                               width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
+                                                      .size
+                                                      .width /
                                                   63),
                                           Text(
                                             '${(_weather!.pop * 100).toInt()}%',
                                             style: const TextStyle(
-                                                fontFamily: 'NanumGotihc-Regular',
+                                                fontFamily:
+                                                    'NanumGotihc-Regular',
                                                 fontSize: 14,
                                                 color: Color(0xff5772D3)),
                                           )
@@ -272,8 +283,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                       ),
                                       SizedBox(
                                         height:
-                                        MediaQuery.of(context).size.height /
-                                            55,
+                                            MediaQuery.of(context).size.height /
+                                                55,
                                       ),
                                       SizedBox(
                                         width: 100,
@@ -297,13 +308,16 @@ class _AddShowLocationState extends State<AddShowLocation> {
                             Transform.translate(
                               offset: const Offset(0, 100),
                               child: Container(
-                                width: (MediaQuery.of(context).size.width) / 1.14,
+                                width:
+                                    (MediaQuery.of(context).size.width) / 1.14,
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.77), // 배경색 지정
+                                  color: Colors.white.withOpacity(0.77),
+                                  // 배경색 지정
                                   borderRadius: BorderRadius.circular(40),
                                   boxShadow: const [
                                     BoxShadow(
-                                      color: Color.fromRGBO(217, 213, 252, 0.70),
+                                      color:
+                                          Color.fromRGBO(217, 213, 252, 0.70),
                                       spreadRadius: 1, // 그림자의 퍼짐 정도
                                       blurRadius: 12, // 그림자의 흐림 정도
                                       offset: Offset(0, 2), // 그림자의 위치 (x, y)
@@ -311,27 +325,33 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                   ],
                                 ),
                                 child: SizedBox(
-                                  height:
-                                  (MediaQuery.of(context).size.height) / 2.1,
-                                  width: (MediaQuery.of(context).size.width) / 1.2,
+                                  height: (MediaQuery.of(context).size.height) /
+                                      2.1,
+                                  width:
+                                      (MediaQuery.of(context).size.width) / 1.2,
                                   child: Stack(
                                     children: [
                                       Container(
                                         padding: EdgeInsets.fromLTRB(
-                                            ((MediaQuery.of(context).size.width) /
+                                            ((MediaQuery.of(context)
+                                                    .size
+                                                    .width) /
                                                 25),
                                             0,
-                                            ((MediaQuery.of(context).size.width) /
+                                            ((MediaQuery.of(context)
+                                                    .size
+                                                    .width) /
                                                 25),
                                             0),
                                         child: GridView(
                                           gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                              SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 3,
-                                            mainAxisSpacing: (MediaQuery.of(context)
-                                                .size
-                                                .height) /
-                                                70,
+                                            mainAxisSpacing:
+                                                (MediaQuery.of(context)
+                                                        .size
+                                                        .height) /
+                                                    70,
                                           ),
                                           children: [
                                             Stack(
@@ -343,8 +363,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                          .size
-                                                          .height) /
+                                                              .size
+                                                              .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -353,7 +373,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.black,
-                                                        fontFamily: 'paybooc Light',
+                                                        fontFamily:
+                                                            'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -369,8 +390,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                          .size
-                                                          .height) /
+                                                              .size
+                                                              .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -379,7 +400,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.black,
-                                                        fontFamily: 'paybooc Light',
+                                                        fontFamily:
+                                                            'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -395,8 +417,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                          .size
-                                                          .height) /
+                                                              .size
+                                                              .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -405,7 +427,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.black,
-                                                        fontFamily: 'paybooc Light',
+                                                        fontFamily:
+                                                            'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -424,8 +447,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                          .size
-                                                          .height) /
+                                                              .size
+                                                              .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -434,7 +457,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.black,
-                                                        fontFamily: 'paybooc Light',
+                                                        fontFamily:
+                                                            'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -453,8 +477,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                          .size
-                                                          .height) /
+                                                              .size
+                                                              .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -463,7 +487,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.black,
-                                                        fontFamily: 'paybooc Light',
+                                                        fontFamily:
+                                                            'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -479,8 +504,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                          .size
-                                                          .height) /
+                                                              .size
+                                                              .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -489,7 +514,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.black,
-                                                        fontFamily: 'paybooc Light',
+                                                        fontFamily:
+                                                            'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -507,8 +533,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                          .size
-                                                          .height) /
+                                                              .size
+                                                              .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -517,7 +543,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.black,
-                                                        fontFamily: 'paybooc Light',
+                                                        fontFamily:
+                                                            'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -533,8 +560,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                          .size
-                                                          .height) /
+                                                              .size
+                                                              .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -543,7 +570,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.black,
-                                                        fontFamily: 'paybooc Light',
+                                                        fontFamily:
+                                                            'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -562,91 +590,125 @@ class _AddShowLocationState extends State<AddShowLocation> {
                               offset: const Offset(0, -360),
                               child: Container(
                                 padding: EdgeInsets.all(10),
-                                width: (MediaQuery.of(context).size.width) / 1.14,
+                                width:
+                                    (MediaQuery.of(context).size.width) / 1.14,
                                 height: isContainerVisible ? 250 : null,
                                 decoration: BoxDecoration(
                                   color: Colors.white.withOpacity(0.77),
                                   borderRadius: BorderRadius.circular(30),
                                   boxShadow: const [
                                     BoxShadow(
-                                      color: Color.fromRGBO(217, 213, 252, 0.70),
+                                      color:
+                                          Color.fromRGBO(217, 213, 252, 0.70),
                                       spreadRadius: 1,
                                       blurRadius: 12,
                                       offset: Offset(0, 2),
                                     ),
                                   ],
                                 ),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      isContainerVisible = !isContainerVisible;
-                                    });
-                                  },
-                                  child: Stack(
-                                    children: [
-                                      SingleChildScrollView(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Image.asset(
+                                child: Stack(
+                                  children: [
+                                    SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    isTts = !isTts;
+                                                  });
+                                                },
+                                                icon: Image.asset(
                                                   'assets/briefing.png',
                                                   height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
+                                                          .size
+                                                          .height /
                                                       18.18,
-                                                  color: isContainerVisible ? Color(0xff5772D3) : null,
+                                                  color: isTts
+                                                      ? Color(0xff5772D3)
+                                                      : null,
                                                 ),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                      63,
-                                                ),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                      1.6,
+                                              ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    63,
+                                              ),
+                                              Expanded(
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.topCenter,
                                                   child: FutureBuilder<String>(
-                                                    builder: (context, snapshot) {
-                                                      if (snapshot.connectionState ==
-                                                          ConnectionState.waiting) {
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      if (snapshot
+                                                              .connectionState ==
+                                                          ConnectionState
+                                                              .waiting) {
                                                         return const CircularProgressIndicator();
-                                                      } else if (snapshot.hasError) {
+                                                      } else if (snapshot
+                                                          .hasError) {
                                                         return Text(
                                                             'Error: ${snapshot.error}');
                                                       } else {
                                                         final aiWeatherresponse =
                                                             snapshot.data;
                                                         return Align(
-                                                          alignment: Alignment.center,
+                                                          alignment:
+                                                              Alignment.center,
                                                           child: Text(
                                                             aiWeatherresponse!,
                                                             overflow:
-                                                            TextOverflow.clip,
+                                                                TextOverflow
+                                                                    .clip,
                                                             style: const TextStyle(
                                                                 fontWeight:
-                                                                FontWeight.w300,
+                                                                    FontWeight
+                                                                        .w300,
                                                                 fontSize: 14),
                                                           ),
                                                         );
                                                       }
                                                     },
                                                     future: isContainerVisible
-                                                        ? brifMorning(widget.latitude!, widget.longitude!)
-                                                        : makeASummary(widget.latitude!, widget.longitude!),
+                                                        ? brifMorning(
+                                                            _weather!.lon,
+                                                            _weather!.lat)
+                                                        : makeASummary(
+                                                            _weather!.lon,
+                                                            _weather!.lat),
                                                   ),
                                                 ),
-                                                isContainerVisible ? Icon(Icons.keyboard_arrow_up) : Icon(Icons.keyboard_arrow_down),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                              ),
+                                              IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    isContainerVisible =
+                                                        !isContainerVisible;
+                                                  });
+                                                },
+                                                icon: isContainerVisible
+                                                    ? Icon(
+                                                        Icons.keyboard_arrow_up)
+                                                    : Icon(Icons
+                                                        .keyboard_arrow_down),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -667,4 +729,3 @@ class _AddShowLocationState extends State<AddShowLocation> {
     );
   }
 }
-

@@ -55,49 +55,28 @@ class _WeatherPageState extends State<WeatherPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // Container(
-          //   // 그라데이션 배경화면
-          //   decoration: const BoxDecoration(
-          //     image: DecorationImage(
-          //       image: AssetImage("assets/home.png"),
-          //       fit: BoxFit.cover, // 화면 자동 맞춤
-          //     ),
-          //   ),
-          // ),
-          Container(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (latitude != null && longitude != null)
-                    // Column(
-                    //   children: [
-                    //     Text("이거이거 참 좋구만요~~~~~"),
-                    //     ElevatedButton(
-                    //       onPressed: () {
-                    //         if (latitude == null || longitude == null) {
-                    //           saveLocation(37.5, 127.0); // 예시로 위도 37.5, 경도 127.0 저장
-                    //         } else {
-                    //           deleteLocation();
-                    //         }
-                    //       },
-                    //       child: Text(latitude == null || longitude == null ? 'Add Location' : 'Remove Location'),
-                    //     )
-                    //   ],
-                    // )
-                    WeatherBook(
-                        id: widget.id,
-                        latitude: latitude!,
-                        longitude: longitude!)
-                  else
-                    _defaultPage()
-                ],
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 35,),
+                    if (latitude != null && longitude != null)
+                      WeatherBook(
+                          id: widget.id,
+                          latitude: latitude!,
+                          longitude: longitude!)
+                    else
+                      _defaultPage()
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
