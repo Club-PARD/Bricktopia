@@ -10,7 +10,7 @@ class AIHandler {
   List<List<WeatherData>> groupedWeatherDataList = [];
 
   final _openAI = OpenAI.instance.build(
-    token: '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',
+    token: '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',
     baseOption: HttpSetup(
       receiveTimeout: const Duration(seconds: 60),
       connectTimeout: const Duration(seconds: 60),
@@ -53,7 +53,7 @@ class AIHandler {
     }
   }
 
-  Future<String> fetchWeatherData_m(double longitude, double latitude) async {
+  Future<String> fetchWeatherData_m(double latitude, double longitude) async {
     const apiKey = '9400fa5b5392bd26329d0dd65aa01ecb';
     final url =
         'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey&units=metric';

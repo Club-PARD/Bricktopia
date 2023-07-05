@@ -4,7 +4,6 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../models/chat_model.dart';
 import '../providers/chats_provider.dart';
-import '../services/ai_handler.dart';
 import '../widgets/chat_item.dart';
 import '../widgets/text_and_voice_field.dart';
 import 'my_app_bar.dart';

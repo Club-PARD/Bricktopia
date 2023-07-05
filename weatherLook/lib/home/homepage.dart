@@ -33,13 +33,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
+          SingleChildScrollView(
             child: Column(
               children: [
-                Expanded(
+                SizedBox(
                   // 여기에 페이지가 나타난다
-                  // height: (MediaQuery.of(context).size.height) / 1.025,
-                  // width: MediaQuery.of(context).size.width,
+                  height: (MediaQuery.of(context).size.height) / 1.025,
+                  width: MediaQuery.of(context).size.width,
                   child: PageView.builder(
                     controller: _pageController,
                     onPageChanged: (int page) {

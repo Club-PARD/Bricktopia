@@ -1,20 +1,26 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:homepage/home/homepage.dart';
 import 'package:http/http.dart' as http;
+import 'package:perfect_volume_control/perfect_volume_control.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../chatbot/models/weather_model.dart';
 import '../../chatbot/services/ai_handler.dart';
 import '../shared_preferences/weather_page.dart';
+import '../weather/weather_api.dart';
+import '../weather/weather_model.dart';
 
 class AddShowLocation extends StatefulWidget {
   final double? longitude;
   final double? latitude;
   final String id;
 
-  const AddShowLocation({super.key,
+  const AddShowLocation({
+    super.key,
     this.longitude,
-    this.latitude, required this.id,
+    this.latitude,
+    required this.id,
   });
 
   @override
@@ -22,466 +28,643 @@ class AddShowLocation extends StatefulWidget {
 }
 
 class _AddShowLocationState extends State<AddShowLocation> {
-  List<List<WeatherData>> groupedWeatherDataList = [];
+  Weather? _weather;
   final AIHandler _openAI = AIHandler();
-  //HomePage homePage = HomePage();
-  late String aiWeatherresponse ="";
+  late String aiWeatherresponse = "";
+
+  Future<String> makeASummary(double latitude, double longitude) async {
+    String weatherSummary =
+    await AIHandler().fetchWeatherData_m(latitude, longitude);
+    final aiWeather = "$weatherSummary + 진짜 정말 제발 짧게 말해줘.";
+    final aiResponse = await _openAI.getResponse(aiWeather);
+
+    if (aiWeatherresponse.isEmpty) {
+      aiWeatherresponse = aiResponse; // mainWeather2가 비어있을 경우에만 값 할당
+    }
+    return aiResponse;
+  }
+
+  //tts part
+  bool isContainerVisible = false;
+  late String aiWeatherresponse_detail = "";
+
+  final FlutterTts tts = FlutterTts();
+  double currentvol = 0.7;
+
+  Future<String> brifMorning(double latitude, double longitude) async {
+    String weatherSummary2 =
+    await AIHandler().getWeatherDataSummary2(latitude, longitude);
+    String aiWeather2 =
+        "$weatherSummary2 + 정보를 가지고 오늘 날씨 유쾌하게 표현해줘. 오늘 날씨에 맞는 옷차림을 구체적으로 자세하게 한국말로 알려줘. 마지막으로 오늘 하루를 응원하고, 축복해줘.";
+    final aiResponse2 = await _openAI.getResponse(aiWeather2);
+
+    if (aiWeatherresponse_detail.isEmpty) {
+      aiWeatherresponse_detail = aiResponse2;
+    }
+    tts.speak(aiWeatherresponse_detail);
+    return aiResponse2;
+  }
 
   @override
   void initState() {
     super.initState();
-    fetchWeatherData3(widget.longitude!,widget.latitude!).then((value) {
-      setState(() {
-        print(value);
-        groupedWeatherDataList = value;
+    Future.delayed(Duration.zero, () async {
+      currentvol = await PerfectVolumeControl.getVolume();
+//get current volume
 
+      setState(() {
+//refresh UI
       });
     });
-    makeASummary(widget.longitude!,widget.latitude!).then((value) {
-      setState(() {
-        if (aiWeatherresponse.isEmpty) {
-          aiWeatherresponse = value; // mainWeather2가 비어있을 경우에만 값 할당
+
+    PerfectVolumeControl.stream.listen((volume) {
+//volume button is pressed,
+// this listener will be triggeret 3 times at one button press
+
+      if (volume != currentvol) {
+//only execute button type check once time
+        if (volume > currentvol) {
+//if new volume is greater, then it up button
+          tts.stop();
+        } else {
+//else it is down button
+          tts.stop();
         }
+      }
+
+      setState(() {
+        currentvol = volume;
       });
     });
-  }
 
-  Future<String> makeASummary(double longitude, double latitude) async {
-    String weatherSummary = await AIHandler().fetchWeatherData_m(longitude,latitude);
-    final aiWeather = "날씨 정보를 바탕으로 은유적인 포현으로 한글 10글자 적어줘 + $weatherSummary";
-    final aiResponse = await _openAI.getResponse(aiWeather);
-    return aiResponse;
-  }
-
-  Future<List<List<WeatherData>>> fetchWeatherData3(double longitude, double latitude) async {
-    final apiKey = '9400fa5b5392bd26329d0dd65aa01ecb';
-    final url =
-        'https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appid=$apiKey&units=metric';
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final city =  data['city']['name'];
-      final List<WeatherData> dataList = [];
-      for (final item in data['list']) {
-        final dateTime = DateTime.fromMillisecondsSinceEpoch(item['dt'] * 1000);
-        final maxTemp = item['main']['temp_max'];
-        final minTemp = item['main']['temp_min'];
-        final humidity = item['main']['humidity'];
-        final main = item['weather'][0]['main'];
-        final pop = item['pop'];
-        print(main);
-        final weatherData = WeatherData(
-          time: dateTime,
-          maxTemperature: maxTemp.toDouble(),
-          minTemperature: minTemp.toDouble(),
-          humidity: humidity.toDouble(),
-          main: main.toString(),
-          pop: pop.toDouble(),
-          city: city.toString(),
-        );
-        dataList.add(weatherData);
-      }
-
-      // Filter weatherDataList for today's data
-      final today = DateTime.now();
-      final filteredDataList = dataList.where((data) {
-        return isSameDate(data.time, today);
-      }).toList();
-
-      // Group filteredDataList by date
-      return groupWeatherDataByDate(filteredDataList);
-    } else {
-      print('Failed to fetch weather data');
-      return [];
-    }
-  }
-
-  List<List<WeatherData>> groupWeatherDataByDate(List<WeatherData> weatherDataList) {
-    final groupedData = <List<WeatherData>>[];
-    for (final weatherData in weatherDataList) {
-      bool foundGroup = false;
-      for (final group in groupedData) {
-        if (isSameDate(group.first.time, weatherData.time)) {
-          group.add(weatherData);
-          foundGroup = true;
-          break;
-        }
-      }
-      if (!foundGroup) {
-        groupedData.add([weatherData]);
-      }
-    }
-    return groupedData;
-  }
-
-  bool isSameDate(DateTime date1, DateTime date2) {
-    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
-  }
-
-  Widget mainImage(String mainWeather) {
-    if(mainWeather=="Clouds"){
-      return Image.asset("assets/clouds.png",width: 100,height: 100,);
-    }else if(mainWeather=="Rain"){
-      return Image.asset("assets/rainy.png",width: 100,height: 100,);
-    }else if(mainWeather=="Snow"){
-      return Image.asset("assets/snow.png",width: 100,height: 100,);
-    }else if(mainWeather=="Clear"){
-      return Image.asset("assets/sun.png",width: 100,height: 100,);
-    }
-    return Image.asset("assets/cloud_sun.png",width: 100,height: 100,);
+    super.initState();
+// 언어 설정
+    tts.setLanguage("ko-KR");
+// 속도지정 (0.0이 제일 느리고 1.0이 제일 빠름)
+    tts.setSpeechRate(0.4);
   }
 
   @override
   Widget build(BuildContext context) {
-    late List<int> maxTemperatures = [];
-    late List<int> minTemperatures = [];
-    late List<int> averageTemperatures = [];
-    late List<int> precipitationList = [];
-    late List<String> mainWeatherList = [];
-    late String mainWeather2 = ""; // mainWeather2 초기화
-    late String mainCity2 = ""; // mainWeather2 초기화
-
-    for (final group in groupedWeatherDataList) {
-      int maxTemperature = group.first.maxTemperature.round();
-      int minTemperature = group.first.minTemperature.round();
-      int totalTemperature = 0;
-      int totalPrecipitation = 0;
-      String mainWeather = group.first.main;
-      String mainCity = group.first.city;
-
-      for (final weatherData in group) {
-        if (weatherData.maxTemperature.round() > maxTemperature) {
-          maxTemperature = weatherData.maxTemperature.round();
-        }
-        if (weatherData.minTemperature.round() < minTemperature) {
-          minTemperature = weatherData.minTemperature.round();
-        }
-
-        totalTemperature += (weatherData.maxTemperature.round() + weatherData.minTemperature.round()) ~/ 2;
-        totalPrecipitation += (weatherData.pop * 100).round();
-
-        if (weatherData.main != mainWeather) {
-          mainWeather = 'Mixed'; // If there are different main weathers, set it as 'Mixed'
-        }
-      }
-
-      int averageTemperature = totalTemperature ~/ group.length;
-      int averagePrecipitation = totalPrecipitation ~/ group.length;
-
-      maxTemperatures.add(maxTemperature);
-      minTemperatures.add(minTemperature);
-      averageTemperatures.add(averageTemperature);
-      precipitationList.add(averagePrecipitation);
-      mainWeatherList.add(mainWeather);
-      if (mainCity2.isEmpty) {
-        mainCity2 = mainCity; // mainWeather2가 비어있을 경우에만 값 할당
-      }
-      if (mainWeather2.isEmpty) {
-        mainWeather2 = mainWeather; // mainWeather2가 비어있을 경우에만 값 할당
-      }
-
-      print('${minTemperatures.join(', ')}°');
-      print('${averageTemperatures.join(', ')}°');
-      print(mainWeather2);
-      print(mainCity2);
-    }
-    //front
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            // 그라데이션 배경화면
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/home.png"),
-                fit: BoxFit.cover, // 화면 자동 맞춤
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+    return Stack(
+      children: [
+        Scaffold(
+          //backgroundColor: Colors.transparent,
+          body: SingleChildScrollView(
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.arrow_back_ios_new_outlined)),
-                    TextButton(
-                        onPressed: () async {
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                          await prefs.setDouble(widget.id + '_latitude', widget.latitude!);
-                          await prefs.setDouble(widget.id + '_longitude', widget.longitude!);
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()),
-                          );
-                        },
-                        child: Text(
-                          "추가",
-                          style: TextStyle(
-                            color: Color(0xff5772D3),
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )),
-                  ],
-                ),
-                Container(
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.center,
+                SizedBox(
+                  // 앱바 역할
+                  height: (MediaQuery.of(context).size.height) / 10.8,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end, // 아이콘들을 아래로 정렬
+                    crossAxisAlignment: CrossAxisAlignment.end, // 아이콘들을 오른쪽으로 정렬
                     children: [
-                      SizedBox(
-                          width: (MediaQuery.of(context).size.width) / 10.2),
-                      Column(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(
-                              height: (MediaQuery.of(context).size.height) /
-                                  22.857),
-                          Text(mainCity2,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20)),
-                          SizedBox(
-                              height:
-                              (MediaQuery.of(context).size.height) / 35),
-                          Text('${averageTemperatures.join(', ')}°',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 36)),
-                          SizedBox(
-                              height:
-                              (MediaQuery.of(context).size.height) / 57.15),
-                          Row(
-                            children: [
-                              Text('${minTemperatures.join(', ')}°',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff5772D3))),
-                              Image.asset('assets/line.png', width: 18),
-                              SizedBox(
-                                  width: (MediaQuery.of(context).size.width) /
-                                      190),
-                              Text(
-                                  '${maxTemperatures.join(', ')}°',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xffDD5441))),
-                            ],
-                          )
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: Icon(
+                                Icons.arrow_back_ios_new_outlined,
+                              )),
+                          TextButton(
+                              onPressed: () async {
+                                SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                                await prefs.setDouble(
+                                    widget.id + '_latitude', widget.latitude!);
+                                await prefs.setDouble(
+                                    widget.id + '_longitude', widget.longitude!);
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage()),
+                                );
+                              },
+                              child: Text(
+                                "추가",
+                                style: TextStyle(
+                                  color: Color(0xff5772D3),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )),
                         ],
                       ),
-                      SizedBox(width: (MediaQuery.of(context).size.width) / 3),
-                      Column(
-                        children: [
-                          SizedBox(
-                              height:
-                              (MediaQuery.of(context).size.height) / 42),
-                          mainImage(mainWeather2!)
-                        ],
-                      )
                     ],
                   ),
                 ),
-                Container(
-                  child: Row(
-                    children: [
-                      Column(
-                        children: [
-                          SizedBox(
-                              height:
-                              (MediaQuery.of(context).size.height) / 20.5),
-                          Row(
-                            children: [
-                              SizedBox(
-                                  width: (MediaQuery.of(context).size.width) /
-                                      10.2),
-                              SizedBox(
-                                width: 180,
-                                height: 45,
-                                child: Text(
-                                  aiWeatherresponse!,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 16),
+                SizedBox(height: (MediaQuery.of(context).size.height) / 29),
+                FutureBuilder(
+                  builder: (context, snapshot) {
+                    if (snapshot != null) {
+                      _weather = snapshot.data as Weather?;
+                      if (_weather == null) {
+                        return const Text("Loading weather...");
+                      } else {
+                        return Column(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width - 80,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                                  140),
+                                          Text(_weather!.city,
+                                              style: const TextStyle(
+                                                  fontFamily: 'paybooc Bold',
+                                                  fontSize: 20)), // 지역 이름(포항시)
+                                        ],
+                                      ),
+                                      SizedBox(
+                                          height: (MediaQuery.of(context)
+                                              .size
+                                              .height) /
+                                              30),
+                                      Text(
+                                          '${_weather!.temp.toStringAsFixed(0)}°',
+                                          style: const TextStyle(
+                                              fontFamily: 'NanumGothic_Light',
+                                              fontSize: 36)), // 현재 기온
+                                      SizedBox(
+                                          height: (MediaQuery.of(context)
+                                              .size
+                                              .height) /
+                                              50),
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                                  126),
+                                          Text(
+                                              _weather!.daily_min_temp[0]
+                                                  .toStringAsFixed(0),
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontFamily: 'paybooc Medium',
+                                                  color: Color(0xff5772D3))),
+                                          SizedBox(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                                  126),
+                                          Image.asset('assets/line.png',
+                                              width: 18),
+                                          SizedBox(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                                  126),
+                                          Text(
+                                              _weather!.daily_max_temp[0]
+                                                  .toStringAsFixed(0),
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontFamily: 'paybooc Medium',
+                                                  color: Color(0xffDD5441))),
+                                          SizedBox(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                                  15.17),
+                                          Image.asset('assets/rain.png',
+                                              height: 12.5),
+                                          SizedBox(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                                  63),
+                                          Text(
+                                            '${(_weather!.pop * 100).toInt()}%',
+                                            style: const TextStyle(
+                                                fontFamily: 'NanumGotihc-Regular',
+                                                fontSize: 14,
+                                                color: Color(0xff5772D3)),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      GestureDetector(
+                                        child: const Text('날씨 더보기 >',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w400,
+                                                color: Color(0xff4E5FFF))),
+                                      ),
+                                      SizedBox(
+                                        height:
+                                        MediaQuery.of(context).size.height /
+                                            55,
+                                      ),
+                                      SizedBox(
+                                        width: 100,
+                                        height: 100,
+                                        child: InkWell(
+                                          radius: 100,
+                                          onTap: () {
+                                            Navigator.pushNamed(
+                                                context, '/weather');
+                                          },
+                                          child: Image.asset(
+                                            'assets/weather/${_weather!.icon}.png',
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Transform.translate(
+                              offset: const Offset(0, 100),
+                              child: Container(
+                                width: (MediaQuery.of(context).size.width) / 1.14,
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.77), // 배경색 지정
+                                  borderRadius: BorderRadius.circular(40),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Color.fromRGBO(217, 213, 252, 0.70),
+                                      spreadRadius: 1, // 그림자의 퍼짐 정도
+                                      blurRadius: 12, // 그림자의 흐림 정도
+                                      offset: Offset(0, 2), // 그림자의 위치 (x, y)
+                                    ),
+                                  ],
+                                ),
+                                child: SizedBox(
+                                  height:
+                                  (MediaQuery.of(context).size.height) / 2.1,
+                                  width: (MediaQuery.of(context).size.width) / 1.2,
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.fromLTRB(
+                                            ((MediaQuery.of(context).size.width) /
+                                                25),
+                                            0,
+                                            ((MediaQuery.of(context).size.width) /
+                                                25),
+                                            0),
+                                        child: GridView(
+                                          gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            mainAxisSpacing: (MediaQuery.of(context)
+                                                .size
+                                                .height) /
+                                                70,
+                                          ),
+                                          children: [
+                                            Stack(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/items/longSleeve.png',
+                                                ),
+                                                Transform.translate(
+                                                  offset: Offset(
+                                                      0,
+                                                      (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                          17.7),
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    child: const Text(
+                                                      '긴팔',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black,
+                                                        fontFamily: 'paybooc Light',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Stack(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/items/knitwear.png',
+                                                ),
+                                                Transform.translate(
+                                                  offset: Offset(
+                                                      0,
+                                                      (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                          17.7),
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    child: const Text(
+                                                      '니트',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black,
+                                                        fontFamily: 'paybooc Light',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Stack(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/items/hoodie.png',
+                                                ),
+                                                Transform.translate(
+                                                  offset: Offset(
+                                                      0,
+                                                      (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                          17.7),
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    child: const Text(
+                                                      '후드티',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black,
+                                                        fontFamily: 'paybooc Light',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Stack(
+                                              children: [
+                                                Center(
+                                                  child: Image.asset(
+                                                    'assets/items/shirts.png',
+                                                    width: 92,
+                                                  ),
+                                                ),
+                                                Transform.translate(
+                                                  offset: Offset(
+                                                      0,
+                                                      (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                          17.7),
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    child: const Text(
+                                                      '셔츠',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black,
+                                                        fontFamily: 'paybooc Light',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Stack(
+                                              children: [
+                                                Center(
+                                                  child: Image.asset(
+                                                    'assets/items/longTrousers.png',
+                                                    width: 88,
+                                                  ),
+                                                ),
+                                                Transform.translate(
+                                                  offset: Offset(
+                                                      0,
+                                                      (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                          17.7),
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    child: const Text(
+                                                      '긴바지',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black,
+                                                        fontFamily: 'paybooc Light',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Stack(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/items/longSleeve.png',
+                                                ),
+                                                Transform.translate(
+                                                  offset: Offset(
+                                                      0,
+                                                      (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                          17.7),
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    child: const Text(
+                                                      '긴팔',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black,
+                                                        fontFamily: 'paybooc Light',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Stack(
+                                              children: [
+                                                Center(
+                                                  child: Image.asset(
+                                                      'assets/items/cap.png',
+                                                      width: 82),
+                                                ),
+                                                Transform.translate(
+                                                  offset: Offset(
+                                                      0,
+                                                      (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                          17.7),
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    child: const Text(
+                                                      '모자',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black,
+                                                        fontFamily: 'paybooc Light',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Stack(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/items/sandals.png',
+                                                ),
+                                                Transform.translate(
+                                                  offset: Offset(
+                                                      0,
+                                                      (MediaQuery.of(context)
+                                                          .size
+                                                          .height) /
+                                                          17.7),
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    child: const Text(
+                                                      '슬리퍼/샌들',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black,
+                                                        fontFamily: 'paybooc Light',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ],
-                          )
-                        ],
-                      ),
-                      SizedBox(width: (MediaQuery.of(context).size.width) / 5),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                              height:
-                              (MediaQuery.of(context).size.height) / 33.33),
-                          Image.asset(
-                            'assets/rain.png',
-                            width: 20,
-                          ),
-                          SizedBox(
-                              height:
-                              (MediaQuery.of(context).size.height) / 128.4),
-                          Text(
-                            '${precipitationList!.join(', ')}',
-                            style: TextStyle(
-                                fontSize: 14, color: Color(0xff5772D3)),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(height: (MediaQuery.of(context).size.height) / 25),
-                Container(
-                    height: ((MediaQuery.of(context).size.height) / 22),
-                    width: ((MediaQuery.of(context).size.width) / 1.7),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color.fromRGBO(217, 213, 252, 0.70),
-                          spreadRadius: 1, // 그림자의 퍼짐 정도
-                          blurRadius: 12, // 그림자의 흐림 정도
-                          offset: Offset(0, 2), // 그림자의 위치 (x, y)
-                        ),
-                      ],
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '오늘의 아이템을 추천드려요!',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff5772D3)),
-                        ),
-                      ],
-                    )),
-                SizedBox(
-                  height: ((MediaQuery.of(context).size.height) / 66.66),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(
-                    // 여기 패딩이 좀 문제인듯!!!!!!
-                    ((MediaQuery.of(context).size.width) /
-                        20), // 이건 우리 갤럭시로 봤을 때 맞는 사이즈
-                    // ((MediaQuery.of(context).size.width) / 13.3), // 이건 우리 emulator로 봤을 때 맞는 사이즈
-                    ((MediaQuery.of(context).size.height) / 23.53),
-                    ((MediaQuery.of(context).size.width) /
-                        20), // 이건 우리 갤럭시로 봤을 때 맞는 사이즈
-                    // ((MediaQuery.of(context).size.width) / 13.3), // 이건 우리 emulator로 봤을 때 맞는 사이즈
-                    ((MediaQuery.of(context).size.height) / 23.53),
-                  ),
-                  width: (MediaQuery.of(context).size.width) / 1.14,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.77), // 배경색 지정
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color.fromRGBO(217, 213, 252, 0.70),
-                        spreadRadius: 1, // 그림자의 퍼짐 정도
-                        blurRadius: 12, // 그림자의 흐림 정도
-                        offset: Offset(0, 2), // 그림자의 위치 (x, y)
-                      ),
-                    ],
-                  ),
-                  child: Stack(
-                    children: [
-                      Column(
-                        children: [
-                          Center(
-                            // 상의
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset('assets/items/hoodie.png',
-                                      width: (MediaQuery.of(context).size.height) /
-                                          10),
-                                  SizedBox(
-                                      width: (MediaQuery.of(context).size.width) /
-                                          18.95),
-                                  Image.asset('assets/items/paddedCoat.png',
-                                      width: (MediaQuery.of(context).size.height) /
-                                          10),
-                                  SizedBox(
-                                      width: (MediaQuery.of(context).size.width) /
-                                          18.95),
-                                  Image.asset('assets/items/paddedCoat.png',
-                                      width: (MediaQuery.of(context).size.height) /
-                                          10),
-                                ],
-                              )),
-                          SizedBox(
-                              height:
-                              (MediaQuery.of(context).size.height) / 38),
-                          Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset('assets/items/shorts.png',
-                                      width: (MediaQuery.of(context).size.height) /
-                                          10),
-                                  SizedBox(
-                                      width: (MediaQuery.of(context).size.width) /
-                                          18.95),
-                                  Image.asset('assets/items/hoodie.png',
-                                      width: (MediaQuery.of(context).size.height) /
-                                          10),
-                                  SizedBox(
-                                      width: (MediaQuery.of(context).size.width) /
-                                          18.95),
-                                  Image.asset('assets/items/shorts.png',
-                                      width: (MediaQuery.of(context).size.height) /
-                                          10),
-                                ],
-                              )),
-                          SizedBox(
-                              height:
-                              (MediaQuery.of(context).size.height) / 38),
-                          Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Image.asset('assets/items/sneakers.png',
-                                    width:
-                                    (MediaQuery.of(context).size.height) /
-                                        10),
-                                SizedBox(
-                                    width: (MediaQuery.of(context).size.width) /
-                                        18.95),
-                                Image.asset('assets/items/cap.png',
-                                    width:
-                                    (MediaQuery.of(context).size.height) /
-                                        10),
-                                SizedBox(
-                                    width: (MediaQuery.of(context).size.width) /
-                                        18.95),
-                                Image.asset('assets/items/sneakers.png',
-                                    width:
-                                    (MediaQuery.of(context).size.height) /
-                                        10),
-                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                            Transform.translate(
+                              offset: const Offset(0, -360),
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                width: (MediaQuery.of(context).size.width) / 1.14,
+                                height: isContainerVisible ? 250 : null,
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.77),
+                                  borderRadius: BorderRadius.circular(30),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Color.fromRGBO(217, 213, 252, 0.70),
+                                      spreadRadius: 1,
+                                      blurRadius: 12,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      isContainerVisible = !isContainerVisible;
+                                    });
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      SingleChildScrollView(
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/briefing.png',
+                                                  height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                      18.18,
+                                                  color: isContainerVisible ? Color(0xff5772D3) : null,
+                                                ),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                      63,
+                                                ),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                      1.6,
+                                                  child: FutureBuilder<String>(
+                                                    builder: (context, snapshot) {
+                                                      if (snapshot.connectionState ==
+                                                          ConnectionState.waiting) {
+                                                        return const CircularProgressIndicator();
+                                                      } else if (snapshot.hasError) {
+                                                        return Text(
+                                                            'Error: ${snapshot.error}');
+                                                      } else {
+                                                        final aiWeatherresponse =
+                                                            snapshot.data;
+                                                        return Align(
+                                                          alignment: Alignment.center,
+                                                          child: Text(
+                                                            aiWeatherresponse!,
+                                                            overflow:
+                                                            TextOverflow.clip,
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                FontWeight.w300,
+                                                                fontSize: 14),
+                                                          ),
+                                                        );
+                                                      }
+                                                    },
+                                                    future: isContainerVisible
+                                                        ? brifMorning(widget.latitude!, widget.longitude!)
+                                                        : makeASummary(widget.latitude!, widget.longitude!),
+                                                  ),
+                                                ),
+                                                isContainerVisible ? Icon(Icons.keyboard_arrow_up) : Icon(Icons.keyboard_arrow_down),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  },
+                  future: getLocalWeather(widget.latitude!, widget.longitude!),
                 ),
               ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
+

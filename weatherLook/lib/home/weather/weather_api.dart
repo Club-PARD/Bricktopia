@@ -55,3 +55,27 @@ Future getCurrentWeather() async {
 
   return weather;
 }
+
+Future getLocalWeather(double lat, double lon) async {
+  Weather? weather;
+
+  try {
+    String apiKey = "9400fa5b5392bd26329d0dd65aa01ecb";
+    var url = Uri.parse(
+        "https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$lon&appid=$apiKey&units=metric&lang=kr");
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      weather = Weather.fromJson(jsonDecode(response.body));
+    } else {
+      // Throw error here
+    }
+  } catch (e) {
+    // Handle location permission denied error
+    // Show an error message or provide an alternative way to input location
+    print("Error: $e");
+  }
+
+  return weather;
+}
