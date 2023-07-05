@@ -38,10 +38,6 @@ class _WeatherPageState extends State<WeatherPage> {
   String currentWeatherDescription = '';
   String currentWeatherMain = '';
 
-  // String formatTime(String time) {
-  //   final hour = time.split(':')[0];
-  //   return '$hour시';
-  // }
   String formatTime(String time) {
     final hour = int.parse(time.split(':')[0]);
     final dateTime = DateTime(
@@ -231,42 +227,46 @@ class _WeatherPageState extends State<WeatherPage> {
     } else if (avgWeather == "FewClouds") {
       return Image.asset("assets/weather_mini/mini_cloud_sun.png", width: 32);
     } else if (avgWeather == "Snow") {
-      return Image.asset("assets/weather_mini/main_snow.png", width: 32);
+      return Image.asset("assets/weather_mini/mini_snow.png", width: 32);
     } else if (avgWeather == "Clear") {
       return Image.asset("assets/weather_mini/mini_sun.png", width: 32);
     } else if (avgWeather == "Thunderstorm") {
       return Image.asset("assets/weather_mini/mini_thunder.png", width: 32);
     }
+    // else if (avgWeather == "Night") {
+    //   return Image.asset("assets/weather_mini/mini_night.png", width: 32);
+    // }
     return Image.asset("assets/cloud_sun.png", width: 32);
   }
 
 // 배경화면
-  Widget homeImage(String homebackground) {
-    if (homebackground == "Clouds") {
+  Widget homeImage(String mainWeather) {
+    if (mainWeather == "Clouds") {
       return Image.asset("assets/home/home_clouds.png", fit: BoxFit.cover);
-    } else if (homebackground == "Rain") {
-      return Image.asset("assets/home/home_rain.png", fit: BoxFit.cover);
-    } else if (homebackground == "FewClouds") {
+    } else if (mainWeather == "FewClouds") {
       return Image.asset("assets/home/home_cloud_sun.png", fit: BoxFit.cover);
-    } else if (homebackground == "Snow") {
+    } else if (mainWeather == "Rain") {
+      return Image.asset("assets/home/home_rain.png", fit: BoxFit.cover);
+    } else if (mainWeather == "Snow") {
       return Image.asset("assets/home/home_snow.png", fit: BoxFit.cover);
-    } else if (homebackground == "Clear") {
+    } else if (mainWeather == "Clear") {
       return Image.asset("assets/home/home_sun.png", fit: BoxFit.cover);
-    } else if (homebackground == "Thunderstorm") {
+    } else if (mainWeather == "Thunderstorm") {
       return Image.asset("assets/home/home_thunderstorm.png",
           fit: BoxFit.cover);
     }
-    // else if (homebackground == "Night") {
-    //   return Image.asset("assets/home/home_night.png", width: 32);
+    //  else if (mainWeather == "Night") {
+    //   return Image.asset("assets/home/home_night.png", fit: BoxFit.cover);
     // }
-    return Image.asset("assets/cloud_sun.png", width: 32);
+    return Image.asset("assets/cloud_sun.png",
+        width: (MediaQuery.of(context).size.width) / 3.1583, fit: BoxFit.cover);
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.asset('assets/home/home_sun.png', fit: BoxFit.cover),
+        Container(child: homeImage(currentWeatherMain)),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: Column(
@@ -588,12 +588,16 @@ class _WeatherPageState extends State<WeatherPage> {
                                                     .size
                                                     .width /
                                                 30),
-                                        Text('${weather['avgPop'].toInt()}%',
-                                            style: const TextStyle(
-                                                fontSize: 13,
-                                                fontFamily:
-                                                    'NanumGothic-Regular',
-                                                color: Color(0xff4E5FFF))),
+                                        if ('${weather['avgPop'].toInt()}%' !=
+                                            '0%')
+                                          Text('${weather['avgPop'].toInt()}%',
+                                              style:
+                                                  const TextStyle(
+                                                      fontSize: 13,
+                                                      fontFamily:
+                                                          'NanumGothic-Regular',
+                                                      color:
+                                                          Color(0xff4E5FFF))),
                                       ],
                                     ),
                                     Row(
