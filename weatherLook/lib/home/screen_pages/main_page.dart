@@ -47,6 +47,26 @@ class _MainPageState extends State<MainPage> {
   final FlutterTts tts = FlutterTts();
   double currentvol = 0.7;
 
+  Widget mainImage(String mainWeather) {
+    if (mainWeather == "Clouds") {
+      return Image.asset("assets/weather/big_clouds.png");
+    } else if (mainWeather == "FewClouds") {
+      return Image.asset("assets/weather/big_cloud_sun.png");
+    } else if (mainWeather == "Rain") {
+      return Image.asset("assets/weather/big_rainy.png");
+    } else if (mainWeather == "Snow") {
+      return Image.asset("assets/weather/big_snow.png");
+    } else if (mainWeather == "Clear") {
+      return Image.asset("assets/weather/big_sun.png");
+    } else if (mainWeather == "Thunderstorm") {
+      return Image.asset("assets/weather/big_thunder.png");
+    } else if (mainWeather == "Night") {
+      return Image.asset("assets/weather/big_night.png");
+    }
+    return Image.asset("assets/cloud_sun.png");
+  }
+
+
   Future<String> brifMorning(double latitude, double longitude) async {
     String weatherSummary2 =
         await AIHandler().getWeatherDataSummary2(latitude, longitude);
@@ -64,6 +84,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
+    getCurrentWeather();
     Future.delayed(Duration.zero, () async {
       currentvol = await PerfectVolumeControl.getVolume();
 //get current volume
@@ -100,12 +121,37 @@ class _MainPageState extends State<MainPage> {
     tts.setSpeechRate(0.4);
   }
 
+  String homeImage(String? mainWeather) {
+    if (mainWeather == "Clouds") {
+      return "assets/home/home_clouds.png";
+    } else if (mainWeather == "FewClouds") {
+      return "assets/home/home_cloud_sun.png";
+    } else if (mainWeather == "Rain") {
+      return "assets/home/home_rain.png";
+    } else if (mainWeather == "Snow") {
+      return "assets/home/home_snow.png";
+    } else if (mainWeather == "Clear") {
+      return "assets/home/home_sun.png";
+    } else if (mainWeather == "Thunderstorm") {
+      return "assets/home/home_thunderstorm.png";
+    }
+    return "assets/cloud_sun.png";
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/home/home_night.png"), // 배경 이미지 설정
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
         Scaffold(
-          backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
             child: Column(
               children: [
@@ -277,9 +323,7 @@ class _MainPageState extends State<MainPage> {
                                             Navigator.pushNamed(
                                                 context, '/weather');
                                           },
-                                          child: Image.asset(
-                                            'assets/weather/${_weather!.icon}.png',
-                                          ),
+                                          child: mainImage(_weather!.weather),
                                         ),
                                       ),
                                       const SizedBox(
@@ -291,7 +335,7 @@ class _MainPageState extends State<MainPage> {
                               ),
                             ),
                             Transform.translate(
-                              offset: const Offset(0, 20),
+                              offset: const Offset(0, 50),
                               child: Container(
                                 width:
                                     (MediaQuery.of(context).size.width) / 1.14,
@@ -572,7 +616,7 @@ class _MainPageState extends State<MainPage> {
                               ),
                             ),
                             Transform.translate(
-                              offset: const Offset(0, -360),
+                              offset: const Offset(0, -410),
                               child: Container(
                                 padding: const EdgeInsets.all(10),
                                 width:

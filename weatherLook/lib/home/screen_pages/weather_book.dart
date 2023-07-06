@@ -30,6 +30,26 @@ class _WeatherBookState extends State<WeatherBook> {
   final AIHandler _openAI = AIHandler();
   late String aiWeatherresponse = "";
 
+
+  Widget mainImage(String mainWeather) {
+    if (mainWeather == "Clouds") {
+      return Image.asset("assets/weather/big_clouds.png");
+    } else if (mainWeather == "FewClouds") {
+      return Image.asset("assets/weather/big_cloud_sun.png");
+    } else if (mainWeather == "Rain") {
+      return Image.asset("assets/weather/big_rainy.png");
+    } else if (mainWeather == "Snow") {
+      return Image.asset("assets/weather/big_snow.png");
+    } else if (mainWeather == "Clear") {
+      return Image.asset("assets/weather/big_sun.png");
+    } else if (mainWeather == "Thunderstorm") {
+      return Image.asset("assets/weather/big_thunder.png");
+    } else if (mainWeather == "Night") {
+      return Image.asset("assets/weather/big_night.png");
+    }
+    return Image.asset("assets/cloud_sun.png");
+  }
+
   Future<String> makeASummary(double latitude, double longitude) async {
     String weatherSummary =
         await AIHandler().fetchWeatherData_m(latitude, longitude);
@@ -262,9 +282,7 @@ class _WeatherBookState extends State<WeatherBook> {
                                           Navigator.pushNamed(
                                               context, '/weather');
                                         },
-                                        child: Image.asset(
-                                          'assets/weather/${_weather!.icon}.png',
-                                        ),
+                                        child: mainImage(_weather!.weather),
                                       ),
                                     ),
                                   ],
@@ -584,6 +602,7 @@ class _WeatherBookState extends State<WeatherBook> {
                                                 setState(() {
                                                   isTts = !isTts;
                                                 });
+                                                tts.speak(aiWeatherresponse_detail);
                                               },
                                               icon: Image.asset(
                                                 'assets/briefing.png',

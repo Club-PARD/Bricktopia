@@ -52,9 +52,12 @@ class _WeatherPageState extends State<WeatherPage> {
     });
   }
 
+  bool check = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
         child: Stack(
           children: [
@@ -64,7 +67,7 @@ class _WeatherPageState extends State<WeatherPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(height: 35,),
-                    if (latitude != null && longitude != null)
+                    if ((latitude != null && longitude != null) == check)
                       WeatherBook(
                           id: widget.id,
                           latitude: latitude!,

@@ -66,6 +66,25 @@ class _AddShowLocationState extends State<AddShowLocation> {
     return aiResponse2;
   }
 
+  Widget mainImage(String mainWeather) {
+    if (mainWeather == "Clouds") {
+      return Image.asset("assets/weather/big_clouds.png");
+    } else if (mainWeather == "FewClouds") {
+      return Image.asset("assets/weather/big_cloud_sun.png");
+    } else if (mainWeather == "Rain") {
+      return Image.asset("assets/weather/big_rainy.png");
+    } else if (mainWeather == "Snow") {
+      return Image.asset("assets/weather/big_snow.png");
+    } else if (mainWeather == "Clear") {
+      return Image.asset("assets/weather/big_sun.png");
+    } else if (mainWeather == "Thunderstorm") {
+      return Image.asset("assets/weather/big_thunder.png");
+    } else if (mainWeather == "Night") {
+      return Image.asset("assets/weather/big_night.png");
+    }
+    return Image.asset("assets/cloud_sun.png");
+  }
+
   @override
   void initState() {
     super.initState();
@@ -275,6 +294,10 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                   Column(
                                     children: [
                                       GestureDetector(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                              context, '/weather');
+                                        },
                                         child: const Text('날씨 더보기 >',
                                             style: TextStyle(
                                                 fontSize: 12,
@@ -295,9 +318,7 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                             Navigator.pushNamed(
                                                 context, '/weather');
                                           },
-                                          child: Image.asset(
-                                            'assets/weather/${_weather!.icon}.png',
-                                          ),
+                                          child: mainImage(_weather!.weather),
                                         ),
                                       ),
                                     ],

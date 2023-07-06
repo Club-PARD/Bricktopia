@@ -33,11 +33,12 @@ class _HomePageState extends State<HomePage> {
     return Stack(
       children: [
         Scaffold(
+          //backgroundColor: Colors.transparent, // Scaffold의 배경을 투명하게 설정
           body: SingleChildScrollView(
             child: Column(
               children: [
                 SizedBox(
-                  // 여기에 페이지가 나타난다
+                  // 페이지뷰
                   height: (MediaQuery.of(context).size.height) / 1.050,
                   width: MediaQuery.of(context).size.width,
                   child: PageView.builder(
@@ -68,4 +69,5 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
+
 }
