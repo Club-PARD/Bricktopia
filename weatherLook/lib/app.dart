@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:homepage/home/homepage.dart';
 import 'package:video_player/video_player.dart';
 
 import 'chatbot/constants/themes.dart';
 import 'home/pages/tts.dart';
 import 'home/pages/weather.dart';
 import 'home/screen_pages/main_page.dart';
+import 'notification/notification.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -47,10 +49,24 @@ class _SplashScreenState extends State<SplashScreen> {
           _controller.pause();
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const MainPage()),
+            MaterialPageRoute(builder: (context) => HomePage()),
           );
         });
       });
+
+    // 초기화
+    FlutterLocalNotification.init();
+
+    // 5분 뒤 알림 예약
+    _scheduleNotification();
+
+    // 3초 후 권한 요청
+    Future.delayed(const Duration(seconds: 3),
+        FlutterLocalNotification.requestNotificationPermission());
+  }
+
+  void _scheduleNotification() async {
+    await FlutterLocalNotification.scheduleNotificationInFiveMinutes();
   }
 
   @override
