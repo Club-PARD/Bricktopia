@@ -33,7 +33,10 @@ class _CurrentWeatherWidgetState extends State<CurrentWeatherWidget> {
           height: (MediaQuery.of(context).size.height) / 12,
         ),
         Center(
-          child: mainImage(context, widget.weatherMain), // 날씨 아이콘
+          child: SizedBox(
+              width: 120,
+              height: 120,
+              child: mainImage(context, widget.weatherMain)), // 날씨 아이콘
         ),
         SizedBox(
           height: (MediaQuery.of(context).size.height) / 50,

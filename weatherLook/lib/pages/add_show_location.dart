@@ -7,12 +7,14 @@ class AddShowLocation extends StatefulWidget {
   final double? longitude;
   final double? latitude;
   final String id;
+  final String localName;
 
   const AddShowLocation({
     super.key,
     this.longitude,
     this.latitude,
     required this.id,
+    required this.localName,
   });
 
   @override
@@ -57,19 +59,48 @@ class _AddShowLocationState extends State<AddShowLocation> {
     return aiResponse2;
   }
 
+  Widget mainImage(String mainWeather) {
+    if (mainWeather == "Clouds") {
+      return Image.asset("assets/weather/big_clouds.png");
+    } else if (mainWeather == "FewClouds") {
+      return Image.asset("assets/weather/big_cloud_sun.png");
+    } else if (mainWeather == "Rain") {
+      return Image.asset("assets/weather/big_rainy.png");
+    } else if (mainWeather == "Snow") {
+      return Image.asset("assets/weather/big_snow.png");
+    } else if (mainWeather == "Clear") {
+      return Image.asset("assets/weather/big_sun.png");
+    } else if (mainWeather == "Thunderstorm") {
+      return Image.asset("assets/weather/big_thunder.png");
+    } else if (mainWeather == "Night") {
+      return Image.asset("assets/weather/big_night.png");
+    }
+    return Image.asset("assets/cloud_sun.png");
+  }
+
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
       currentvol = await PerfectVolumeControl.getVolume();
-      setState(() {});
+//get current volume
+
+      setState(() {
+//refresh UI
+      });
     });
 
     PerfectVolumeControl.stream.listen((volume) {
+//volume button is pressed,
+// this listener will be triggeret 3 times at one button press
+
       if (volume != currentvol) {
+//only execute button type check once time
         if (volume > currentvol) {
+//if new volume is greater, then it up button
           tts.stop();
         } else {
+//else it is down button
           tts.stop();
         }
       }
@@ -78,12 +109,16 @@ class _AddShowLocationState extends State<AddShowLocation> {
         currentvol = volume;
       });
     });
+
+    super.initState();
+// 언어 설정
     tts.setLanguage("ko-KR");
+// 속도지정 (0.0이 제일 느리고 1.0이 제일 빠름)
     tts.setSpeechRate(0.4);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Stack();
   }
 }

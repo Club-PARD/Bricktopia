@@ -1,6 +1,5 @@
-// ignore_for_file: depend_on_referenced_packages, must_be_immutable, unnecessary_null_comparison, avoid_print, unused_local_variable
-
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:translator/translator.dart';
@@ -164,7 +163,18 @@ class _SearchPageState extends State<SearchPage> {
                         List<Location> locations = await locationFromAddress(
                             _placesList![index]['description']);
                         String placeName = _placesList![index]['description'];
+                        String decodedPlaceName = jsonDecode(
+                            '{"description": "$placeName"}')['description'];
+
                         onLocationSelected(locations.last, placeName);
+
+                        int lastIndex = decodedPlaceName.lastIndexOf(',');
+                        String city =
+                            decodedPlaceName.substring(lastIndex + 1).trim();
+
+                        print(999999999999999999);
+                        print(city);
+                        print(999999999999999999);
 
                         double? longitude = locations.last.longitude;
                         double? latitude = locations.last.latitude;
@@ -176,6 +186,7 @@ class _SearchPageState extends State<SearchPage> {
                               id: widget.id,
                               longitude: longitude,
                               latitude: latitude,
+                              localName: city,
                             ),
                           ),
                         );

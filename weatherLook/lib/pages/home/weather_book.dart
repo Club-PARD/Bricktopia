@@ -8,12 +8,14 @@ class WeatherBook extends StatefulWidget {
   final double latitude;
   final double longitude;
   final String id;
+  final String city;
 
   const WeatherBook({
     Key? key,
     required this.id,
     required this.latitude,
     required this.longitude,
+    required this.city,
   }) : super(key: key);
 
   @override
