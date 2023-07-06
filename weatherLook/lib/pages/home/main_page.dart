@@ -1,14 +1,17 @@
 // ignore_for_file: unnecessary_null_comparison, non_constant_identifier_names, avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather_summary/chatbot/screens/chat_screen.dart';
 import 'package:weather_summary/get/get_location.dart';
+import 'package:weather_summary/get/get_range.dart';
 import 'package:weather_summary/get/get_weather_api.dart';
-import 'package:weather_summary/widget/home/app_bar_widget.dart';
+import 'package:weather_summary/item_model.dart';
+import 'package:weather_summary/service/item_service.dart';
+import 'package:weather_summary/widget/home/home_app_bar_widget.dart';
 import 'package:weather_summary/widget/home/home_weather_widget.dart';
 import 'package:weather_summary/widget/home/item_widget.dart';
-import 'package:weather_summary/widget/home/summary_box_widget.dart';
+import 'package:weather_summary/widget/home/home_summary_box_widget.dart';
 import 'package:weather_summary/widget/image/background_widget.dart';
 
 class MainPage extends StatefulWidget {
@@ -19,8 +22,12 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  CollectionReference temperatureRanges =
-      FirebaseFirestore.instance.collection('temperature');
+  String range = '';
+
+  List<ClothingItem> topsList = [];
+  List<ClothingItem> outersList = [];
+  List<ClothingItem> bottomList = [];
+  List<ClothingItem> otherList = [];
 
   List<Map<String, dynamic>> weatherList = [];
 
@@ -122,14 +129,42 @@ class _MainPageState extends State<MainPage> {
         currentWeatherDescription = currentWeather['weather'][0]['description'];
         currentWeatherMain = currentWeather['weather'][0]['main'];
         currentCity = weatherData['city']['name'];
+        range = getAvgTempString(currentMinTemperature, currentMaxTemperature);
       });
     } catch (e) {
       print('Error: $e');
     }
   }
 
+  void updateTops(List<ClothingItem> tops) {
+    setState(() {
+      topsList = tops;
+    });
+  }
+
+  void updateOuters(List<ClothingItem> outers) {
+    setState(() {
+      outersList = outers;
+    });
+  }
+
+  void updateBottoms(List<ClothingItem> bottoms) {
+    setState(() {
+      bottomList = bottoms;
+    });
+  }
+
+  void updateAccessories(List<ClothingItem> other) {
+    setState(() {
+      otherList = other;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    range = getAvgTempString(currentMinTemperature, currentMaxTemperature);
+    ItemService.getMatchingItems(
+        range, updateTops, updateOuters, updateBottoms, updateAccessories);
     return Stack(
       children: [
         SizedBox(
@@ -140,11 +175,12 @@ class _MainPageState extends State<MainPage> {
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SizedBox(
                   height: (MediaQuery.of(context).size.height) / 10.8,
-                  child: const AppBarWidget(),
+                  child: const HomeAppBarWidget(),
                 ),
                 HomeWeatherWidget(
                   temperature: currentTemperature,
@@ -154,14 +190,44 @@ class _MainPageState extends State<MainPage> {
                   city: currentCity,
                   weatherMain: currentWeatherMain,
                 ),
-                const Stack(
+                Stack(
                   children: [
-                    ItemWidget(),
-                    SummaryBoxWidget(),
+                    ItemWidget(
+                      topsList: topsList,
+                      outersList: outersList,
+                      bottomList: bottomList,
+                      otherList: otherList,
+                    ),
+                    const HomeSummaryBoxWidget(),
                   ],
-                )
+                ),
               ],
             ),
+          ),
+          floatingActionButton: Stack(
+            children: <Widget>[
+              Align(
+                alignment:
+                    Alignment(Alignment.bottomRight.x, Alignment.bottomRight.y),
+                child: FloatingActionButton(
+                  heroTag: 'chat',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ChatScreen()),
+                    );
+                  },
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  shape: const CircleBorder(),
+                  child: Image.asset(
+                    "assets/icon/icon_chatbot.png",
+                    width: (MediaQuery.of(context).size.width) / 1,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],

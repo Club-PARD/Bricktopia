@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:weather_summary/pages/setting.dart';
 
-class AppBarWidget extends StatefulWidget {
-  const AppBarWidget({super.key});
+class HomeAppBarWidget extends StatefulWidget {
+  const HomeAppBarWidget({super.key});
 
   @override
-  State<AppBarWidget> createState() => _AppBarWidgetState();
+  State<HomeAppBarWidget> createState() => _HomeAppBarWidgetState();
 }
 
-class _AppBarWidgetState extends State<AppBarWidget> {
+class _HomeAppBarWidgetState extends State<HomeAppBarWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
