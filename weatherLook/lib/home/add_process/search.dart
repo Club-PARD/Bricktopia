@@ -164,7 +164,16 @@ class _SearchPageState extends State<SearchPage> {
                         List<Location> locations = await locationFromAddress(
                             _placesList![index]['description']);
                         String placeName = _placesList![index]['description'];
+                        String decodedPlaceName = jsonDecode('{"description": "$placeName"}')['description'];
+
                         onLocationSelected(locations.last, placeName);
+
+                        int lastIndex = decodedPlaceName.lastIndexOf(',');
+                        String city = decodedPlaceName.substring(lastIndex + 1).trim();
+
+                        print(999999999999999999);
+                        print(city);
+                        print(999999999999999999);
 
                         double? longitude = locations.last.longitude;
                         double? latitude = locations.last.latitude;
@@ -176,6 +185,7 @@ class _SearchPageState extends State<SearchPage> {
                               id:widget.id,
                               longitude: longitude,
                               latitude: latitude,
+                              localName: city,
                             ),
                           ),
                         );

@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_null_comparison
-
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -21,7 +19,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   CollectionReference temperatureRanges =
-      FirebaseFirestore.instance.collection('temperature');
+  FirebaseFirestore.instance.collection('temperature');
 
   Weather? _weather;
   final AIHandler _openAI = AIHandler();
@@ -29,7 +27,7 @@ class _MainPageState extends State<MainPage> {
 
   Future<String> makeASummary(double latitude, double longitude) async {
     String weatherSummary =
-        await AIHandler().fetchWeatherData_m(latitude, longitude);
+    await AIHandler().fetchWeatherData_m(latitude, longitude);
     final aiWeather = "$weatherSummary + 진짜 정말 제발 짧게 말해줘.";
     final aiResponse = await _openAI.getResponse(aiWeather);
 
@@ -69,7 +67,7 @@ class _MainPageState extends State<MainPage> {
 
   Future<String> brifMorning(double latitude, double longitude) async {
     String weatherSummary2 =
-        await AIHandler().getWeatherDataSummary2(latitude, longitude);
+    await AIHandler().getWeatherDataSummary2(latitude, longitude);
     String aiWeather2 =
         "$weatherSummary2 + 정보를 가지고 오늘 날씨 유쾌하게 표현해줘. 오늘 날씨에 맞는 옷차림을 구체적으로 자세하게 한국말로 알려줘. 마지막으로 오늘 하루를 응원하고, 축복해줘.";
     final aiResponse2 = await _openAI.getResponse(aiWeather2);
@@ -161,14 +159,14 @@ class _MainPageState extends State<MainPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end, // 아이콘들을 아래로 정렬
                     crossAxisAlignment:
-                        CrossAxisAlignment.end, // 아이콘들을 오른쪽으로 정렬
+                    CrossAxisAlignment.end, // 아이콘들을 오른쪽으로 정렬
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end, // 오른쪽 정렬
                         children: [
                           SizedBox(
                               width:
-                                  (MediaQuery.of(context).size.width) / 18.95),
+                              (MediaQuery.of(context).size.width) / 18.95),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -184,7 +182,7 @@ class _MainPageState extends State<MainPage> {
                           ),
                           SizedBox(
                               width:
-                                  (MediaQuery.of(context).size.width) / 17.23),
+                              (MediaQuery.of(context).size.width) / 17.23),
                         ],
                       ),
                     ],
@@ -204,19 +202,19 @@ class _MainPageState extends State<MainPage> {
                               width: MediaQuery.of(context).size.width - 80,
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
                                           SizedBox(
                                               width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
+                                                  .size
+                                                  .width /
                                                   140),
                                           Text(_weather!.city,
                                               style: const TextStyle(
@@ -226,8 +224,8 @@ class _MainPageState extends State<MainPage> {
                                       ),
                                       SizedBox(
                                           height: (MediaQuery.of(context)
-                                                  .size
-                                                  .height) /
+                                              .size
+                                              .height) /
                                               30),
                                       Text(
                                           '${_weather!.temp.toStringAsFixed(0)}°',
@@ -236,15 +234,15 @@ class _MainPageState extends State<MainPage> {
                                               fontSize: 36)), // 현재 기온
                                       SizedBox(
                                           height: (MediaQuery.of(context)
-                                                  .size
-                                                  .height) /
+                                              .size
+                                              .height) /
                                               50),
                                       Row(
                                         children: [
                                           SizedBox(
                                               width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
+                                                  .size
+                                                  .width /
                                                   126),
                                           Text(
                                               _weather!.daily_min_temp[0]
@@ -255,15 +253,15 @@ class _MainPageState extends State<MainPage> {
                                                   color: Color(0xff5772D3))),
                                           SizedBox(
                                               width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
+                                                  .size
+                                                  .width /
                                                   126),
                                           Image.asset('assets/line.png',
                                               width: 18),
                                           SizedBox(
                                               width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
+                                                  .size
+                                                  .width /
                                                   126),
                                           Text(
                                               _weather!.daily_max_temp[0]
@@ -274,21 +272,21 @@ class _MainPageState extends State<MainPage> {
                                                   color: Color(0xffDD5441))),
                                           SizedBox(
                                               width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
+                                                  .size
+                                                  .width /
                                                   15.17),
                                           Image.asset('assets/rain.png',
                                               height: 12.5),
                                           SizedBox(
                                               width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
+                                                  .size
+                                                  .width /
                                                   63),
                                           Text(
                                             '${(_weather!.pop * 100).toInt()}%',
                                             style: const TextStyle(
                                                 fontFamily:
-                                                    'NanumGotihc-Regular',
+                                                'NanumGotihc-Regular',
                                                 fontSize: 14,
                                                 color: Color(0xff5772D3)),
                                           )
@@ -311,8 +309,8 @@ class _MainPageState extends State<MainPage> {
                                       ),
                                       SizedBox(
                                         height:
-                                            MediaQuery.of(context).size.height /
-                                                55,
+                                        MediaQuery.of(context).size.height /
+                                            55,
                                       ),
                                       SizedBox(
                                         width: 100,
@@ -338,15 +336,15 @@ class _MainPageState extends State<MainPage> {
                               offset: const Offset(0, 50),
                               child: Container(
                                 width:
-                                    (MediaQuery.of(context).size.width) / 1.14,
+                                (MediaQuery.of(context).size.width) / 1.14,
                                 decoration: BoxDecoration(
                                   color:
-                                      Colors.white.withOpacity(0.77), // 배경색 지정
+                                  Colors.white.withOpacity(0.77), // 배경색 지정
                                   borderRadius: BorderRadius.circular(40),
                                   boxShadow: const [
                                     BoxShadow(
                                       color:
-                                          Color.fromRGBO(217, 213, 252, 0.70),
+                                      Color.fromRGBO(217, 213, 252, 0.70),
                                       spreadRadius: 1, // 그림자의 퍼짐 정도
                                       blurRadius: 12, // 그림자의 흐림 정도
                                       offset: Offset(0, 2), // 그림자의 위치 (x, y)
@@ -357,30 +355,30 @@ class _MainPageState extends State<MainPage> {
                                   height: (MediaQuery.of(context).size.height) /
                                       2.1,
                                   width:
-                                      (MediaQuery.of(context).size.width) / 1.2,
+                                  (MediaQuery.of(context).size.width) / 1.2,
                                   child: Stack(
                                     children: [
                                       Container(
                                         padding: EdgeInsets.fromLTRB(
                                             ((MediaQuery.of(context)
-                                                    .size
-                                                    .width) /
+                                                .size
+                                                .width) /
                                                 25),
                                             0,
                                             ((MediaQuery.of(context)
-                                                    .size
-                                                    .width) /
+                                                .size
+                                                .width) /
                                                 25),
                                             0),
                                         child: GridView(
                                           gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                          SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 3,
                                             mainAxisSpacing:
-                                                (MediaQuery.of(context)
-                                                        .size
-                                                        .height) /
-                                                    70,
+                                            (MediaQuery.of(context)
+                                                .size
+                                                .height) /
+                                                70,
                                           ),
                                           children: [
                                             Stack(
@@ -392,8 +390,8 @@ class _MainPageState extends State<MainPage> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                              .size
-                                                              .height) /
+                                                          .size
+                                                          .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -403,7 +401,7 @@ class _MainPageState extends State<MainPage> {
                                                         fontSize: 12,
                                                         color: Colors.black,
                                                         fontFamily:
-                                                            'paybooc Light',
+                                                        'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -419,8 +417,8 @@ class _MainPageState extends State<MainPage> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                              .size
-                                                              .height) /
+                                                          .size
+                                                          .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -430,7 +428,7 @@ class _MainPageState extends State<MainPage> {
                                                         fontSize: 12,
                                                         color: Colors.black,
                                                         fontFamily:
-                                                            'paybooc Light',
+                                                        'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -446,8 +444,8 @@ class _MainPageState extends State<MainPage> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                              .size
-                                                              .height) /
+                                                          .size
+                                                          .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -457,7 +455,7 @@ class _MainPageState extends State<MainPage> {
                                                         fontSize: 12,
                                                         color: Colors.black,
                                                         fontFamily:
-                                                            'paybooc Light',
+                                                        'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -476,8 +474,8 @@ class _MainPageState extends State<MainPage> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                              .size
-                                                              .height) /
+                                                          .size
+                                                          .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -487,7 +485,7 @@ class _MainPageState extends State<MainPage> {
                                                         fontSize: 12,
                                                         color: Colors.black,
                                                         fontFamily:
-                                                            'paybooc Light',
+                                                        'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -506,8 +504,8 @@ class _MainPageState extends State<MainPage> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                              .size
-                                                              .height) /
+                                                          .size
+                                                          .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -517,7 +515,7 @@ class _MainPageState extends State<MainPage> {
                                                         fontSize: 12,
                                                         color: Colors.black,
                                                         fontFamily:
-                                                            'paybooc Light',
+                                                        'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -533,8 +531,8 @@ class _MainPageState extends State<MainPage> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                              .size
-                                                              .height) /
+                                                          .size
+                                                          .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -544,7 +542,7 @@ class _MainPageState extends State<MainPage> {
                                                         fontSize: 12,
                                                         color: Colors.black,
                                                         fontFamily:
-                                                            'paybooc Light',
+                                                        'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -562,8 +560,8 @@ class _MainPageState extends State<MainPage> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                              .size
-                                                              .height) /
+                                                          .size
+                                                          .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -573,7 +571,7 @@ class _MainPageState extends State<MainPage> {
                                                         fontSize: 12,
                                                         color: Colors.black,
                                                         fontFamily:
-                                                            'paybooc Light',
+                                                        'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -589,8 +587,8 @@ class _MainPageState extends State<MainPage> {
                                                   offset: Offset(
                                                       0,
                                                       (MediaQuery.of(context)
-                                                              .size
-                                                              .height) /
+                                                          .size
+                                                          .height) /
                                                           17.7),
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -600,7 +598,7 @@ class _MainPageState extends State<MainPage> {
                                                         fontSize: 12,
                                                         color: Colors.black,
                                                         fontFamily:
-                                                            'paybooc Light',
+                                                        'paybooc Light',
                                                       ),
                                                     ),
                                                   ),
@@ -620,7 +618,7 @@ class _MainPageState extends State<MainPage> {
                               child: Container(
                                 padding: const EdgeInsets.all(10),
                                 width:
-                                    (MediaQuery.of(context).size.width) / 1.14,
+                                (MediaQuery.of(context).size.width) / 1.14,
                                 height: isContainerVisible ? 250 : null,
                                 decoration: BoxDecoration(
                                   color: Colors.white.withOpacity(0.77),
@@ -628,7 +626,7 @@ class _MainPageState extends State<MainPage> {
                                   boxShadow: const [
                                     BoxShadow(
                                       color:
-                                          Color.fromRGBO(217, 213, 252, 0.70),
+                                      Color.fromRGBO(217, 213, 252, 0.70),
                                       spreadRadius: 1,
                                       blurRadius: 12,
                                       offset: Offset(0, 2),
@@ -640,15 +638,15 @@ class _MainPageState extends State<MainPage> {
                                     SingleChildScrollView(
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                             children: [
                                               IconButton(
                                                 onPressed: () {
@@ -659,8 +657,8 @@ class _MainPageState extends State<MainPage> {
                                                 icon: Image.asset(
                                                   'assets/briefing.png',
                                                   height: MediaQuery.of(context)
-                                                          .size
-                                                          .height /
+                                                      .size
+                                                      .height /
                                                       18.18,
                                                   color: isTts
                                                       ? const Color(0xff5772D3)
@@ -669,19 +667,19 @@ class _MainPageState extends State<MainPage> {
                                               ),
                                               SizedBox(
                                                 width: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
+                                                    .size
+                                                    .width /
                                                     63,
                                               ),
                                               Expanded(
                                                 child: Align(
                                                   alignment:
-                                                      Alignment.topCenter,
+                                                  Alignment.topCenter,
                                                   child: FutureBuilder<String>(
                                                     builder:
                                                         (context, snapshot) {
                                                       if (snapshot
-                                                              .connectionState ==
+                                                          .connectionState ==
                                                           ConnectionState
                                                               .waiting) {
                                                         return const CircularProgressIndicator();
@@ -694,16 +692,16 @@ class _MainPageState extends State<MainPage> {
                                                             snapshot.data;
                                                         return Align(
                                                           alignment:
-                                                              Alignment.center,
+                                                          Alignment.center,
                                                           child: Text(
                                                             aiWeatherresponse!,
                                                             overflow:
-                                                                TextOverflow
-                                                                    .clip,
+                                                            TextOverflow
+                                                                .clip,
                                                             style: const TextStyle(
                                                                 fontWeight:
-                                                                    FontWeight
-                                                                        .w300,
+                                                                FontWeight
+                                                                    .w300,
                                                                 fontSize: 14),
                                                           ),
                                                         );
@@ -711,11 +709,11 @@ class _MainPageState extends State<MainPage> {
                                                     },
                                                     future: isContainerVisible
                                                         ? brifMorning(
-                                                            _weather!.lon,
-                                                            _weather!.lat)
+                                                        _weather!.lon,
+                                                        _weather!.lat)
                                                         : makeASummary(
-                                                            _weather!.lon,
-                                                            _weather!.lat),
+                                                        _weather!.lon,
+                                                        _weather!.lat),
                                                   ),
                                                 ),
                                               ),
@@ -723,14 +721,14 @@ class _MainPageState extends State<MainPage> {
                                                 onPressed: () {
                                                   setState(() {
                                                     isContainerVisible =
-                                                        !isContainerVisible;
+                                                    !isContainerVisible;
                                                   });
                                                 },
                                                 icon: isContainerVisible
                                                     ? const Icon(
-                                                        Icons.keyboard_arrow_up)
+                                                    Icons.keyboard_arrow_up)
                                                     : const Icon(Icons
-                                                        .keyboard_arrow_down),
+                                                    .keyboard_arrow_down),
                                               ),
                                             ],
                                           ),
@@ -757,7 +755,7 @@ class _MainPageState extends State<MainPage> {
             children: <Widget>[
               Align(
                 alignment:
-                    Alignment(Alignment.bottomRight.x, Alignment.bottomRight.y),
+                Alignment(Alignment.bottomRight.x, Alignment.bottomRight.y),
                 child: FloatingActionButton(
                   heroTag: 'chat',
                   onPressed: () {

@@ -13,12 +13,14 @@ class WeatherBook extends StatefulWidget {
   final double latitude;
   final double longitude;
   final String id;
+  final String city;
 
   const WeatherBook({
     Key? key,
     required this.id,
     required this.latitude,
     required this.longitude,
+    required this.city,
   }) : super(key: key);
 
   @override
@@ -148,6 +150,7 @@ class _WeatherBookState extends State<WeatherBook> {
                                   await SharedPreferences.getInstance();
                                   await prefs.remove(widget.id + '_latitude');
                                   await prefs.remove(widget.id + '_longitude');
+                                  await prefs.remove(widget.id + '_city');
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -178,7 +181,7 @@ class _WeatherBookState extends State<WeatherBook> {
                                                     .size
                                                     .width /
                                                 140),
-                                        Text(_weather!.city,
+                                        Text(widget.city,
                                             style: const TextStyle(
                                                 fontFamily: 'paybooc Bold',
                                                 fontSize: 20)), // 지역 이름(포항시)

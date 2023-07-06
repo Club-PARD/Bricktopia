@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:homepage/home/homepage.dart';
 import 'package:http/http.dart' as http;
 import 'package:perfect_volume_control/perfect_volume_control.dart';
@@ -15,12 +16,14 @@ class AddShowLocation extends StatefulWidget {
   final double? longitude;
   final double? latitude;
   final String id;
+  final String localName;
 
   const AddShowLocation({
     super.key,
     this.longitude,
     this.latitude,
     required this.id,
+    required this.localName,
   });
 
   @override
@@ -124,6 +127,7 @@ class _AddShowLocationState extends State<AddShowLocation> {
     tts.setSpeechRate(0.4);
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -164,6 +168,7 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                   widget.id + '_latitude', widget.latitude!);
                               await prefs.setDouble(
                                   widget.id + '_longitude', widget.longitude!);
+                              await prefs.setString(widget.id+'_city', widget.localName!);
 
                               Navigator.push(
                                 context,
@@ -213,7 +218,7 @@ class _AddShowLocationState extends State<AddShowLocation> {
                                                       .size
                                                       .width /
                                                   140),
-                                          Text(_weather!.city,
+                                          Text(widget.localName,
                                               style: const TextStyle(
                                                   fontFamily: 'paybooc Bold',
                                                   fontSize: 20)), // 지역 이름(포항시)
