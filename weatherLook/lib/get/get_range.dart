@@ -12,7 +12,7 @@ String getAvgTempString(double minTemp, double maxTemp) {
   } else if (avgTemp >= 17 && avgTemp < 20) {
     avgRange = '17_to_19';
   } else if (minTemp >= 20 && avgTemp < 23) {
-    avgRange = 'avgTemp';
+    avgRange = '20_to_22';
   } else if (avgTemp >= 23 && avgTemp < 28) {
     avgRange = '23_to_27';
   } else if (avgTemp >= 28) {

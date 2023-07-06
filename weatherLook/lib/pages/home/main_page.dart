@@ -11,7 +11,7 @@ import 'package:weather_summary/service/item_service.dart';
 import 'package:weather_summary/widget/home/home_app_bar_widget.dart';
 import 'package:weather_summary/widget/home/home_weather_widget.dart';
 import 'package:weather_summary/widget/home/item_widget.dart';
-import 'package:weather_summary/widget/home/home_summary_box_widget.dart';
+import 'package:weather_summary/widget/home/summary_box_widget.dart';
 import 'package:weather_summary/widget/image/background_widget.dart';
 
 class MainPage extends StatefulWidget {
