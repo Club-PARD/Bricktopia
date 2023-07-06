@@ -185,35 +185,34 @@ class _WeatherPageState extends State<WeatherPage> {
 // 메인 날씨 아이콘
   Widget mainImage(String mainWeather) {
     if (mainWeather == "Clouds") {
-      return Image.asset("assets/weather/03d.png",
+      return Image.asset("assets/weather/big_clouds.png",
           width: (MediaQuery.of(context).size.width) / 3.1583,
           fit: BoxFit.cover);
     } else if (mainWeather == "FewClouds") {
-      return Image.asset("assets/weather/02d.png",
+      return Image.asset("assets/weather/big_cloud_sun.png",
           width: (MediaQuery.of(context).size.width) / 3.1583,
           fit: BoxFit.cover);
     } else if (mainWeather == "Rain") {
-      return Image.asset("assets/weather/09d.png",
+      return Image.asset("assets/weather/big_rainy.png",
           width: (MediaQuery.of(context).size.width) / 3.1583,
           fit: BoxFit.cover);
     } else if (mainWeather == "Snow") {
-      return Image.asset("assets/weather/13d.png",
+      return Image.asset("assets/weather/big_snow.png",
           width: (MediaQuery.of(context).size.width) / 3.1583,
           fit: BoxFit.cover);
     } else if (mainWeather == "Clear") {
-      return Image.asset("assets/weather/01d.png",
+      return Image.asset("assets/weather/big_sun.png",
           width: (MediaQuery.of(context).size.width) / 3.1583,
           fit: BoxFit.cover);
     } else if (mainWeather == "Thunderstorm") {
-      return Image.asset("assets/sun.png",
+      return Image.asset("assets/weather/big_thunder.png",
+          width: (MediaQuery.of(context).size.width) / 3.1583,
+          fit: BoxFit.cover);
+    } else if (mainWeather == "Night") {
+      return Image.asset("assets/weather/big_night.png",
           width: (MediaQuery.of(context).size.width) / 3.1583,
           fit: BoxFit.cover);
     }
-    //  else if (mainWeather == "Night") {
-    //   return Image.asset("assets/sun.png",
-    //       width: (MediaQuery.of(context).size.width) / 3.1583,
-    //       fit: BoxFit.cover);
-    // }
     return Image.asset("assets/cloud_sun.png",
         width: (MediaQuery.of(context).size.width) / 3.1583, fit: BoxFit.cover);
   }
@@ -264,380 +263,455 @@ class _WeatherPageState extends State<WeatherPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(child: homeImage(currentWeatherMain)),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: (MediaQuery.of(context).size.height) / 12,
-              ),
-              Center(
-                child: mainImage(
-                  currentWeatherMain,
-                ), // 날씨 아이콘
-              ),
-              SizedBox(
-                height: (MediaQuery.of(context).size.height) / 50,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Scaffold(
+      body: FutureBuilder(
+          future: _fetch1(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            //data를 아직 받지 못했을 때 실행되는 부분
+            if (snapshot.hasData == false) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+                ),
+              );
+            }
+            //error 발생될 경우
+            else if (snapshot.hasError) {
+              return Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text('Error: ${snapshot.error}',
+                      style: const TextStyle(fontSize: 15)));
+            }
+            //데이터를 정상적으로 가져온 경우
+            else {
+              return Stack(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: (MediaQuery.of(context).size.width) / 12),
-                    child: Column(
+                  Container(child: homeImage(currentWeatherMain)),
+                  Scaffold(
+                    backgroundColor: Colors.transparent,
+                    body: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: (MediaQuery.of(context).size.height) / 40,
+                          height: (MediaQuery.of(context).size.height) / 12,
+                        ),
+                        Center(
+                          child: mainImage(
+                            currentWeatherMain,
+                          ), // 날씨 아이콘
+                        ),
+                        SizedBox(
+                          height: (MediaQuery.of(context).size.height) / 55,
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Image.asset('assets/rain.png'),
-                                    SizedBox(
-                                        width: (MediaQuery.of(context)
-                                                .size
-                                                .width) /
-                                            64),
-                                    Text('${currentPop.toInt()}%',
-                                        style: const TextStyle(
-                                            fontSize: 14,
-                                            color: Color(0xff4E5FFF),
-                                            fontFamily:
-                                                'NanumGothic-Regular')), // 강수량
-                                  ],
-                                ),
-                                SizedBox(
-                                  height:
-                                      (MediaQuery.of(context).size.height) / 70,
-                                ),
-                                Text(currentWeatherDescription,
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: 'NanumGothic-Regular'))
-                              ],
-                            )
-                          ],
-                        ),
-                        // 첫 번째 Column의 내용
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text('${currentTemperature.toInt()}°',
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 36,
-                                fontFamily: 'NanumGothic-Light')),
-                        SizedBox(
-                          height: (MediaQuery.of(context).size.height) / 70,
-                        ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text('${currentMinTemperature.toInt()}',
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      color: Color(0xff4E5FFF),
-                                      fontFamily: 'paybooc Medium')),
-                              SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width / 126),
-                              Image.asset('assets/line.png', width: 18),
-                              SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width / 126),
-                              Text('${currentMaxTemperature.toInt()}',
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      color: Color(0xffDD5441),
-                                      fontFamily: 'paybooc Medium')),
-                            ])
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        right: (MediaQuery.of(context).size.width) / 8),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 32,
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: weatherList.map((weather) {
-                          final List<Map<String, dynamic>> weatherInfoForDate =
-                              weather['weatherInfoForDate'];
-                          return Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: (MediaQuery.of(context).size.width) /
-                                        21),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left:
+                                      (MediaQuery.of(context).size.width) / 12),
+                              child: Column(
                                 children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(0.5),
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                    padding:
-                                        const EdgeInsets.all(8.0), // 내부 여백 설정
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: weatherInfoForDate
-                                            .map((weatherInfo) {
-                                          return Container(
-                                            width:
-                                                48, // Adjust the width as needed
-                                            margin: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  formatTime(
-                                                      weatherInfo['time']),
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      color: Color(0xff4E5FFF),
-                                                      fontFamily:
-                                                          'NanumGothic-Regular'),
-                                                ),
-                                                SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height /
-                                                      100,
-                                                ),
-                                                SizedBox(
-                                                  width: 35.5,
-                                                  height: 35.5,
-                                                  child: mainImage(
-                                                      weatherInfo['weatherMain']
-                                                          .toString()),
-                                                ),
-                                                SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height /
-                                                      100,
-                                                ),
-                                                Text(
-                                                  '${weatherInfo['temperature'].toInt()}°',
-                                                  style: const TextStyle(
-                                                      fontSize: 13.734,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      color: Color(0xff6D6D6D),
-                                                      fontFamily:
-                                                          'paybooc Bold'),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        }).toList(),
-                                      ),
-                                    ),
-                                  ),
-                                  const Divider(),
-                                ],
-                              ),
-                            ],
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(
-                          MediaQuery.of(context).size.width / 18.95,
-                          MediaQuery.of(context).size.height / 40,
-                          MediaQuery.of(context).size.width / 13,
-                          MediaQuery.of(context).size.height / 90),
-                      width: MediaQuery.of(context).size.width / 1.13,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Colors.white.withOpacity(0.5)),
-                      child: Column(
-                        children: [
-                          Container(
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    '    5일간의 날씨',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: 'paybooc Medium',
-                                        color: Color(0xff6D6D6D)),
+                                  SizedBox(
+                                    height:
+                                        (MediaQuery.of(context).size.height) /
+                                            40,
                                   ),
                                   Row(
                                     children: [
-                                      const Text('최고',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Color(0xff6D6D6D),
-                                              fontFamily: 'paybooc Medium')),
-                                      SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              20),
-                                      const Text('최저',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Color(0xff6D6D6D),
-                                              fontFamily: 'paybooc Medium')),
-                                      SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              80),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Image.asset('assets/rain.png'),
+                                              SizedBox(
+                                                  width: (MediaQuery.of(context)
+                                                          .size
+                                                          .width) /
+                                                      64),
+                                              Text('${currentPop.toInt()}%',
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: Color(0xff4E5FFF),
+                                                      fontFamily:
+                                                          'NanumGothic-Regular')), // 강수량
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: (MediaQuery.of(context)
+                                                    .size
+                                                    .height) /
+                                                70,
+                                          ),
+                                          Text(currentWeatherDescription,
+                                              style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontFamily:
+                                                      'NanumGothic-Regular'))
+                                        ],
+                                      )
                                     ],
                                   ),
-                                ]),
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: weatherList.length,
-                            itemBuilder: (context, index) {
-                              final weather = weatherList[index];
-                              final List<Map<String, dynamic>>
-                                  weatherInfoForDate =
-                                  weather['weatherInfoForDate'];
-
-                              final date = DateTime.parse(weather['date']);
-                              final isFutureDate = date.isAfter(DateTime.now()
-                                  .subtract(const Duration(days: 1)));
-
-                              if (!isFutureDate) {
-                                return const SizedBox(); // Skip data from past days
-                              }
-
-                              final isToday = DateTime.now().day == date.day;
-                              final dayLabel = isToday
-                                  ? '오늘'
-                                  : DateFormat('  EEE  ', 'ko_KR').format(date);
-
-                              return Container(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
+                                  // 첫 번째 Column의 내용
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text('${currentTemperature.toInt()}°',
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 36,
+                                          fontFamily: 'NanumGothic-Light')),
+                                  SizedBox(
+                                    height:
+                                        (MediaQuery.of(context).size.height) /
+                                            70,
+                                  ),
+                                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  32,
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  50,
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  30,
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  50,
-                                            ),
-                                            child: Text(dayLabel,
-                                                style: const TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.black,
-                                                    fontFamily:
-                                                        'baybooc Medium'))),
-                                        SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                15,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                15,
-                                            child: fiveDayImage(weather[
-                                                'avgWeatherMain'])), // 아이콘 바꾸기
-                                        SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                30),
-                                        if ('${weather['avgPop'].toInt()}%' !=
-                                            '0%')
-                                          Text('${weather['avgPop'].toInt()}%',
-                                              style:
-                                                  const TextStyle(
-                                                      fontSize: 13,
-                                                      fontFamily:
-                                                          'NanumGothic-Regular',
-                                                      color:
-                                                          Color(0xff4E5FFF))),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                            '${weather['maxTemperature'].toInt()}°',
+                                        Text('${currentMinTemperature.toInt()}',
                                             style: const TextStyle(
-                                                fontSize: 15,
-                                                color: Color(0xffDD5441),
-                                                fontFamily: 'paybooc Medium')),
-                                        SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                16),
-                                        Text(
-                                            '${weather['minTemperature'].toInt()}°',
-                                            style: const TextStyle(
-                                                fontSize: 15,
+                                                fontSize: 16,
                                                 color: Color(0xff4E5FFF),
                                                 fontFamily: 'paybooc Medium')),
+                                        SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                126),
+                                        Image.asset('assets/line.png',
+                                            width: 18),
+                                        SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                126),
+                                        Text('${currentMaxTemperature.toInt()}',
+                                            style: const TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xffDD5441),
+                                                fontFamily: 'paybooc Medium')),
+                                      ])
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  right:
+                                      (MediaQuery.of(context).size.width) / 8),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 39,
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: weatherList.map((weather) {
+                                    final List<Map<String, dynamic>>
+                                        weatherInfoForDate =
+                                        weather['weatherInfoForDate'];
+                                    return Row(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: (MediaQuery.of(context)
+                                                      .size
+                                                      .width) /
+                                                  21),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white
+                                                    .withOpacity(0.3),
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                              ),
+                                              padding: const EdgeInsets.all(
+                                                  8.0), // 내부 여백 설정
+                                              child: SingleChildScrollView(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                child: Row(
+                                                  children: weatherInfoForDate
+                                                      .map((weatherInfo) {
+                                                    return Container(
+                                                      width:
+                                                          48, // Adjust the width as needed
+                                                      margin:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            formatTime(
+                                                                weatherInfo[
+                                                                    'time']),
+                                                            style: const TextStyle(
+                                                                fontSize: 12,
+                                                                color: Color(
+                                                                    0xff4E5FFF),
+                                                                fontFamily:
+                                                                    'NanumGothic-Regular'),
+                                                          ),
+                                                          SizedBox(
+                                                            height: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height /
+                                                                100,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 35.5,
+                                                            height: 35.5,
+                                                            child: mainImage(
+                                                                weatherInfo[
+                                                                        'weatherMain']
+                                                                    .toString()),
+                                                          ),
+                                                          SizedBox(
+                                                            height: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height /
+                                                                100,
+                                                          ),
+                                                          Text(
+                                                            '${weatherInfo['temperature'].toInt()}°',
+                                                            style: const TextStyle(
+                                                                fontSize:
+                                                                    13.734,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                                color: Color(
+                                                                    0xff6D6D6D),
+                                                                fontFamily:
+                                                                    'paybooc Bold'),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                              ),
+                                            ),
+                                            const Divider(),
+                                          ],
+                                        ),
                                       ],
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.fromLTRB(
+                                    MediaQuery.of(context).size.width / 18.95,
+                                    MediaQuery.of(context).size.height / 45,
+                                    MediaQuery.of(context).size.width / 13,
+                                    MediaQuery.of(context).size.height / 90),
+                                width: MediaQuery.of(context).size.width / 1.13,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: Colors.white.withOpacity(0.3)),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const Text(
+                                              '    5일간의 날씨',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontFamily: 'paybooc Medium',
+                                                  color: Color(0xff6D6D6D)),
+                                            ),
+                                            Row(
+                                              children: [
+                                                const Text('최고',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color:
+                                                            Color(0xff6D6D6D),
+                                                        fontFamily:
+                                                            'paybooc Medium')),
+                                                SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            20),
+                                                const Text('최저',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color:
+                                                            Color(0xff6D6D6D),
+                                                        fontFamily:
+                                                            'paybooc Medium')),
+                                                SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            80),
+                                              ],
+                                            ),
+                                          ]),
+                                    ),
+                                    ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: weatherList.length,
+                                      itemBuilder: (context, index) {
+                                        final weather = weatherList[index];
+                                        final List<Map<String, dynamic>>
+                                            weatherInfoForDate =
+                                            weather['weatherInfoForDate'];
+
+                                        final date =
+                                            DateTime.parse(weather['date']);
+                                        final isFutureDate = date.isAfter(
+                                            DateTime.now().subtract(
+                                                const Duration(days: 1)));
+
+                                        if (!isFutureDate) {
+                                          return const SizedBox(); // Skip data from past days
+                                        }
+
+                                        final isToday =
+                                            DateTime.now().day == date.day;
+                                        final dayLabel = isToday
+                                            ? '오늘'
+                                            : DateFormat('  EEE  ', 'ko_KR')
+                                                .format(date);
+
+                                        return SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              17.7,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              35),
+                                                  SizedBox(
+                                                    child: Text(dayLabel,
+                                                        style: const TextStyle(
+                                                            fontSize: 16,
+                                                            color: Colors.black,
+                                                            fontFamily:
+                                                                'baybooc Medium')),
+                                                  ),
+                                                  SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              29),
+                                                  SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              11,
+                                                      child: fiveDayImage(weather[
+                                                          'avgWeatherMain'])), // 아이콘 바꾸기
+                                                  SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              30),
+                                                  if ('${weather['avgPop'].toInt()}%' !=
+                                                      '0%')
+                                                    Text(
+                                                        '${weather['avgPop'].toInt()}%',
+                                                        style: const TextStyle(
+                                                            fontSize: 13,
+                                                            fontFamily:
+                                                                'NanumGothic-Regular',
+                                                            color: Color(
+                                                                0xff4E5FFF))),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                      '${weather['maxTemperature'].toInt()}°',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          color:
+                                                              Color(0xffDD5441),
+                                                          fontFamily:
+                                                              'paybooc Medium')),
+                                                  SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              16),
+                                                  Text(
+                                                      '${weather['minTemperature'].toInt()}°',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          color:
+                                                              Color(0xff4E5FFF),
+                                                          fontFamily:
+                                                              'paybooc Medium')),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),
-                              );
-                            },
+                              )
+                            ],
                           ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }
+          }),
     );
+  }
+
+  Future<String> _fetch1() async {
+    await Future.delayed(const Duration(seconds: 5));
+    return 'Call Data';
   }
 }
