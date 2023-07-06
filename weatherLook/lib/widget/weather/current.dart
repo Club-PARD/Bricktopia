@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_summary/widget/image/main_image_widget.dart';
 
-class CurrentWeatherWidget extends StatelessWidget {
+class CurrentWeatherWidget extends StatefulWidget {
   final double temperature;
   final double minTemperature;
   final double maxTemperature;
@@ -20,6 +20,11 @@ class CurrentWeatherWidget extends StatelessWidget {
   });
 
   @override
+  State<CurrentWeatherWidget> createState() => _CurrentWeatherWidgetState();
+}
+
+class _CurrentWeatherWidgetState extends State<CurrentWeatherWidget> {
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +33,7 @@ class CurrentWeatherWidget extends StatelessWidget {
           height: (MediaQuery.of(context).size.height) / 12,
         ),
         Center(
-          child: mainImage(context, weatherMain), // 날씨 아이콘
+          child: mainImage(context, widget.weatherMain), // 날씨 아이콘
         ),
         SizedBox(
           height: (MediaQuery.of(context).size.height) / 50,
@@ -56,7 +61,7 @@ class CurrentWeatherWidget extends StatelessWidget {
                                   width:
                                       (MediaQuery.of(context).size.width) / 64),
                               Text(
-                                '${pop.toInt()}%',
+                                '${widget.pop.toInt()}%',
                                 style: const TextStyle(
                                   fontSize: 14,
                                   color: Color(0xff4E5FFF),
@@ -69,7 +74,7 @@ class CurrentWeatherWidget extends StatelessWidget {
                             height: (MediaQuery.of(context).size.height) / 70,
                           ),
                           Text(
-                            weatherDescription,
+                            widget.weatherDescription,
                             style: const TextStyle(
                               fontSize: 14,
                               fontFamily: 'NanumGothic-Regular',
@@ -87,7 +92,7 @@ class CurrentWeatherWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    '${temperature.toInt()}°',
+                    '${widget.temperature.toInt()}°',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 36,
@@ -101,7 +106,7 @@ class CurrentWeatherWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        '${minTemperature.toInt()}',
+                        '${widget.minTemperature.toInt()}',
                         style: const TextStyle(
                           fontSize: 16,
                           color: Color(0xff4E5FFF),
@@ -116,7 +121,7 @@ class CurrentWeatherWidget extends StatelessWidget {
                         width: MediaQuery.of(context).size.width / 126,
                       ),
                       Text(
-                        '${maxTemperature.toInt()}',
+                        '${widget.maxTemperature.toInt()}',
                         style: const TextStyle(
                           fontSize: 16,
                           color: Color(0xffDD5441),

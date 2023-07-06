@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_summary/pages/home/main_page.dart';
 import 'package:weather_summary/pages/item_page.dart';
 import 'package:weather_summary/pages/weather.dart';
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const WeatherPage(),
+      home: const MainPage(),
       routes: {
         '/item': (BuildContext context) => const ItemPage(),
         '/weather': (BuildContext context) => const WeatherPage(),
