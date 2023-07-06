@@ -1,6 +1,6 @@
 {
-    "name": "homepage",
-    "short_name": "homepage",
+    "name": "weather_summary",
+    "short_name": "weather_summary",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,12 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:homepage/app.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:weather_summary/app.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-<<<<<<< Updated upstream
-  runApp(const ProviderScope(child: WeatherLook()));
-=======
-  runApp(const ProviderScope(child: App()));
->>>>>>> Stashed changes
+  await Firebase.initializeApp();
+  initializeDateFormatting('ko_KR', null).then((_) {
+    runApp(const MyApp());
+  });
 }

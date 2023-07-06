@@ -1,90 +1,161 @@
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: library_private_types_in_public_api, avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:homepage/weather/weather_api.dart';
-import 'package:homepage/weather/weather_model.dart';
-import 'package:homepage/weather/widget/hourly_box.dart';
-import 'package:homepage/weather/widget/weather_box.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:weather_summary/get/get_location.dart';
+import 'package:weather_summary/get/get_weather_api.dart';
+import 'package:weather_summary/widget/image/background_widget.dart';
+import 'package:weather_summary/widget/weather/current.dart';
+import 'package:weather_summary/widget/weather/five_day_widget.dart';
+import 'package:weather_summary/widget/weather/hourly.dart';
 
 class WeatherPage extends StatefulWidget {
-  const WeatherPage({super.key});
+  const WeatherPage({Key? key}) : super(key: key);
 
   @override
   _WeatherPageState createState() => _WeatherPageState();
 }
 
 class _WeatherPageState extends State<WeatherPage> {
-  Weather? _weather;
+  List<Map<String, dynamic>> weatherList = [];
+
+  double currentTemperature = 0.0;
+  double currentMaxTemperature = 0.0;
+  double currentMinTemperature = 0.0;
+  double currentPop = 0.0;
+  String currentWeatherDescription = '';
+  String currentWeatherMain = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getWeatherData();
+  }
+
+  void getWeatherData() async {
+    try {
+      final Position position = await getCurrentLocation();
+      final double latitude = position.latitude;
+      final double longitude = position.longitude;
+
+      final Map<String, dynamic> weatherData =
+          await fetchWeatherData(latitude, longitude);
+
+      final List<dynamic> forecasts = weatherData['list'];
+      weatherList = [];
+
+      Map<String, List<Map<String, dynamic>>> weatherByDate = {};
+
+      for (var forecast in forecasts) {
+        final String date = forecast['dt_txt']
+            .substring(0, 10); // Extracting only the date part
+        final double temperature = forecast['main']['temp'].toDouble();
+        final double pop = forecast['pop'].toDouble();
+        final String weatherMain = forecast['weather'][0]['main'];
+        final String time = forecast['dt_txt']
+            .substring(11, 16); // Extracting only the time part
+
+        if (!weatherByDate.containsKey(date)) {
+          weatherByDate[date] = [];
+        }
+
+        weatherByDate[date]!.add({
+          'temperature': temperature,
+          'pop': pop * 100,
+          'weatherMain': weatherMain,
+          'time': time,
+        });
+      }
+
+      weatherByDate.forEach((date, weatherDataList) {
+        double maxTemperature = weatherDataList
+            .map<double>((weatherData) => weatherData['temperature'])
+            .reduce((value, element) => value > element ? value : element);
+        double minTemperature = weatherDataList
+            .map<double>((weatherData) => weatherData['temperature'])
+            .reduce((value, element) => value < element ? value : element);
+        double avgPop = weatherDataList
+                .map<double>((weatherData) => weatherData['pop'])
+                .reduce((value, element) => value + element) /
+            weatherDataList.length;
+        String mostFrequentWeatherMain = weatherDataList
+            .map<String>((weatherData) => weatherData['weatherMain'])
+            .toList()
+            .fold<Map<String, int>>(
+                {},
+                (Map<String, int> map, String value) =>
+                    map..update(value, (count) => count + 1, ifAbsent: () => 1))
+            .entries
+            .reduce((entry1, entry2) =>
+                entry1.value > entry2.value ? entry1 : entry2)
+            .key;
+
+        weatherList.add({
+          'date': date,
+          'avgWeatherMain': mostFrequentWeatherMain,
+          'avgPop': avgPop,
+          'minTemperature': minTemperature,
+          'maxTemperature': maxTemperature,
+          'weatherInfoForDate': weatherDataList,
+        });
+
+        // Set currentMaxTemperature and currentMinTemperature for today
+        final today = DateTime.now().toString().substring(0, 10);
+        if (date == today) {
+          setState(() {
+            currentMaxTemperature = maxTemperature;
+            currentMinTemperature = minTemperature;
+          });
+        }
+      });
+
+      setState(() {
+        final currentWeather = forecasts.first;
+        currentTemperature = currentWeather['main']['temp'].toDouble();
+        currentPop = currentWeather['pop'].toDouble() * 100;
+        currentWeatherDescription = currentWeather['weather'][0]['description'];
+        currentWeatherMain = currentWeather['weather'][0]['main'];
+      });
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.search,
-                color: Colors.black,
-              ),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.settings,
-                color: Colors.black,
-              ),
-            ),
-          ],
+    return Stack(
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: homeImage(context, currentWeatherMain),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 35),
-          child: Column(
-            children: [
-              FutureBuilder(
-                builder: (context, snapshot) {
-                  if (snapshot != null) {
-                    _weather = snapshot.data;
-                    if (_weather == null) {
-                      return const Text("Loading weather...");
-                    } else {
-                      return Column(
-                        children: [
-                          weatherBox(_weather!),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: List.generate(
-                                8,
-                                (index) => HourlyBox(
-                                  temp: _weather!.hourly_temp[index],
-                                  icon: _weather!.hourly_icon[index],
-                                  time: _weather!.hourly_dt[index],
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          //WeeklyBox(weather: _weather!),
-                        ],
-                      );
-                    }
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                },
-                future: getCurrentWeather(),
-              ),
-            ],
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                CurrentWeatherWidget(
+                  temperature: currentTemperature,
+                  minTemperature: currentMinTemperature,
+                  maxTemperature: currentMaxTemperature,
+                  pop: currentPop,
+                  weatherDescription: currentWeatherDescription,
+                  weatherMain: currentWeatherMain,
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 32,
+                ),
+                HourlyWeathertWidget(weatherList: weatherList),
+                FiveDayWeatherWidget(weatherList: weatherList),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 32,
+                ),
+              ],
+            ),
           ),
-        ));
+        ),
+      ],
+    );
   }
 }

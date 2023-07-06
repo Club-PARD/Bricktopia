@@ -3,7 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  flutter_tts
+  firebase_core
   geolocator_windows
 )
 
