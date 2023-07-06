@@ -55,6 +55,8 @@ dependencies:
   firebase_core: ^2.14.0
   firebase_storage: ^11.2.4
   cloud_firestore: ^4.8.2
+  video_player: ^2.1.11
+  
 
 
 dev_dependencies:
@@ -87,6 +89,7 @@ flutter:
     - assets/items/.
     - assets/weather_mini/.
     - assets/home/.
+    - assets/splash.mp4
 
   fonts:
     - family: "NanumGothic-Light"
