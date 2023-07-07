@@ -2,6 +2,9 @@
 <br>
 ⬇️ 클릭하고 Weather.look˚ 더 알아보기 ⬇️ <br> 
 <a href="https://bricktopia-define-world.notion.site/0c416e693eaf4921b5291ced0abce4a8?pvs=4"><img src="https://file.notion.so/f/s/7b981eb9-2cbb-4ccd-bf55-944fcf8e5c2d/Untitled.png?id=72f53076-5e89-4adf-85bf-f07a4ef3f1e7&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688803200000&signature=cGlQkig8R5kXkSS4Vb_MxIDmjBKqFNKq6oTVLNCjdZ8&downloadName=Untitled.png" width="1000"></a>
+https://github.com/s1mjane/ossTeam/assets/100616572/a8144d05-9215-47e5-9483-a0e206d22323
+<a href="https://bricktopia-define-world.notion.site/0c416e693eaf4921b5291ced0abce4a8?pvs=4"><img src="https://github.com/s1mjane/ossTeam/assets/100616572/a8144d05-9215-47e5-9483-a0e206d22323" width="1000"></a>
+
 
 
 </br>
@@ -42,8 +45,8 @@
 <br>
 
 ### 📱 웨더룩 사용하기
- <img src="https://file.notion.so/f/s/2cfd1b33-0608-4e25-a8c5-a3f4c6fa3813/Untitled.png?id=13465bac-29e6-438c-8377-e34c149e7fae&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=I0Ngbt2T7mP41Aq4G_jpPdEhTQg-zYT8jn4WxqpZdJU&downloadName=Untitled.png" width=100> <br>
-<a href="https://bricktopia-define-world.notion.site/0c416e693eaf4921b5291ced0abce4a8?pvs=4"><img src="https://github.com/s1mjane/ossTeam/assets/100616572/738cba18-1e35-4955-b17b-b663827abdc8" width="500"></a> <br>
+
+<a href="https://bricktopia-define-world.notion.site/0c416e693eaf4921b5291ced0abce4a8?pvs=4"><img src="https://github.com/s1mjane/ossTeam/assets/100616572/738cba18-1e35-4955-b17b-b663827abdc8" width="500"></a>  <img src="https://file.notion.so/f/s/2cfd1b33-0608-4e25-a8c5-a3f4c6fa3813/Untitled.png?id=13465bac-29e6-438c-8377-e34c149e7fae&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=I0Ngbt2T7mP41Aq4G_jpPdEhTQg-zYT8jn4WxqpZdJU&downloadName=Untitled.png" width=00> <br>
  <img src="https://file.notion.so/f/s/3704e22c-7dd4-49ef-b676-aeb4249e85b1/Untitled.png?id=298191e5-90f7-475d-af6f-a4a397ddefef&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688824800000&signature=dW7yLbDmaVtpXrL7dPcOmcLEcjD8HvlCSyaFgTU_l-M&downloadName=Untitled.png" height=350>
  <img src="https://file.notion.so/f/s/51b25697-e21a-483a-a6de-d5657fe57873/Untitled.png?id=cbc33a96-7dcd-4aff-b20c-d22497958d96&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688824800000&signature=EHC-rd8F-YguOCshZ3JGm-Y5Q-wVPg7HM1Czx1u4RQU&downloadName=Untitled.png" height=350>
  
