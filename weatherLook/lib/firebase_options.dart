@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyADCnjMWwDNu3_8-bRid-347WJiSI7Kvpk',
-    appId: '1:414170479907:android:555d9fd98756fb9d6ce096',
+    appId: '1:414170479907:android:2f63f835f6ad7c026ce096',
     messagingSenderId: '414170479907',
     projectId: 'weather-look-dd8f4',
     databaseURL: 'https://weather-look-dd8f4-default-rtdb.firebaseio.com',

@@ -23,11 +23,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    chatFirst();
   }
 
+/*
   void chatFirst() async {
     final chats = ref.read(chatsProvider.notifier);
     chats.add(const ChatModel(
@@ -41,7 +40,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       isMe: false,
     ));
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,13 +81,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             color: const Color(0xffD9D9D9),
             panel: Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       height: 3,
-                      margin: const EdgeInsets.symmetric(horizontal: 160,vertical: 5),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 160, vertical: 5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.grey.shade500,
@@ -101,14 +102,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                         chats.add(ChatModel(
                           id: DateTime.now().toString(),
                           message:
-                          "원하는 지역을 입력해주세용:) \n <날씨>가 들어가게 입력 \nex) 포항 날씨",
+                              "원하는 지역을 입력해주세용:) \n <날씨>가 들어가게 입력 \nex) 포항 날씨",
                           isMe: false,
                         ));
-
                       },
                       child: const Text('원하는 지역의 날씨가?!😮'),
                     ),
-                    const Divider(color: Color(0xffF4F4F4),),
+                    const Divider(
+                      color: Color(0xffF4F4F4),
+                    ),
                     ElevatedButton(
                       onPressed: () {
                         // 버튼 2 동작 처리
@@ -119,9 +121,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           isMe: false,
                         ));
                       },
-                      child: Text('특별한 오늘, 도대체 뭘 입어야?!😣'),
+                      child: const Text('특별한 오늘, 도대체 뭘 입어야?!😣'),
                     ),
-                    Divider(color: Color(0xffF4F4F4),),
+                    const Divider(
+                      color: Color(0xffF4F4F4),
+                    ),
                     ElevatedButton(
                       onPressed: () {
                         // 버튼 3 동작 처리
@@ -133,32 +137,27 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           isMe: false,
                         ));
                       },
-                      child: Text('멀리가는데 짐 뭘 챙겨야?!🤔'),
+                      child: const Text('멀리가는데 짐 뭘 챙겨야?!🤔'),
                     ),
                   ],
                 ),
               ),
             ),
-
             collapsed: Container(
-              decoration: BoxDecoration(
-                  color: Colors.blueGrey,
-                  borderRadius: radius
-              ),
-              child: Center(
+              decoration:
+                  BoxDecoration(color: Colors.blueGrey, borderRadius: radius),
+              child: const Center(
                 child: Text(
                   "위로 올려주세요:)",
                   style: TextStyle(color: Colors.white),
                 ),
               ),
             ),
-
             borderRadius: radius,
           ),
-
           Container(
             color: Colors.black, // 검정색으로 변경
-            child: Padding(
+            child: const Padding(
               padding: EdgeInsets.all(12.0),
               child: Column(
                 children: [

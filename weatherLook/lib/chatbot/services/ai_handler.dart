@@ -10,7 +10,7 @@ class AIHandler {
   List<List<WeatherData>> groupedWeatherDataList = [];
 
   final _openAI = OpenAI.instance.build(
-    token: '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',
+    token: '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',
     baseOption: HttpSetup(
       receiveTimeout: const Duration(seconds: 60),
       connectTimeout: const Duration(seconds: 60),
@@ -45,9 +45,9 @@ class AIHandler {
       final weather = data['weather'][0]['main'];
       final temperature = data['main']['temp'];
       final humidity = data['main']['humidity'];
-      final pop = data['pop'];
+      final rain = data['rain'][0]['1h'];
 
-      return 'Current weather in $city:\nWeather: $weather\nTemperature: $temperature\nHumidity: $humidity\nPrecipitation: $pop';
+      return 'Current weather in $city:\nWeather: $weather\nTemperature: $temperature\nHumidity: $humidity\n rain: $rain';
     } else {
       return 'Failed to fetch weather data';
     }
@@ -63,9 +63,8 @@ class AIHandler {
       final weather = data['weather'][0]['main'];
       final temperature = data['main']['temp'];
       final humidity = data['main']['humidity'];
-      final pop = data['pop'];
 
-      return 'Current weather:\nWeather: $weather\nTemperature: $temperature\nHumidity: $humidity\nPrecipitation: $pop';
+      return 'Current weather:\nWeather: $weather\nTemperature: $temperature\nHumidity: $humidity\n ';
     } else {
       return 'Failed to fetch weather data';
     }

@@ -37,17 +37,17 @@ class _ToggleButtonState extends State<ToggleButton> {
       onPressed: widget._isReplying
           ? null
           : widget._inputMode == InputMode.text
-          ? widget._sendTextMessage
-          : widget._sendVoiceMessage,
-      child: Container(
+              ? widget._sendTextMessage
+              : widget._sendVoiceMessage,
+      child: SizedBox(
         width: 25, // 원하는 너비
         height: 25, // 원하는 높이
         child: Image.asset(
           widget._inputMode == InputMode.text
-              ? "icon/icon_send.png"
+              ? "assets/icon/icon_send.png"
               : widget._isListening
-              ? "icon/icon_mic.png"
-              : "icon/icon_mic.png",
+                  ? "assets/icon/icon_mic.png"
+                  : "assets/icon/icon_mic.png",
           fit: BoxFit.cover, // 이미지를 컨테이너에 맞게 조정
         ),
       ),

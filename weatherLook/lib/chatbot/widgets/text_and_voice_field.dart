@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:homepage/chatbot/widgets/todayWeather.dart';
+import 'package:weather_summary/chatbot/widgets/todayWeather.dart';
 
 import '../models/chat_model.dart';
 import '../providers/chats_provider.dart';
@@ -23,7 +23,6 @@ class TextAndVoiceField extends ConsumerStatefulWidget {
 }
 
 class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
-
   InputMode _inputMode = InputMode.voice;
   final _messageController = TextEditingController();
   final AIHandler _openAI = AIHandler();
@@ -36,7 +35,6 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
   void initState() {
     voiceHandler.initSpeech();
     super.initState();
-
   }
 
   @override
@@ -53,17 +51,18 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
         Row(
           children: [
             Expanded(
-              child: TextField( //
+              child: TextField(
+                //
                 controller: _messageController,
                 onChanged: (value) {
                   value.isNotEmpty
                       ? setInputMode(InputMode.text)
                       : setInputMode(InputMode.voice);
                 },
-                cursorColor:  Theme.of(context).colorScheme.onPrimary,
+                cursorColor: Theme.of(context).colorScheme.onPrimary,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Color(0xFFE8E8E8),
+                  fillColor: const Color(0xFFE8E8E8),
                   hintText: '텍스트를 입력하세요',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -94,11 +93,11 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
                   // "코디"가 포함된 경우에 수행할 동작을 여기에 작성합니다.
                   sendTextMessageCloth(message);
                   // 원하는 동작을 수행하도록 코드를 작성합니다.
-                } else if(message.contains("물품 추천")) {
+                } else if (message.contains("물품 추천")) {
                   // "코디"가 포함되지 않은 경우에 수행할 동작을 여기에 작성합니다.
                   sendTextMessageBag(message);
                   // 원하는 동작을 수행하도록 코드를 작성합니다.
-                }else if(message.contains("웨더룩")){
+                } else if (message.contains("웨더룩")) {
                   // "코디"가 포함되지 않은 경우에 수행할 동작을 여기에 작성합니다.
                   final chats = ref.read(chatsProvider.notifier);
                   chats.add(ChatModel(
@@ -112,18 +111,19 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
                     isMe: false,
                   ));
                   // 원하는 동작을 수행하도록 코드를 작성합니다.
-                }else if(message.contains("날씨")){
+                } else if (message.contains("날씨")) {
                   // "코디"가 포함되지 않은 경우에 수행할 동작을 여기에 작성합니다.
                   String text = message;
                   List<String> parts = text.split(" ");
                   String cityName = parts[0];
 
-                  var translation = await translator.translate(cityName, from: 'ko', to: 'en');
+                  var translation = await translator.translate(cityName,
+                      from: 'ko', to: 'en');
                   String cityTrans = translation.toString();
 
                   sendTextMessageWeather(cityTrans);
                   // 원하는 동작을 수행하도록 코드를 작성합니다.
-                }else{
+                } else {
                   sendTextMessageAI(message);
                 }
               },
@@ -155,13 +155,14 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
       //print(result);
       setListeningState(false);
 
-      if(result.contains("날씨")){
+      if (result.contains("날씨")) {
         // "코디"가 포함되지 않은 경우에 수행할 동작을 여기에 작성합니다.
         String text = result;
         List<String> parts = text.split(" ");
         String cityName = parts[0];
 
-        var translation = await translator.translate(cityName, from: 'ko', to: 'en');
+        var translation =
+            await translator.translate(cityName, from: 'ko', to: 'en');
         String cityTrans = translation.toString();
         sendTextMessageWeather(cityTrans);
         // 원하는 동작을 수행하도록 코드를 작성합니다.
@@ -170,10 +171,12 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
     }
   }
 
-  Future<String> brifMorning(double latitude,double longitude) async {
-    String weatherSummary = await AIHandler().getWeatherDataSummary2(latitude, longitude);
-    String AI_weather = "$weatherSummary + 에 오늘 날씨 20글자로 표현해줘. 오늘 날씨에 맞는 옷차림을 구체적으로 자세하게 한국말로 알려줘. 마지막으로 오늘 하루를 응원하고, 축복해줘.";
-    final aiResponse = await _openAI.getResponse(AI_weather);
+  Future<String> brifMorning(double latitude, double longitude) async {
+    String weatherSummary =
+        await AIHandler().getWeatherDataSummary2(latitude, longitude);
+    String aiWeather =
+        "$weatherSummary + 에 오늘 날씨 20글자로 표현해줘. 오늘 날씨에 맞는 옷차림을 구체적으로 자세하게 한국말로 알려줘. 마지막으로 오늘 하루를 응원하고, 축복해줘.";
+    final aiResponse = await _openAI.getResponse(aiWeather);
     return aiResponse;
   }
 
@@ -186,18 +189,23 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
 
     String weatherSummary = await AIHandler().getWeatherDataSummary(message);
     //final weatherResponse = await _openAI.fetchWeatherData(message);
-    String AI_weather = "$weatherSummary + $message에 오늘 날씨 20글자로 표현해주는데 수치를 단어로 바꿔서 표현해줘, 오늘 날씨에 맞는 옷차림을 어떤 상의, 하의, 아우터, 신발, 악세사리를 옷차림을 구체적으로 자세하게 한국말로 알려줘. 마지막으로 오늘 하루를 응원해줘.";
-   final aiResponse = await _openAI.getResponse(AI_weather);
+    String aiWeather =
+        "$weatherSummary + $message에 오늘 날씨 20글자로 표현해줘. "
+        "오늘 날씨에 맞는 옷차림을 구체적으로 자세하게 한국말로 알려줘. "
+        "마지막으로 오늘 하루를 응원하고, 축복해줘.";
+    final aiResponse = await _openAI.getResponse(aiWeather);
     removeTyping();
 
-    final replyWidget = Container(
+    final replyWidget = SizedBox(
       width: 250,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          const Row(
             children: [
-              SizedBox(width: 55,),
+              SizedBox(
+                width: 55,
+              ),
               Text(
                 "더 원하시는 정보가 있나요?",
                 style: TextStyle(
@@ -207,15 +215,17 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(width: 28,),
+              const SizedBox(
+                width: 28,
+              ),
               ElevatedButton(
-                onPressed: (){
+                onPressed: () {
                   final replyWidget = TodayWeather(message);
                   final chats = ref.read(chatsProvider.notifier);
                   chats.add(ChatModel(
@@ -226,7 +236,7 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
                   ));
                   chats.removeTyping2();
                 },
-                child: Text(
+                child: const Text(
                   "오늘 날씨",
                   style: TextStyle(
                     fontSize: 8,
@@ -234,9 +244,11 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
                   ),
                 ),
               ),
-              SizedBox(width: 30,),
+              const SizedBox(
+                width: 30,
+              ),
               ElevatedButton(
-                onPressed: (){
+                onPressed: () {
                   final replyWidget = FivedayWeather(message);
                   final chats = ref.read(chatsProvider.notifier);
                   chats.add(ChatModel(
@@ -247,7 +259,7 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
                   ));
                   chats.removeTyping3();
                 },
-                child: Text(
+                child: const Text(
                   "5일간 날씨",
                   style: TextStyle(
                     fontSize: 8,
@@ -255,7 +267,9 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
                   ),
                 ),
               ),
-              SizedBox(width: 30,),
+              const SizedBox(
+                width: 30,
+              ),
             ],
           ),
         ],
@@ -311,7 +325,6 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
     addToChatList(aiResponse, false, DateTime.now().toString());
     setReplyingState(false);
   }
-
 
   //필요없어 지금
   void setReplyingState(bool isReplying) {

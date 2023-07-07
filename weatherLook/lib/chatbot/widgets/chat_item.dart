@@ -19,7 +19,7 @@ class ChatItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment:
-        isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+            isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           if (!isMe) ProfileContainer(isMe: isMe),
           if (!isMe) const SizedBox(width: 15),
@@ -68,9 +68,8 @@ class ProfileContainer extends StatelessWidget {
       alignment: Alignment.center,
       width: 45,
       height: 45,
-
       child: Image.asset(
-        isMe ? "icon/logo_black.png" : "icon/Weathy.png",
+        isMe ? "assets/icon/logo_black.png" : "assets/icon/Weathy.png",
       ),
     );
   }
