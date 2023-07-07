@@ -1,5 +1,5 @@
 String getAvgTempString(double minTemp, double maxTemp) {
-  String avgRange = '';
+  String avgRange = ' ';
   double avgTemp = (maxTemp + minTemp) / 2;
   if (avgTemp < 5) {
     avgRange = '0_to_4';

@@ -1,5 +1,6 @@
+// ignore_for_file: must_be_immutable, unnecessary_null_comparison, unused_local_variable, avoid_print, depend_on_referenced_packages, unused_element, use_build_context_synchronously
+
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:translator/translator.dart';

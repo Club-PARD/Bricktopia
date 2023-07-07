@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_summary/widget/image/main_image_widget.dart';
 
-class CurrentWeatherWidget extends StatefulWidget {
+class CurrentBookWeatherWidget extends StatefulWidget {
   final double temperature;
   final double minTemperature;
   final double maxTemperature;
@@ -9,7 +9,7 @@ class CurrentWeatherWidget extends StatefulWidget {
   final String weatherDescription;
   final String weatherMain;
 
-  const CurrentWeatherWidget({
+  const CurrentBookWeatherWidget({
     super.key,
     required this.temperature,
     required this.minTemperature,
@@ -20,10 +20,11 @@ class CurrentWeatherWidget extends StatefulWidget {
   });
 
   @override
-  State<CurrentWeatherWidget> createState() => _CurrentWeatherWidgetState();
+  State<CurrentBookWeatherWidget> createState() =>
+      _CurrentBookWeatherWidgetState();
 }
 
-class _CurrentWeatherWidgetState extends State<CurrentWeatherWidget> {
+class _CurrentBookWeatherWidgetState extends State<CurrentBookWeatherWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(

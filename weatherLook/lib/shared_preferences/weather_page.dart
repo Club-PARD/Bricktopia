@@ -15,29 +15,11 @@ class WeatherPage extends StatefulWidget {
 class _WeatherPageState extends State<WeatherPage> {
   double? latitude;
   double? longitude;
-  String? city;
 
   @override
   void initState() {
     super.initState();
     loadLocation();
-    loadCity();
-  }
-
-  Future<void> saveCity(String city) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('${widget.id}_city', city);
-    setState(() {
-      this.city = city;
-    });
-  }
-
-  Future<void> loadCity() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? loadedCity = prefs.getString('${widget.id}_city');
-    setState(() {
-      city = loadedCity;
-    });
   }
 
   Future<void> saveLocation(double latitude, double longitude) async {
@@ -92,7 +74,6 @@ class _WeatherPageState extends State<WeatherPage> {
                         id: widget.id,
                         latitude: latitude!,
                         longitude: longitude!,
-                        city: city!,
                       )
                     else
                       _defaultPage()

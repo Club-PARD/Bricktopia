@@ -26,6 +26,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     super.initState();
   }
 
+/*
   void chatFirst() async {
     final chats = ref.read(chatsProvider.notifier);
     chats.add(const ChatModel(
@@ -39,7 +40,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       isMe: false,
     ));
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(

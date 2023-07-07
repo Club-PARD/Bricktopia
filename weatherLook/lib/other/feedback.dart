@@ -31,7 +31,7 @@ class _feedbackPageState extends State<feedbackPage> {
                           Navigator.pop(context);
                         },
                         child: Image.asset(
-                          'assets/icon/icon_back.png',
+                          'icon/icon_back.png',
                           width: (MediaQuery.of(context).size.width) / 15.8,
                         ),
                       ),
@@ -127,7 +127,7 @@ class _feedbackPageState extends State<feedbackPage> {
                           );
                         },
                         child: Image.asset(
-                          'assets/icon/icon_arrow.png',
+                          'icon/icon_arrow.png',
                         ))
                   ],
                 ),

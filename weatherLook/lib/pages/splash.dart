@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:weather_summary/notification/notification.dart';
 import 'package:weather_summary/pages/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -29,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
           );
         });
       });
-/*
+
     // 초기화
     FlutterLocalNotification.init();
 
@@ -43,7 +44,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _scheduleNotification() async {
     await FlutterLocalNotification.scheduleNotificationInFiveMinutes();
-    */
   }
 
   @override

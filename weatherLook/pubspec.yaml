@@ -31,6 +31,7 @@ dependencies:
   shared_preferences: ^2.2.0
   smooth_page_indicator: ^1.1.0
   video_player: ^2.7.0
+  flutter_local_notifications: ^15.0.1
 
 dev_dependencies:
   flutter_test:
@@ -45,11 +46,10 @@ flutter:
   assets:
     - assets/.
     - assets/icon/.
-    - assets/weather/.
     - assets/items/.
     - assets/weather_mini/.
     - assets/home/.
-    - assets/splash.mp4
+    - assets/weather/.
 
   fonts:
     - family: "NanumGothic-Light"

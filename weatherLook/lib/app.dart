@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:weather_summary/chatbot/constants/themes.dart';
-import 'package:weather_summary/pages/item_page.dart';
 import 'package:weather_summary/pages/splash.dart';
 import 'package:weather_summary/pages/weather.dart';
 
@@ -10,12 +9,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Weather App',
+      title: 'Flutter Demo',
       theme: mainTheme,
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
       routes: {
-        '/item': (BuildContext context) => const ItemPage(),
         '/weather': (BuildContext context) => const WeatherPage(),
       },
     );

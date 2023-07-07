@@ -53,7 +53,7 @@ class _HomeSummaryBoxWidgetState extends State<HomeSummaryBoxWidget> {
     final double latitude = position.latitude;
     final double longitude = position.longitude;
     String weatherSummary =
-        await AIHandler().fetchWeatherData_m(latitude, longitude);
+        await AIHandler().fetchWeatherData_m(longitude, latitude);
     final aiWeather = "$weatherSummary + 진짜 정말 제발 짧게 말해줘.";
     final aiResponse = await _openAI.getResponse(aiWeather);
 
@@ -102,14 +102,20 @@ class _HomeSummaryBoxWidgetState extends State<HomeSummaryBoxWidget> {
           children: [
             SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       IconButton(
                         onPressed: () {
+                          if (isTts == false) {
+                            tts.speak(aiWeatherresponse);
+                          } else {
+                            tts.stop();
+                          }
+
                           setState(() {
                             isTts = !isTts;
                           });

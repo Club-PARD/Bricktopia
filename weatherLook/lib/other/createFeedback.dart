@@ -31,7 +31,7 @@ class _createFeedbackPageState extends State<createFeedbackPage> {
                           Navigator.pop(context);
                         },
                         child: Image.asset(
-                          'assets/icon/icon_back.png',
+                          'icon/icon_back.png',
                           width: (MediaQuery.of(context).size.width) / 15.8,
                         ),
                       ),

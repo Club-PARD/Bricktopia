@@ -1,33 +1,26 @@
 // ignore_for_file: library_private_types_in_public_api, avoid_print
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:weather_summary/get/get_location.dart';
-import 'package:weather_summary/get/get_range.dart';
-import 'package:weather_summary/item_model.dart';
-import 'package:weather_summary/service/item_service.dart';
 import 'package:weather_summary/get/get_weather_api.dart';
-import 'package:weather_summary/widget/image/item_widget.dart';
+import 'package:weather_summary/widget/book/current.dart';
+import 'package:weather_summary/widget/book/five_day_widget.dart';
+import 'package:weather_summary/widget/book/hourly.dart';
+import 'package:weather_summary/widget/image/background_widget.dart';
 
-class ItemPage extends StatefulWidget {
-  const ItemPage({Key? key}) : super(key: key);
+class BookWeatherPage extends StatefulWidget {
+  final double latitude;
+  final double longitude;
+  const BookWeatherPage({
+    super.key,
+    required this.latitude,
+    required this.longitude,
+  });
 
   @override
-  _ItemPageState createState() => _ItemPageState();
+  _BookWeatherPageState createState() => _BookWeatherPageState();
 }
 
-class _ItemPageState extends State<ItemPage> {
-  CollectionReference temperatureRanges =
-      FirebaseFirestore.instance.collection('temperature');
-
-  String range = '';
-
-  List<ClothingItem> topsList = [];
-  List<ClothingItem> outersList = [];
-  List<ClothingItem> bottomList = [];
-  List<ClothingItem> otherList = [];
-
+class _BookWeatherPageState extends State<BookWeatherPage> {
   List<Map<String, dynamic>> weatherList = [];
 
   double currentTemperature = 0.0;
@@ -45,12 +38,8 @@ class _ItemPageState extends State<ItemPage> {
 
   void getWeatherData() async {
     try {
-      final Position position = await getCurrentLocation();
-      final double latitude = position.latitude;
-      final double longitude = position.longitude;
-
       final Map<String, dynamic> weatherData =
-          await fetchWeatherData(latitude, longitude);
+          await fetchWeatherData(widget.latitude, widget.longitude);
 
       final List<dynamic> forecasts = weatherData['list'];
       weatherList = [];
@@ -132,47 +121,41 @@ class _ItemPageState extends State<ItemPage> {
     }
   }
 
-  void updateTops(List<ClothingItem> tops) {
-    setState(() {
-      topsList = tops;
-    });
-  }
-
-  void updateOuters(List<ClothingItem> outers) {
-    setState(() {
-      outersList = outers;
-    });
-  }
-
-  void updateBottoms(List<ClothingItem> bottoms) {
-    setState(() {
-      bottomList = bottoms;
-    });
-  }
-
-  void updateAccessories(List<ClothingItem> other) {
-    setState(() {
-      otherList = other;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    range = getAvgTempString(currentMinTemperature, currentMaxTemperature);
-    ItemService.getMatchingItems(
-        range, updateTops, updateOuters, updateBottoms, updateAccessories);
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClothingItemsSection(
-            topsList: topsList,
-            outersList: outersList,
-            bottomList: bottomList,
-            otherList: otherList,
+    return Stack(
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: homeImage(context, currentWeatherMain),
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                CurrentBookWeatherWidget(
+                  temperature: currentTemperature,
+                  minTemperature: currentMinTemperature,
+                  maxTemperature: currentMaxTemperature,
+                  pop: currentPop,
+                  weatherDescription: currentWeatherDescription,
+                  weatherMain: currentWeatherMain,
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 32,
+                ),
+                HourlyBookWeathertWidget(weatherList: weatherList),
+                FiveDayBookWeatherWidget(weatherList: weatherList),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 32,
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
