@@ -7,7 +7,7 @@ class ItemService {
       Function(List<ClothingItem>) updateTops,
       Function(List<ClothingItem>) updateOuters,
       Function(List<ClothingItem>) updateBottoms,
-      Function(List<ClothingItem>) updateAccessories) {
+      Function(List<ClothingItem>) updateAccessories) async {
     final CollectionReference temperatureRanges =
         FirebaseFirestore.instance.collection('temperature');
     final matchingTemperatureDoc = temperatureRanges.doc(range);

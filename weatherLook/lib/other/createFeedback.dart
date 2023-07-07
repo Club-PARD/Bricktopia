@@ -1,5 +1,7 @@
 // 성국이가 하는 페이지
 
+// ignore_for_file: file_names, camel_case_types, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class createFeedbackPage extends StatefulWidget {

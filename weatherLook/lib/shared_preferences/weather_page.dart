@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_summary/pages/home/weather_book.dart';
@@ -61,24 +63,22 @@ class _WeatherPageState extends State<WeatherPage> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Container(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 35,
-                    ),
-                    if ((latitude != null && longitude != null) == check)
-                      WeatherBook(
-                        id: widget.id,
-                        latitude: latitude!,
-                        longitude: longitude!,
-                      )
-                    else
-                      _defaultPage()
-                  ],
-                ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 35,
+                  ),
+                  if ((latitude != null && longitude != null) == check)
+                    WeatherBook(
+                      id: widget.id,
+                      latitude: latitude!,
+                      longitude: longitude!,
+                    )
+                  else
+                    _defaultPage()
+                ],
               ),
             )
           ],

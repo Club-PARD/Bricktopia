@@ -1,7 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
+import 'package:weather_summary/get/get_range.dart';
 import 'package:weather_summary/get/get_weather_api.dart';
 import 'package:weather_summary/item_model.dart';
+import 'package:weather_summary/service/item_service.dart';
 import 'package:weather_summary/widget/book/book_app_bar_widget.dart';
 import 'package:weather_summary/widget/book/book_weather_widget.dart';
 import 'package:weather_summary/widget/home/home_summary_box_widget.dart';
@@ -24,9 +27,6 @@ class WeatherBook extends StatefulWidget {
 }
 
 class _WeatherBookState extends State<WeatherBook> {
-  CollectionReference temperatureRanges =
-      FirebaseFirestore.instance.collection('temperature');
-
   String range = '';
 
   List<ClothingItem> topsList = [];
@@ -165,6 +165,9 @@ class _WeatherBookState extends State<WeatherBook> {
 
   @override
   Widget build(BuildContext context) {
+    range = getAvgTempString(currentMinTemperature, currentMaxTemperature);
+    ItemService.getMatchingItems(
+        range, updateTops, updateOuters, updateBottoms, updateAccessories);
     return Stack(
       children: [
         SingleChildScrollView(

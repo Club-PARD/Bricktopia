@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -45,7 +47,7 @@ class _FivedayWeatherState extends State<FivedayWeather> {
           minTemperature: minTemp.toDouble(),
           humidity: humidity.toDouble(),
           main: main.toString(),
-          pop : pop.toDouble(),
+          pop: pop.toDouble(),
           city: city.toString(),
         );
         dataList.add(weatherData);
@@ -58,7 +60,8 @@ class _FivedayWeatherState extends State<FivedayWeather> {
     }
   }
 
-  List<List<WeatherData>> groupWeatherDataByDate(List<WeatherData> weatherDataList) {
+  List<List<WeatherData>> groupWeatherDataByDate(
+      List<WeatherData> weatherDataList) {
     final groupedData = <List<WeatherData>>[];
     for (final weatherData in weatherDataList) {
       bool foundGroup = false;
@@ -77,10 +80,13 @@ class _FivedayWeatherState extends State<FivedayWeather> {
   }
 
   bool isSameDate(DateTime date1, DateTime date2) {
-    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
-  List<WeatherData> compareWeatherData(List<List<WeatherData>> groupedDataList) {
+  List<WeatherData> compareWeatherData(
+      List<List<WeatherData>> groupedDataList) {
     final List<WeatherData> comparedList = [];
     for (final group in groupedDataList) {
       double maxTemperature = group.first.maxTemperature;
