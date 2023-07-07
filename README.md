@@ -38,28 +38,12 @@
 
 <br>
 
-### ☃️ 웨더룩 사용하기
- <img src="https://file.notion.so/f/s/2cfd1b33-0608-4e25-a8c5-a3f4c6fa3813/Untitled.png?id=13465bac-29e6-438c-8377-e34c149e7fae&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=I0Ngbt2T7mP41Aq4G_jpPdEhTQg-zYT8jn4WxqpZdJU&downloadName=Untitled.png" width=150> <br>
- <img src="https://file.notion.so/f/s/e7bbf75f-e45c-4fa6-9729-4f2961a05302/Untitled.png?id=e833cf1c-ba65-4132-8c84-6299ba804d26&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=EnoS5gFTwupYMd0FKSAteaSUcgqsChXuLs5hqS--KlY&downloadName=Untitled.png" width=150>
- <img src="https://file.notion.so/f/s/1b73b564-2fb1-40c6-8252-5da079381188/Untitled.png?id=a2ac4ab7-8cfd-4892-8079-f5b1775edba5&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=y_SyURDd3PU055ndO-OxAtYsntc4p1Yr9KwW2MmvDKU&downloadName=Untitled.png" width=150>
- <img src="https://file.notion.so/f/s/7a0f040c-eacf-42bb-8c1b-42deb2dd9ee3/Untitled.png?id=0fbc51ca-3551-42ef-adc9-012c17ac748f&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=353LPXWl7lJUZ1LvwZDYMx5KhWa4KM4sboL0PA4U7iE&downloadName=Untitled.png" width=150>
- <img src="https://file.notion.so/f/s/ca5b72d5-95d6-4fd6-9d92-c845e93c0233/Untitled.png?id=4adfe66c-6115-491d-804c-d1d74e18781d&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=KqBDrMGhyM1YpACQ-WrHcBCizccZCoYcz66N_ADaCrM&downloadName=Untitled.png" width=150>
- <img src="https://file.notion.so/f/s/13e91321-b625-4468-8c88-f718631ab380/Untitled.png?id=e0d86a6c-2f75-456d-81be-aafb159bd1f6&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=XcbIH9iNbuG2q9rahv8MZvJvmdpku4eeD_TbD19maPQ&downloadName=Untitled.png" width=150>
+### 📱 웨더룩 사용하기
+ <img src="https://file.notion.so/f/s/2cfd1b33-0608-4e25-a8c5-a3f4c6fa3813/Untitled.png?id=13465bac-29e6-438c-8377-e34c149e7fae&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=I0Ngbt2T7mP41Aq4G_jpPdEhTQg-zYT8jn4WxqpZdJU&downloadName=Untitled.png" width=100> <br>
+ <img src="https://file.notion.so/f/s/3704e22c-7dd4-49ef-b676-aeb4249e85b1/Untitled.png?id=298191e5-90f7-475d-af6f-a4a397ddefef&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688824800000&signature=dW7yLbDmaVtpXrL7dPcOmcLEcjD8HvlCSyaFgTU_l-M&downloadName=Untitled.png" height=350>
+ <img src="https://file.notion.so/f/s/51b25697-e21a-483a-a6de-d5657fe57873/Untitled.png?id=cbc33a96-7dcd-4aff-b20c-d22497958d96&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688824800000&signature=EHC-rd8F-YguOCshZ3JGm-Y5Q-wVPg7HM1Czx1u4RQU&downloadName=Untitled.png" height=350>
  
- <br>
 
-### 🧑🏻‍💻 Stack
-<div style={display:flex}>
-    <img src="https://img.shields.io/badge/flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white">
-<img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white">
-  <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
-  <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
-  <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
-
-  <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
-  <img src="https://img.shields.io/badge/slack-4A154B?style=for-the-badge&logo=slack&logoColor=white">
-
-</div>
   <br>
   
   ### 🧑🏻‍🎨 Color Reference
@@ -73,6 +57,21 @@
 | Gray/Button_text | <img src="https://file.notion.so/f/s/c69b4292-2394-4c03-89b5-9e0a76d2751a/Untitled.png?id=ddad0fe3-c975-4b33-9d78-46ed37dd3fc2&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688810400000&signature=_t-CSMZUPdf0u9RvqTyrwI61GTcBtF9ip2-DvVvzH5Q&downloadName=Untitled.png" width=10> #9E9E9E | Dark blue |<img src="https://file.notion.so/f/s/6188ba3d-c52e-4cd1-959e-21458383cf2e/Untitled.png?id=c063bf3e-4bba-450e-b19c-66496e948026&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688810400000&signature=GM3vZoIyEEe-3XI7mzGiO-iSKF7BMtsV55RaD2OgI0A&downloadName=Untitled.png" width=10> #C1CFE3|
 | Gray/Button_box| <img src="https://file.notion.so/f/s/88a25860-533e-41e0-b0b7-cddce6a529ad/Untitled.png?id=7b4f26b9-fffd-43c4-8961-2074eefecca1&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688810400000&signature=djgW8BdcgsXeJn4RZwxx3ekdKI0r_LfhQ-Z7LgycrsU&downloadName=Untitled.png" width=10> #E8E8E8 | Purple | <img src="https://file.notion.so/f/s/d5ccf2b4-d70a-4cd2-95d7-24b92245707a/Untitled.png?id=03fb5c0f-3fce-4540-96eb-41c2ddafb91a&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688810400000&signature=UmJRETkGHhtmvrEM37VNwE9IpYxSNTvUBNOR9hacmag&downloadName=Untitled.png" width=10 > #E3E0FF|
 |Gray/Button_desactivated | <img src="https://file.notion.so/f/s/2a19260d-7732-4bbf-8d24-b594b0d3ad99/Untitled.png?id=f7c57f44-6c7f-4013-8a35-cf7235b4384e&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688810400000&signature=5syi6mcR6H2x_3DPljJ6P4uOd48PZJ-2OCkMmu9RD8s&downloadName=Untitled.png" width=10> #F4F4F4| Gray | <img src="https://file.notion.so/f/s/1d744c1d-2a56-46a1-9d03-ef3aeb55e7bb/Untitled.png?id=8c7687a5-b5c7-4b7f-bf50-490dad9b5c03&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688810400000&signature=ujnm_sMX1tGkm80NGMyQ1RNBl9PK05ygUfpW5voHWIk&downloadName=Untitled.png" width=10 > #E8E8E8|
+
+<br>
+
+### 🧑🏻‍💻 Stack
+<div style={display:flex}>
+    <img src="https://img.shields.io/badge/flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white">
+<img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white">
+  <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
+  <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+  <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+
+  <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
+  <img src="https://img.shields.io/badge/slack-4A154B?style=for-the-badge&logo=slack&logoColor=white">
+
+</div>
 
 <br>
 
