@@ -22,6 +22,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  double latitude = 0.0;
+  double longitude = 0.0;
   String range = ' ';
 
   List<ClothingItem> topsList = [];
@@ -48,8 +50,8 @@ class _MainPageState extends State<MainPage> {
   void getWeatherData() async {
     try {
       final Position position = await getCurrentLocation();
-      final double latitude = position.latitude;
-      final double longitude = position.longitude;
+      latitude = position.latitude;
+      longitude = position.longitude;
 
       final Map<String, dynamic> weatherData =
           await fetchWeatherData(latitude, longitude);
@@ -198,7 +200,10 @@ class _MainPageState extends State<MainPage> {
                       bottomList: bottomList,
                       otherList: otherList,
                     ),
-                    const HomeSummaryBoxWidget(),
+                    HomeSummaryBoxWidget(
+                      longitude: longitude,
+                      latitude: latitude,
+                    ),
                   ],
                 ),
               ],

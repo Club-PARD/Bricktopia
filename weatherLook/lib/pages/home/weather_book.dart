@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_summary/get/get_weather_api.dart';
 import 'package:weather_summary/item_model.dart';
-import 'package:weather_summary/widget/add/add_summary_box_widget.dart';
-import 'package:weather_summary/widget/add/book_app_bar_widget.dart';
+import 'package:weather_summary/widget/book/book_app_bar_widget.dart';
 import 'package:weather_summary/widget/book/book_weather_widget.dart';
+import 'package:weather_summary/widget/home/home_summary_box_widget.dart';
 import 'package:weather_summary/widget/home/item_widget.dart';
 
 class WeatherBook extends StatefulWidget {
@@ -191,7 +191,7 @@ class _WeatherBookState extends State<WeatherBook> {
                     bottomList: bottomList,
                     otherList: otherList,
                   ),
-                  AddSummaryBoxWidget(
+                  HomeSummaryBoxWidget(
                     longitude: widget.longitude,
                     latitude: widget.latitude,
                   ),

@@ -2,13 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:perfect_volume_control/perfect_volume_control.dart';
 import 'package:weather_summary/chatbot/services/ai_handler.dart';
-import 'package:weather_summary/get/get_location.dart';
 
 class HomeSummaryBoxWidget extends StatefulWidget {
-  const HomeSummaryBoxWidget({super.key});
+  final double longitude;
+  final double latitude;
+  const HomeSummaryBoxWidget({
+    super.key,
+    required this.longitude,
+    required this.latitude,
+  });
 
   @override
   State<HomeSummaryBoxWidget> createState() => _HomeSummaryBoxWidgetState();
@@ -49,11 +53,8 @@ class _HomeSummaryBoxWidgetState extends State<HomeSummaryBoxWidget> {
   }
 
   Future<String> makeASummary() async {
-    final Position position = await getCurrentLocation();
-    final double latitude = position.latitude;
-    final double longitude = position.longitude;
     String weatherSummary =
-        await AIHandler().fetchWeatherData_m(longitude, latitude);
+        await AIHandler().fetchWeatherData_m(widget.longitude, widget.latitude);
     final aiWeather = "$weatherSummary + 진짜 정말 제발 짧게 말해줘.";
     final aiResponse = await _openAI.getResponse(aiWeather);
 
@@ -64,11 +65,8 @@ class _HomeSummaryBoxWidgetState extends State<HomeSummaryBoxWidget> {
   }
 
   Future<String> brifMorning() async {
-    final Position position = await getCurrentLocation();
-    final double latitude = position.latitude;
-    final double longitude = position.longitude;
-    String weatherSummary2 =
-        await AIHandler().getWeatherDataSummary2(latitude, longitude);
+    String weatherSummary2 = await AIHandler()
+        .getWeatherDataSummary2(widget.latitude, widget.longitude);
     String aiWeather2 =
         "$weatherSummary2 + 정보를 가지고 오늘 날씨 유쾌하게 표현해줘. 오늘 날씨에 맞는 옷차림을 구체적으로 자세하게 한국말로 알려줘. 마지막으로 오늘 하루를 응원하고, 축복해줘.";
     final aiResponse2 = await _openAI.getResponse(aiWeather2);
