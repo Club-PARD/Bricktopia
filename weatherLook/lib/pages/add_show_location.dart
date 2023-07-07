@@ -10,6 +10,7 @@ import '../get/get_range.dart';
 import '../service/item_service.dart';
 import '../widget/book/book_weather_widget.dart';
 import '../widget/home/home_summary_box_widget.dart';
+import '../widget/image/background_widget.dart';
 
 class AddShowLocation extends StatefulWidget {
   final double longitude;
@@ -172,6 +173,10 @@ class _AddShowLocationState extends State<AddShowLocation> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        SizedBox( //currentWeatherMain
+          width: MediaQuery.of(context).size.width,
+          child: homeImage(context, currentWeatherMain),
+        ),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(

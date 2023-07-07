@@ -125,9 +125,10 @@ class _WeatherPageState extends State<WeatherPage> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SizedBox( //FewClouds  //currentWeatherMain
+        SizedBox(
+          //currentWeatherMain
           width: MediaQuery.of(context).size.width,
-          child: homeImage(context, "FewClouds"),
+          child: homeImage(context, currentWeatherMain),
         ),
         Scaffold(
           backgroundColor: Colors.transparent,

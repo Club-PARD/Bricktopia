@@ -17,5 +17,5 @@ Widget homeImage(BuildContext context, String mainWeather) {
   //  else if (mainWeather == "Night") {
   //   return Image.asset("assets/home/home_night.png", fit: BoxFit.cover);
   // }
-  return Container();
+  return Image.asset("assets/home/home_clouds.png", fit: BoxFit.cover);
 }
