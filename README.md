@@ -1,5 +1,8 @@
 # Weather.look˚
-![logo](https://file.notion.so/f/s/7b981eb9-2cbb-4ccd-bf55-944fcf8e5c2d/Untitled.png?id=72f53076-5e89-4adf-85bf-f07a4ef3f1e7&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688803200000&signature=cGlQkig8R5kXkSS4Vb_MxIDmjBKqFNKq6oTVLNCjdZ8&downloadName=Untitled.png)
+<br>
+⬇️ 클릭하고 Weather.look˚ 더 알아보기<br>
+<a href="https://bricktopia-define-world.notion.site/0c416e693eaf4921b5291ced0abce4a8?pvs=4"><img src="https://file.notion.so/f/s/7b981eb9-2cbb-4ccd-bf55-944fcf8e5c2d/Untitled.png?id=72f53076-5e89-4adf-85bf-f07a4ef3f1e7&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688803200000&signature=cGlQkig8R5kXkSS4Vb_MxIDmjBKqFNKq6oTVLNCjdZ8&downloadName=Untitled.png" width="1000"></a>
+
 
 </br>
 
@@ -40,7 +43,7 @@
 
 ### 📱 웨더룩 사용하기
  <img src="https://file.notion.so/f/s/2cfd1b33-0608-4e25-a8c5-a3f4c6fa3813/Untitled.png?id=13465bac-29e6-438c-8377-e34c149e7fae&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=I0Ngbt2T7mP41Aq4G_jpPdEhTQg-zYT8jn4WxqpZdJU&downloadName=Untitled.png" width=100> <br>
-<a href="https://bricktopia-define-world.notion.site/0c416e693eaf4921b5291ced0abce4a8?pvs=4"><img src="https://github.com/s1mjane/ossTeam/assets/100616572/738cba18-1e35-4955-b17b-b663827abdc8" width="500"></a>
+<a href="https://bricktopia-define-world.notion.site/0c416e693eaf4921b5291ced0abce4a8?pvs=4"><img src="https://github.com/s1mjane/ossTeam/assets/100616572/738cba18-1e35-4955-b17b-b663827abdc8" width="500"></a> <br>
  <img src="https://file.notion.so/f/s/3704e22c-7dd4-49ef-b676-aeb4249e85b1/Untitled.png?id=298191e5-90f7-475d-af6f-a4a397ddefef&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688824800000&signature=dW7yLbDmaVtpXrL7dPcOmcLEcjD8HvlCSyaFgTU_l-M&downloadName=Untitled.png" height=350>
  <img src="https://file.notion.so/f/s/51b25697-e21a-483a-a6de-d5657fe57873/Untitled.png?id=cbc33a96-7dcd-4aff-b20c-d22497958d96&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688824800000&signature=EHC-rd8F-YguOCshZ3JGm-Y5Q-wVPg7HM1Czx1u4RQU&downloadName=Untitled.png" height=350>
  
@@ -68,7 +71,6 @@
   <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
   <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
-
   <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
   <img src="https://img.shields.io/badge/slack-4A154B?style=for-the-badge&logo=slack&logoColor=white">
 
@@ -84,5 +86,3 @@
 |macsusp01@gmail.com | 21900474@handong.ac.kr | 21800030@handong.ac.kr |ssoup0224@gmail.com | s1mjane@handong.ac.kr|
 | <a href="https://disquiet.io/@21800030"><img src="https://file.notion.so/f/s/96012e14-c4ce-4a9d-945d-b5bb269d709a/Untitled.png?id=b60b68ad-10d2-4728-81c6-056588989666&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=VBmAuzRElPUQXQyrR-lAqd0_HFUBCihhnNAvOji-D_w&downloadName=Untitled.png" width="100"></a>  |<a href="https://disquiet.io/@yysaeeun"><img src="https://file.notion.so/f/s/96012e14-c4ce-4a9d-945d-b5bb269d709a/Untitled.png?id=b60b68ad-10d2-4728-81c6-056588989666&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=VBmAuzRElPUQXQyrR-lAqd0_HFUBCihhnNAvOji-D_w&downloadName=Untitled.png" width="100"></a> |<a href="https://disquiet.io/@21800030"><img src="https://file.notion.so/f/s/96012e14-c4ce-4a9d-945d-b5bb269d709a/Untitled.png?id=b60b68ad-10d2-4728-81c6-056588989666&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=VBmAuzRElPUQXQyrR-lAqd0_HFUBCihhnNAvOji-D_w&downloadName=Untitled.png" width="100"></a> <br> <a href="https://github.com/"><img src="https://file.notion.so/f/s/3938dfed-225b-4ef5-b4cc-154aeffba97a/Untitled.png?id=8006aadf-c093-46d6-bc32-29db190e01b1&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=P1sFg7KTwhM4TS2iLLWFI6G0ttUYrDXSCqQzSJ7iSCY&downloadName=Untitled.png" width="100"></a> | <a href="https://disquiet.io/@ssoup0224"><img src="https://file.notion.so/f/s/96012e14-c4ce-4a9d-945d-b5bb269d709a/Untitled.png?id=b60b68ad-10d2-4728-81c6-056588989666&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=VBmAuzRElPUQXQyrR-lAqd0_HFUBCihhnNAvOji-D_w&downloadName=Untitled.png" width="100"></a> <br> <a href="https://github.com/ssoup0224"><img src="https://file.notion.so/f/s/3938dfed-225b-4ef5-b4cc-154aeffba97a/Untitled.png?id=8006aadf-c093-46d6-bc32-29db190e01b1&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=P1sFg7KTwhM4TS2iLLWFI6G0ttUYrDXSCqQzSJ7iSCY&downloadName=Untitled.png" width="100"></a> | <a href="[https://disquiet.io/@ssoup0224](https://github.com/s1mjane)"><img src="https://file.notion.so/f/s/96012e14-c4ce-4a9d-945d-b5bb269d709a/Untitled.png?id=b60b68ad-10d2-4728-81c6-056588989666&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=VBmAuzRElPUQXQyrR-lAqd0_HFUBCihhnNAvOji-D_w&downloadName=Untitled.png" width="100"></a> <br> <a href="https://github.com/s1mjane"><img src="https://file.notion.so/f/s/3938dfed-225b-4ef5-b4cc-154aeffba97a/Untitled.png?id=8006aadf-c093-46d6-bc32-29db190e01b1&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=P1sFg7KTwhM4TS2iLLWFI6G0ttUYrDXSCqQzSJ7iSCY&downloadName=Untitled.png" width="100"></a> |
 <br>
-⬇️ 클릭하고 Brick-topia 더 알아보기<br>
-<a href="https://bricktopia-define-world.notion.site/Brick-topia-in-your-area-def7487a9532471fb17639cc8d67c3ff?pvs=4"><img src="https://github.com/s1mjane/ossTeam/assets/100616572/74fed205-14e7-4eea-a926-6cde69b889f8" width="300"></a>
