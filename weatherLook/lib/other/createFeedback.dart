@@ -8,7 +8,10 @@ class createFeedbackPage extends StatefulWidget {
 }
 
 class _createFeedbackPageState extends State<createFeedbackPage> {
-  bool isToggleOn = false; // 초기 토글 상태
+  bool isToggleOn1 = false; // 초기 토글 상태
+  bool isToggleOn2 = false;
+  bool isToggleOn3 = false;
+  bool isToggleOn4 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class _createFeedbackPageState extends State<createFeedbackPage> {
       body: Column(
         children: [
           SizedBox(
-              height: (MediaQuery.of(context).size.height) / 10.8,
+              height: (MediaQuery.of(context).size.height) / 9.5,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end, // 아이콘들을 아래로 정렬
                 children: [
@@ -29,13 +32,13 @@ class _createFeedbackPageState extends State<createFeedbackPage> {
                           Navigator.pop(context);
                         },
                         child: Image.asset(
-                          'assets/icon/icon_back.png',
+                          'icon/icon_back.png',
                           width: (MediaQuery.of(context).size.width) / 15.8,
                         ),
                       ),
                       SizedBox(
                           width: (MediaQuery.of(context).size.width) / 21.4),
-                      const Text('피드백 작성하기',
+                      const Text('피드백 작성',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
                     ],
@@ -93,24 +96,23 @@ class _createFeedbackPageState extends State<createFeedbackPage> {
                         children: [
                           Column(children: [
                             Center(
-                                // 상의
                                 child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Image.asset('assets/items/paddedCoat.png',
+                                Image.asset('assets/items/shirts.png',
                                     width:
                                         (MediaQuery.of(context).size.height) /
                                             10),
                                 SizedBox(
                                     width: (MediaQuery.of(context).size.width) /
-                                        18.95),
-                                Image.asset('assets/items/hoodie.png',
+                                        28),
+                                Image.asset('assets/items/longSleeve.png',
                                     width:
                                         (MediaQuery.of(context).size.height) /
                                             10),
                                 SizedBox(
                                     width: (MediaQuery.of(context).size.width) /
-                                        18.95),
+                                        28),
                                 Image.asset('assets/items/shorts.png',
                                     width:
                                         (MediaQuery.of(context).size.height) /
@@ -124,14 +126,14 @@ class _createFeedbackPageState extends State<createFeedbackPage> {
                                 child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Image.asset('assets/items/sneakers.png',
+                                Image.asset('assets/items/cap.png',
                                     width:
                                         (MediaQuery.of(context).size.height) /
                                             10),
                                 SizedBox(
                                     width: (MediaQuery.of(context).size.width) /
-                                        18.95),
-                                Image.asset('assets/items/cap.png',
+                                        28),
+                                Image.asset('assets/items/sandals.png',
                                     width:
                                         (MediaQuery.of(context).size.height) /
                                             10),
@@ -151,7 +153,7 @@ class _createFeedbackPageState extends State<createFeedbackPage> {
                     SizedBox(height: (MediaQuery.of(context).size.height) / 25),
                     const Text(
                       '더 필요한 아이템이 있으셨나요?(선택사항)',
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(height: (MediaQuery.of(context).size.height) / 60),
                     Row(
@@ -159,14 +161,14 @@ class _createFeedbackPageState extends State<createFeedbackPage> {
                         ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              isToggleOn = false; // 예 선택
+                              isToggleOn1 = !isToggleOn1; // 예 선택
                             });
                           },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15)),
                             elevation: 0,
-                            backgroundColor: isToggleOn
+                            backgroundColor: isToggleOn1
                                 ? const Color(0xff4E5FFF)
                                 : const Color(0xffE4E8F6),
                             minimumSize: const Size(50, 38), // 버튼의 최소 높이 설정
@@ -182,14 +184,14 @@ class _createFeedbackPageState extends State<createFeedbackPage> {
                         ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              isToggleOn = false; // 아니오 선택
+                              isToggleOn2 = !isToggleOn2; // 아니오 선택
                             });
                           },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15)),
                             elevation: 0,
-                            backgroundColor: isToggleOn
+                            backgroundColor: isToggleOn2
                                 ? const Color(0xff4E5FFF)
                                 : const Color(0xffE4E8F6),
                             minimumSize: const Size(50, 38), // 버튼의 최소 높이 설정
@@ -205,14 +207,14 @@ class _createFeedbackPageState extends State<createFeedbackPage> {
                         ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              isToggleOn = false; // 아니오 선택
+                              isToggleOn3 = !isToggleOn3; // 아니오 선택
                             });
                           },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15)),
                             elevation: 0,
-                            backgroundColor: isToggleOn
+                            backgroundColor: isToggleOn3
                                 ? const Color(0xff4E5FFF)
                                 : const Color(0xffE4E8F6),
                             minimumSize: const Size(50, 38), // 버튼의 최소 높이 설정
@@ -228,14 +230,14 @@ class _createFeedbackPageState extends State<createFeedbackPage> {
                         ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              isToggleOn = false; // 아니오 선택
+                              isToggleOn4 = !isToggleOn4; // 아니오 선택
                             });
                           },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15)),
                             elevation: 0,
-                            backgroundColor: isToggleOn
+                            backgroundColor: isToggleOn4
                                 ? const Color(0xff4E5FFF)
                                 : const Color(0xffE4E8F6),
                             minimumSize: const Size(80, 38), // 버튼의 최소 높이 설정
