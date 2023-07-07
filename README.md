@@ -1,8 +1,7 @@
 # Weather.look˚
 <br>
-⬇️ 클릭하고 Weather.look˚ 더 알아보기 ⬇️ <br> 
-<a href="https://bricktopia-define-world.notion.site/0c416e693eaf4921b5291ced0abce4a8?pvs=4"><img src="https://file.notion.so/f/s/7b981eb9-2cbb-4ccd-bf55-944fcf8e5c2d/Untitled.png?id=72f53076-5e89-4adf-85bf-f07a4ef3f1e7&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688803200000&signature=cGlQkig8R5kXkSS4Vb_MxIDmjBKqFNKq6oTVLNCjdZ8&downloadName=Untitled.png" width="1000"></a>
-https://github.com/s1mjane/ossTeam/assets/100616572/a8144d05-9215-47e5-9483-a0e206d22323
+
+
 <a href="https://bricktopia-define-world.notion.site/0c416e693eaf4921b5291ced0abce4a8?pvs=4"><img src="https://github.com/s1mjane/ossTeam/assets/100616572/a8144d05-9215-47e5-9483-a0e206d22323" width="1000"></a>
 
 
@@ -44,6 +43,8 @@ https://github.com/s1mjane/ossTeam/assets/100616572/a8144d05-9215-47e5-9483-a0e2
 
 <br>
 
+
+
 ### 📱 웨더룩 사용하기
 
 <a href="https://bricktopia-define-world.notion.site/0c416e693eaf4921b5291ced0abce4a8?pvs=4"><img src="https://github.com/s1mjane/ossTeam/assets/100616572/738cba18-1e35-4955-b17b-b663827abdc8" width="500"></a>  <img src="https://file.notion.so/f/s/2cfd1b33-0608-4e25-a8c5-a3f4c6fa3813/Untitled.png?id=13465bac-29e6-438c-8377-e34c149e7fae&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688817600000&signature=I0Ngbt2T7mP41Aq4G_jpPdEhTQg-zYT8jn4WxqpZdJU&downloadName=Untitled.png" width=00> <br>
@@ -52,6 +53,11 @@ https://github.com/s1mjane/ossTeam/assets/100616572/a8144d05-9215-47e5-9483-a0e2
  
 
   <br>
+
+  ⬇️ 클릭하고 Weather.look˚ 더 알아보기 ⬇️ <br> 
+<a href="https://bricktopia-define-world.notion.site/0c416e693eaf4921b5291ced0abce4a8?pvs=4"><img src="https://file.notion.so/f/s/7b981eb9-2cbb-4ccd-bf55-944fcf8e5c2d/Untitled.png?id=72f53076-5e89-4adf-85bf-f07a4ef3f1e7&table=block&spaceId=2adb39f3-ae8a-4d22-9e58-517958962188&expirationTimestamp=1688803200000&signature=cGlQkig8R5kXkSS4Vb_MxIDmjBKqFNKq6oTVLNCjdZ8&downloadName=Untitled.png" width="300"></a>
+
+<br>
   
   ### 🧑🏻‍🎨 Color Reference
 
