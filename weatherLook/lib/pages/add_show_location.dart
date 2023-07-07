@@ -1,10 +1,6 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
-import 'package:weather_summary/get/get_range.dart';
 import 'package:weather_summary/get/get_weather_api.dart';
-import 'package:weather_summary/item_model.dart';
-import 'package:weather_summary/service/item_service.dart';
+import 'package:weather_summary/service/item_model.dart';
 import 'package:weather_summary/widget/add/add_app_bar_widget.dart';
 import 'package:weather_summary/widget/home/home_summary_box_widget.dart';
 import 'package:weather_summary/widget/home/home_weather_widget.dart';
@@ -141,35 +137,8 @@ class _AddShowLocationState extends State<AddShowLocation> {
     }
   }
 
-  void updateTops(List<ClothingItem> tops) {
-    setState(() {
-      topsList = tops;
-    });
-  }
-
-  void updateOuters(List<ClothingItem> outers) {
-    setState(() {
-      outersList = outers;
-    });
-  }
-
-  void updateBottoms(List<ClothingItem> bottoms) {
-    setState(() {
-      bottomList = bottoms;
-    });
-  }
-
-  void updateAccessories(List<ClothingItem> other) {
-    setState(() {
-      otherList = other;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    range = getAvgTempString(currentMinTemperature, currentMaxTemperature);
-    ItemService.getMatchingItems(
-        range, updateTops, updateOuters, updateBottoms, updateAccessories);
     return Stack(
       children: [
         Scaffold(
