@@ -1,11 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:homepage/chatbot/widgets/today_weather_card.dart';
-
-import 'package:intl/intl.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:weather_summary/chatbot/widgets/today_weather_card.dart';
 
 import '../models/weather_model.dart';
 
@@ -51,8 +49,8 @@ class _TodayWeatherState extends State<TodayWeather> {
           minTemperature: minTemp.toDouble(),
           humidity: humidity.toDouble(),
           main: main.toString(),
-          pop : pop.toDouble(),
-          city : city.toString(),
+          pop: pop.toDouble(),
+          city: city.toString(),
         );
         dataList.add(weatherData);
       }
@@ -97,7 +95,7 @@ class _TodayWeatherState extends State<TodayWeather> {
           minTemperature: minTemp.toDouble(),
           humidity: humidity.toDouble(),
           main: main.toString(),
-          pop : pop.toDouble(),
+          pop: pop.toDouble(),
           city: city.toString(),
         );
         dataList.add(weatherData);
@@ -119,7 +117,8 @@ class _TodayWeatherState extends State<TodayWeather> {
     setState(() {});
   }
 
-  List<List<WeatherData>> groupWeatherDataByDate(List<WeatherData> weatherDataList) {
+  List<List<WeatherData>> groupWeatherDataByDate(
+      List<WeatherData> weatherDataList) {
     final groupedData = <List<WeatherData>>[];
     for (final weatherData in weatherDataList) {
       bool foundGroup = false;
@@ -138,14 +137,16 @@ class _TodayWeatherState extends State<TodayWeather> {
   }
 
   bool isSameDate(DateTime date1, DateTime date2) {
-    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: groupedWeatherDataList.isEmpty
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : TodayWeatherCard(groupedWeatherDataList: groupedWeatherDataList),
     );
   }

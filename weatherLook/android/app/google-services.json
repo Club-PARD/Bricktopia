@@ -1,0 +1,135 @@
+{
+  "project_info": {
+    "project_number": "414170479907",
+    "firebase_url": "https://weather-look-dd8f4-default-rtdb.firebaseio.com",
+    "project_id": "weather-look-dd8f4",
+    "storage_bucket": "weather-look-dd8f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414170479907:android:555d9fd98756fb9d6ce096",
+        "android_client_info": {
+          "package_name": "com.example.homepage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414170479907-3oij343ftpb02ab7ncqkea5itlu4ddcs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.homepage",
+            "certificate_hash": "3e162528d2738c1f820926bb81dad51400427acd"
+          }
+        },
+        {
+          "client_id": "414170479907-6mqdfu9bvtmu2i04lbog853fjfb9kv78.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADCnjMWwDNu3_8-bRid-347WJiSI7Kvpk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414170479907-6mqdfu9bvtmu2i04lbog853fjfb9kv78.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414170479907-2ipbdgt1g1qhj0j6hdnfa116pnjo26i4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.homepage"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414170479907:android:f681e8ccfc2de5256ce096",
+        "android_client_info": {
+          "package_name": "com.example.weather_look"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414170479907-o2abojesbviqk2gkpg80kkilitaiik87.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.weather_look",
+            "certificate_hash": "132baa454baa1f85ed34d668e83006f29fcc84d3"
+          }
+        },
+        {
+          "client_id": "414170479907-6mqdfu9bvtmu2i04lbog853fjfb9kv78.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADCnjMWwDNu3_8-bRid-347WJiSI7Kvpk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414170479907-6mqdfu9bvtmu2i04lbog853fjfb9kv78.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414170479907-2ipbdgt1g1qhj0j6hdnfa116pnjo26i4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.homepage"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414170479907:android:2f63f835f6ad7c026ce096",
+        "android_client_info": {
+          "package_name": "com.example.weather_summary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414170479907-6mqdfu9bvtmu2i04lbog853fjfb9kv78.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADCnjMWwDNu3_8-bRid-347WJiSI7Kvpk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414170479907-6mqdfu9bvtmu2i04lbog853fjfb9kv78.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414170479907-2ipbdgt1g1qhj0j6hdnfa116pnjo26i4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.homepage"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

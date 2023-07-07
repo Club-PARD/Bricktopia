@@ -10,7 +10,7 @@ class AIHandler {
   List<List<WeatherData>> groupedWeatherDataList = [];
 
   final _openAI = OpenAI.instance.build(
-    token: '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',
+    token: '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',
     baseOption: HttpSetup(
       receiveTimeout: const Duration(seconds: 60),
       connectTimeout: const Duration(seconds: 60),
@@ -35,7 +35,7 @@ class AIHandler {
   }
 
   Future<String> fetchWeatherData(String city) async {
-    final apiKey = '9400fa5b5392bd26329d0dd65aa01ecb';
+    const apiKey = '9400fa5b5392bd26329d0dd65aa01ecb';
     final url =
         'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric';
 
@@ -54,7 +54,7 @@ class AIHandler {
   }
 
   Future<String> fetchWeatherData_m(double longitude, double latitude) async {
-    final apiKey = '9400fa5b5392bd26329d0dd65aa01ecb';
+    const apiKey = '9400fa5b5392bd26329d0dd65aa01ecb';
     final url =
         'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey&units=metric';
     final response = await http.get(Uri.parse(url));
@@ -139,8 +139,10 @@ class AIHandler {
         date1.day == date2.day;
   }
 
-  Future<List<List<WeatherData>>> fetchWeatherData3(double longitude, double latitude) async {
-    final url = Uri.parse('https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appid=9400fa5b5392bd26329d0dd65aa01ecb&units=metric');
+  Future<void> fetchWeatherData3(double latitude, double longitude) async {
+    // Fetch weather data and populate weatherDataList
+    final url = Uri.parse(
+        'https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appid=9400fa5b5392bd26329d0dd65aa01ecb&units=metric');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -165,19 +167,18 @@ class AIHandler {
         );
         dataList.add(weatherData);
       }
-
-      // Filter weatherDataList for today's data
-      final today = DateTime.now();
-      final filteredDataList = dataList.where((data) {
-        return isSameDate(data.time, today);
-      }).toList();
-
-      // Group filteredDataList by date
-      return groupWeatherDataByDate(filteredDataList);
+      weatherDataList = dataList;
     } else {
       print('Failed to fetch weather data');
-      return [];
     }
+    // Filter weatherDataList for today's data
+    final today = DateTime.now();
+    final filteredDataList = weatherDataList.where((data) {
+      return isSameDate(data.time, today);
+    }).toList();
+
+    // Group filteredDataList by date
+    groupedWeatherDataList = groupWeatherDataByDate(filteredDataList);
   }
 
   Future<String> getWeatherDataSummary(String city) async {
@@ -194,8 +195,9 @@ class AIHandler {
     return summary;
   }
 
-  Future<String> getWeatherDataSummary2(double longitude, double latitude) async {
-    await fetchWeatherData3(longitude, latitude);
+  Future<String> getWeatherDataSummary2(
+      double latitude, double longitude) async {
+    await fetchWeatherData3(latitude, longitude);
     final buffer = StringBuffer();
     for (final group in groupedWeatherDataList) {
       for (final weatherData in group) {
