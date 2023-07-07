@@ -1,5 +1,5 @@
 name: weather_summary
-description: A new Flutter project.
+description: weather look app using flutter
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -51,6 +51,7 @@ flutter:
     - assets/weather_mini/.
     - assets/home/.
     - assets/weather/.
+    - assets/toggle/.
     - assets/lottie/97952-loading-animation-blue.json
     - assets/toggle/toggle_down.png
     - assets/toggle/toggle_up.png

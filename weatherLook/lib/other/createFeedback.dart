@@ -1,5 +1,3 @@
-// 성국이가 하는 페이지
-
 import 'package:flutter/material.dart';
 
 class createFeedbackPage extends StatefulWidget {
@@ -31,7 +29,7 @@ class _createFeedbackPageState extends State<createFeedbackPage> {
                           Navigator.pop(context);
                         },
                         child: Image.asset(
-                          'icon/icon_back.png',
+                          'assets/icon/icon_back.png',
                           width: (MediaQuery.of(context).size.width) / 15.8,
                         ),
                       ),

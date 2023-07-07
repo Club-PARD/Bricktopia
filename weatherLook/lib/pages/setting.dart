@@ -29,7 +29,7 @@ class _SettingPageState extends State<SettingPage> {
                           Navigator.pop(context);
                         },
                         child: Image.asset(
-                          'icon/icon_back.png',
+                          'assets/icon/icon_back.png',
                           width: (MediaQuery.of(context).size.width) / 15.8,
                         ),
                       ),
@@ -74,7 +74,7 @@ class _SettingPageState extends State<SettingPage> {
                     const SizedBox(),
                     GestureDetector(
                         child: Image.asset(
-                      'icon/icon_arrow.png',
+                      'assets/icon/icon_arrow.png',
                     ))
                   ],
                 ),
@@ -109,7 +109,7 @@ class _SettingPageState extends State<SettingPage> {
                     const SizedBox(),
                     GestureDetector(
                         child: Image.asset(
-                      'icon/icon_arrow.png',
+                      'assets/icon/icon_arrow.png',
                     ))
                   ],
                 ),
