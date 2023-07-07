@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, unused_element, no_leading_underscores_for_local_identifiers, depend_on_referenced_packages
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;

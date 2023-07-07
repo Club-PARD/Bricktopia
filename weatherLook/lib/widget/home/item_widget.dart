@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_summary/service/item_model.dart';
+import 'package:weather_summary/item_model.dart';
 
 class ItemWidget extends StatelessWidget {
   final List<ClothingItem> topsList;

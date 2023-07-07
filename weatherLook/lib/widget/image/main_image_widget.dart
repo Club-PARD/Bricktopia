@@ -25,6 +25,5 @@ Widget mainImage(BuildContext context, String mainWeather) {
   //       width: (MediaQuery.of(context).size.width) / 3.1583,
   //       fit: BoxFit.cover);
   // }
-  return Image.asset("assets/cloud_sun.png",
-      width: (MediaQuery.of(context).size.width) / 3.1583, fit: BoxFit.cover);
+  return Container();
 }

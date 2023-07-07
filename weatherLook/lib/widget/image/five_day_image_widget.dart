@@ -17,5 +17,5 @@ Widget fiveDayImage(String avgWeather) {
   // else if (avgWeather == "Night") {
   //   return Image.asset("assets/weather_mini/mini_night.png", width: 32);
   // }
-  return Image.asset("assets/cloud_sun.png", width: 32);
+  return Container();
 }

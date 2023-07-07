@@ -130,7 +130,7 @@ class _WeatherPageState extends State<WeatherPage> {
           child: homeImage(context, currentWeatherMain),
         ),
         Scaffold(
-          backgroundColor: Colors.transparent,
+          //backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
